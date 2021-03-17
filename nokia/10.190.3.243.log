@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.243
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.243
 Warning: Permanently added '10.190.3.243' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.243's password: 
+ca168b@10.190.3.243's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
 A:NEXTGO-TELCEL-AA# environment no more 
 A:NEXTGO-TELCEL-AA# show chassis 
 
@@ -79,7 +81,7 @@ A:NEXTGO-TELCEL-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Mar 6 07:36:33 EST 2018 by builder in /builds/F80B/R9/panos/main
 
-# Generated THU MAY 21 05:26:46 2020 UTC
+# Generated WED MAR 17 02:29:16 2021 UTC
 
 exit all
 configure
@@ -151,7 +153,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -222,6 +224,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -697,6 +709,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1226,7 +1278,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$7bQyPbqA9asa4a4DJBNXc.JOWfGTWovVabNTaF93oRB8ro9XAXncS"
+                password "$2y$10$Q1YIt.fa2.jyTKR01Jzr2.PrvdWRx2j.D1kbKkuqjNgiK6cyrTnrC"
                 access console ftp 
                 no home-directory
                 no restricted-to-home
@@ -1238,7 +1290,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$kqIWA6563qqv.SppDjksE.gmy.kUtE8vIv/019SxUvZsfMwxQPYdy"
+                password "$2y$10$.9lgyqmBAR49Gic/YfhEU.CausS5804vCKlHrC43N/IBBkGkhy8au"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1251,8 +1303,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$mkxHGtEDvtTRGpcFredVs.xH/7rLGGHi3c7ObvJVdCt.1gZ8kf2.i"
-                no access
+                password "$2y$10$F3nzE6IR0bPGyLj1lFlxQ.Sa4NrPq85UQgbLMj73Uam3AFgH161TG"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -5037,6 +5089,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/2/1
+        shutdown
         description "To-TELCEL-OUTGOING"
         ethernet
             dot1x
@@ -5120,7 +5173,6 @@ echo "Port Configuration"
             no ptp-asymmetry
         exit
         ddm-events
-        no shutdown
     exit
     port 1/2/2
         shutdown
@@ -5381,6 +5433,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/2/5
+        shutdown
         description "CONEXION 10G TELCEL ROAMING NACIONAL "
         ethernet
             xgig lan
@@ -5466,7 +5519,6 @@ echo "Port Configuration"
             channel 0
         exit
         ddm-events
-        no shutdown
     exit
     port 1/2/6
         description "NEXTEN-MEX056-GA-PTO4/1/8"
@@ -7655,7 +7707,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:48 2020 UTC
+# Finished WED MAR 17 02:29:19 2021 UTC
 A:NEXTGO-TELCEL-AA# show port 
 
 ===============================================================================
@@ -7670,11 +7722,11 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/4       Down  No   Down    1514 1514    - accs null xcme   
 1/1/5       Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-LR  10*
 1/1/6       Down  No   Down    1514 1514    - accs null xgige  
-1/2/1       Up    No   Down    1518 1518    - accs dotq xcme   GIGE-LX  10KM
+1/2/1       Down  No   Down    1518 1518    - accs dotq xcme   GIGE-LX  10KM
 1/2/2       Down  No   Down    1514 1514    - accs null xcme   
 1/2/3       Down  No   Down    1514 1514    - accs null xcme   
 1/2/4       Down  No   Down    1514 1514    - accs null xcme   
-1/2/5       Up    No   Down    9212 9212    - accs dotq xgige  10GBASE-LR  10*
+1/2/5       Down  No   Down    9212 9212    - accs dotq xgige  10GBASE-LR  10*
 1/2/6       Up    Yes  Up      1572 1572    - netw null xgige  10GBASE-LR  10*
 
 ===============================================================================

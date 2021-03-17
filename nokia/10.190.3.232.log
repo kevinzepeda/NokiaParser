@@ -1,12 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.232
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.232
 Warning: Permanently added '10.190.3.232' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.232's password: 
-A:NEWMAN-GA# environment no more 
-A:NEWMAN-GA# show chassis 
+ca168b@10.190.3.232's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
+B:NEWMAN-GA# environment no more 
+B:NEWMAN-GA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -37,12 +39,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-A:NEWMAN-GA# admin display-config detail 
+B:NEWMAN-GA# admin display-config detail 
 # TiMOS-C-16.0.R7-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Wed Apr 24 06:59:13 PDT 2019 by builder in /builds/c/160B/R7-1/panos/main
 
-# Generated THU MAY 21 05:26:40 2020 UTC
+# Generated WED MAR 17 02:29:11 2021 UTC
 
 exit all
 configure
@@ -208,7 +210,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402cc055b"
             packet-size 9216
@@ -233,7 +235,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -419,7 +421,7 @@ echo "System Security Configuration"
             exit
             no telnet-server
             no telnet6-server
-            no ftp-server
+            ftp-server
             management-access-filter
                 ip-filter
                     shutdown
@@ -796,7 +798,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$XwIWbfIwauP3/kWCkiNPk.erE2M31nVThh445JlzSGVeBqdL.ArBy"
+                password "$2y$10$6/qvB.qaVtV8Do5.HfmEg.1sbw2p/y.xIsowpTwoeujAhJgEUs6BG"
                 access console
                 no home-directory
                 no restricted-to-home
@@ -816,7 +818,27 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$cNFdkMGRW4Yf0TUg1Y35..dSi8A29FjthX6kEKup5S/spUNjJpjiS"
+                password "$2y$10$Sd3gDVcqerkmpZ/PMTMBY.4j24hqbLYB3aJ3vLB0wNTfeJsWFn/Ru"
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$pZkodA2C6gPNtvJfIYvrQ.MGJ9oYgbejc3J9A7Gt7K5jitzfi5bEa"
                 access console
                 no home-directory
                 no restricted-to-home
@@ -4719,6 +4741,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4729,6 +4753,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4740,6 +4766,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -28004,7 +28230,7 @@ echo "ISIS Configuration"
         isis 0
             no system-id
             no router-id
-            level-capability level-1/2
+            level-capability level-2
             no standard-multi-instance
             no graceful-restart
             area-id 49.0009
@@ -58281,8 +58507,8 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:55 2020 UTC
-A:NEWMAN-GA# show port 
+# Finished WED MAR 17 02:29:23 2021 UTC
+B:NEWMAN-GA# show port 
 
 ===============================================================================
 Ports on Slot 1
@@ -58367,11 +58593,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 B/1           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-A:NEWMAN-GA# show lag detail 
+B:NEWMAN-GA# show lag detail 
 
 ===============================================================================
 LAG Details
 ===============================================================================
 No Entries Found
 ===============================================================================
-A:NEWMAN-GA# 
+B:NEWMAN-GA# 

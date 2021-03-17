@@ -1,12 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.128
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.128
 Warning: Permanently added '10.190.3.128' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.128's password: 
-A:ANAHUA-MEX1089-GA# environment no more 
-A:ANAHUA-MEX1089-GA# show chassis 
+ca168b@10.190.3.128's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 20 Minutes 
+*A:ANAHUA-MEX1089-GA# environment no more 
+*A:ANAHUA-MEX1089-GA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -38,12 +40,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-A:ANAHUA-MEX1089-GA# admin display-config detail 
+*A:ANAHUA-MEX1089-GA# admin display-config detail 
 # TiMOS-C-16.0.R5-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:25:31 2020 UTC
+# Generated WED MAR 17 02:28:04 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca4028b0c01"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$iyz1BdasWWkh7nnfgHbnk.Xd5hjLVTlHk93Y0KqnVT4vbZrxAw5he"
+                password "$2y$10$hq96IPUKRrM/cN4UsH8ag.23HCQFgWnENntEDKGo6tGxIdGphcdDe"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -909,7 +911,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$6R81ahLYyfoCw7AAKQ28w.NfdCHuVl2I5xqtELbrwBSkTj6U6KZsG"
+                password "$2y$10$.lZd1Gt9VGSDG2irWaWsA.5FOw5177rE7McOP1e/z/5qB2Jv7kPHq"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -933,8 +935,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$sJeqHXa7KC7YT5ug/kTuQ.nrmhQP/V.Kd44vSdqcQbgoTFuMzU7A6"
-                no access
+                password "$2y$10$WE4hW8NtqYzx/HlhD/PcM.XRtcNHd.ubWH7SvGj9X7t0lkCkeE39G"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4303,8 +4305,6 @@ echo "Log Configuration"
         snmp-trap-group 98
             description "5620sam"
             trap-target "10.150.10.203:162" address 10.150.10.203 port 162 snmpv2c notify-community "netviewtrap98"
-            trap-target "10.190.60.162:162" address 10.190.60.162 port 162 snmpv2c notify-community "galateatrap98"
-            trap-target "3CA82A0A7404:main1" address 10.190.60.130 port 162 snmpv2c notify-community "galateatrap98"
         exit
         snmp-trap-group 99
             no description
@@ -4765,6 +4765,18 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+                no description
+                prefix 10.32.2.104/32
+                prefix 10.32.224.132/32
+                prefix 10.32.240.171/32
+                prefix 10.32.241.38/32
+                prefix 10.32.242.132/32
+                prefix 10.32.242.136/32
+                prefix 10.36.231.244/32
+                prefix 10.150.10.71/32
+                prefix 10.150.10.200/32
+            exit
             ip-prefix-list "ntp-host" create
                 no description
                 prefix 196.18.6.12/32
@@ -4835,6 +4847,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4845,6 +4859,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4856,6 +4872,26 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "Deny SNMP"
+                        no log
+                        match protocol none
+                            no dscp
+                            no dst-ip
+                            no dst-port
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip ip-prefix-list "denysnmp"
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -37939,7 +37975,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -40415,119 +40451,6 @@ echo "Service Configuration"
                 description "To-NEWMAN"
             exit
             no vsd-domain
-        exit
-        epipe 519057 name "EPIPE_To-TECAMA-VLAN57-BH" customer 2 create
-            description "EPIPE_To-TECAMA-VLAN57-BH"
-            service-mtu 9178
-            no oper-group
-            load-balancing
-                no per-service-hashing
-            exit
-            no vxlan-src-vtep
-            eth-cfm
-                tunnel-fault ignore
-            exit
-            sap 4/1/10:57 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                eth-cfm
-                    no ais-enable
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no mip
-                exit
-                no lag-link-map-profile
-                no cflowd
-                no aarp
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 10001
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                    no qinq-vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 10001
-                    no qinq-mark-top-only
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no ignore-oper-down
-                no shutdown
-            exit
-            spoke-sdp 11127:519057 vc-type ether create
-                no description
-                no vlan-vc-tag
-                cpu-protection 255
-                ingress
-                    no vc-label
-                    no filter
-                    no qos
-                exit
-                egress
-                    no vc-label
-                    no filter
-                    no qos
-                exit
-                pw-status-signaling
-                no bandwidth
-                no hash-label
-                no entropy-label
-                no use-sdp-bmac
-                no aarp
-                no control-word
-                control-channel-status
-                    shutdown
-                    no refresh-timer
-                    no acknowledgment
-                    no request-timer
-                exit
-                no force-vlan-vc-forwarding
-                no force-qinq-vc-forwarding
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no mip
-                exit
-                no collect-stats
-                no accounting-policy
-                no precedence
-                no transit-policy
-                no app-profile
-                no standby-signaling-slave
-                no block-on-peer-fault
-                no oper-group
-                no monitor-oper-group
-                no bfd-template
-                no bfd-enable
-                no shutdown
-            exit
-            no shutdown
         exit
         vprn 1000000 name "1000000" customer 2 create
             shutdown
@@ -51290,11 +51213,6 @@ echo "Service Configuration"
             exit
             no vsd-domain
         exit
-        epipe 519057 name "EPIPE_To-TECAMA-VLAN57-BH" customer 2 create
-            pbb
-                no force-qtag-forwarding
-            exit
-        exit
         vpls 90004043 name "To-MEX-9111-01_1" customer 1 create
             allow-ip-int-bind
                 no forward-ipv4-multicast-to-ip-int
@@ -51383,6 +51301,8 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+            exit
             ip-prefix-list "ntp-host" create
             exit
             ip-prefix-list "snmp-list" create
@@ -54255,8 +54175,8 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:47 2020 UTC
-A:ANAHUA-MEX1089-GA# show port 
+# Finished WED MAR 17 02:28:12 2021 UTC
+*A:ANAHUA-MEX1089-GA# show port 
 
 ===============================================================================
 Ports on Slot 2
@@ -54384,7 +54304,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 B/1           Up    No   Down    1514 1514    - netw null faste  
 B/4           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-A:ANAHUA-MEX1089-GA# show lag detail 
+*A:ANAHUA-MEX1089-GA# show lag detail 
 
 ===============================================================================
 LAG Details
@@ -54399,7 +54319,7 @@ Details
 Lag-id              : 4                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 05/05/2019 16:50:56   Port Thres. Action   : down
+Thres. Last Cleared : 09/13/2020 19:18:49   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:8b:0d:45     Lag-IfIndex          : 1342177284
@@ -54440,4 +54360,4 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 4/1/1          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
 4/1/1          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
 ===============================================================================
-A:ANAHUA-MEX1089-GA# 
+*A:ANAHUA-MEX1089-GA# 

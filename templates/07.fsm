@@ -1,5 +1,5 @@
 Value Filldown sysname (\S+)
-Value Filldown model (\S+)
+Value Filldown model ([^:\b]+)
 Value source_ip (\S+)
 Value l2vpn (\S+)
 Value service_id (\d+)
@@ -20,6 +20,9 @@ Value buffer_max (\S+)
 Value shutdown (\S+)
 Value resv_min (\S+)
 Value resv_max (\S+)
+Value ingress_qos (\d+)
+Value egress_qos (\d+)
+Value port_description (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -47,10 +50,22 @@ Sdp
 
 Vpn
   ^\s{12}spoke-sdp ${spoke_spd_id}:${spoke_svc_id}
-  ^\s{12}sap ${sap} create
+  ^\s{12}sap ${sap} create -> Sap
   ^\s{8}exit -> Record Service
 
+Sap
+  ^\s{16}ingress -> Ingress
+  ^\s{16}egress -> Egress
+  ^\s{12}exit -> Vpn
+
+Ingress
+  ^\s{20}qos ${ingress_qos} -> Sap
+
+Egress
+  ^\s{20}qos ${egress_qos} -> Sap
+
 Port
+  ^\s{8}description "${port_description}"
   ^\s{8}ethernet -> Ethernet
   ^\s{4}exit -> Record Start
 

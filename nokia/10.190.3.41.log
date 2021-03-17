@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.41
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.41
 Warning: Permanently added '10.190.3.41' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.41's password: 
+ca168b@10.190.3.41's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 18 Minutes 
 A:TONALA-CHP8021-AA# environment no more 
 A:TONALA-CHP8021-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:TONALA-CHP8021-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:30:54 2020 UTC
+# Generated WED MAR 17 02:29:36 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -668,6 +680,46 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 250
                         description "Permit SNMP from Src IP - ACC"
                         no src-port
@@ -1071,7 +1123,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$VnZWxok7tZOFA6XKNXwK..r7NROPEDWR8ZncbiiCVq8cZsjY2AQUy"
+                password "$2y$10$8cz9ZJG5H9cimpLNE0sSE.Uh3PTfXxUAArkHbOICZJuFiHaW6Aaim"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1088,7 +1140,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$dWWUCEcr3biYgJUPgzlaU.66axbZqcMLfBMG1mJPoMlMgti9kbl9O"
+                password "$2y$10$ZUw7RywIMUKfUIpETCRh6.xc/v4kkQFFB8aL/L2QedBcs4HbeONdK"
                 access console ftp 
                 no home-directory
                 no restricted-to-home
@@ -1096,7 +1148,20 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
-                    member "default"
+                    no member "default"
+                    member "administrative"
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$z0Hh0StTfWFof5jrbYp0..zLRu.hXdSWLmbZnfJ/vvul2YfolfNmi"
+                access console 
+                no home-directory
+                no restricted-to-home
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
                     member "administrative"
                 exit
             exit
@@ -1646,8 +1711,8 @@ echo "System Login Control Configuration"
             exit
             ssh
                 no disable-graceful-shutdown
-                inbound-max-sessions 5
-                outbound-max-sessions 5
+                inbound-max-sessions 7
+                outbound-max-sessions 7
                 ttl-security 20
             exit
             telnet
@@ -5509,7 +5574,7 @@ echo "Port Configuration"
     exit
     port 1/5/6
         shutdown
-        description "10/100/Gig Ethernet SFP"
+        description "Nuevo Enlace Carrier to TUXCOL-CHP8001-GA"
         ethernet
             dot1x
                 port-control force-auth
@@ -6841,13 +6906,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -6950,13 +7015,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -6999,13 +7064,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7048,13 +7113,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7097,13 +7162,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7146,13 +7211,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7195,13 +7260,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7244,13 +7309,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7293,13 +7358,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7391,13 +7456,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7538,13 +7603,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7587,13 +7652,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -8126,13 +8191,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -8175,13 +8240,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -8273,13 +8338,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9681,13 +9746,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -9874,13 +9939,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -10252,7 +10317,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:30:57 2020 UTC
+# Finished WED MAR 17 02:29:39 2021 UTC
 A:TONALA-CHP8021-AA# show port 
 
 ===============================================================================
@@ -10299,7 +10364,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/5/4         Down  No   Down    1514 1514    - accs null xcme   
 1/5/5         Down  No   Down    1572 1572    - netw dotq xcme   
 1/5/6         Down  No   Down    1572 1572    - netw null xcme   
-1/5/7         Up    Yes  Up      1518 1518    - accs dotq xcme   GIGE-T 
+1/5/7         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/8         Up    Yes  Up      2102 2102    - netw null xcme   GIGE-SX 
 
 ===============================================================================

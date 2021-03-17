@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.4.194
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.4.194
 Warning: Permanently added '10.190.4.194' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.4.194's password: 
+ca168b@10.190.4.194's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
 A:BARRIOT-MEX103H-AA# environment no more 
 A:BARRIOT-MEX103H-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:BARRIOT-MEX103H-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:29:26 2020 UTC
+# Generated WED MAR 17 02:30:56 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$N1gy5piUOALpQztkBlZwg.fz3sNl5bH2jvU.sPzVmcWeLba8By31."
+                password "$2y$10$e1ljL8lOXqTL0Scj8ZDUw.1RxZfb9y5JqczK1tpQ6BKB3lGj2Utui"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$6R64N9mZusMApuANXPRCE.Dagm4H.GJVowQGlKKoDz54zf3PzzVmC"
+                password "$2y$10$Iz.uMaMWwimWXsj32QVug.itUhVLZfV85aNcp9U3CHVKd2HzaWN4e"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1193,8 +1245,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$KqnyfpKlrqCipYg0NfxPo.vbJBLHmT/PI1mPnPyAjldYL4niV4.AO"
-                no access
+                password "$2y$10$C6F0maEgZYIkXiICdUzpM.RMslQfOrA8QPBjAZwxCmmoe4Grk9U7G"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3851,6 +3903,13 @@ echo "QoS Policy Configuration"
                 unknown-queue 1
                 no de-1-out-profile
             exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
             fc "nc" create
                 queue 6
                 broadcast-queue 1
@@ -3957,6 +4016,13 @@ echo "QoS Policy Configuration"
             exit
             fc "l1" create
                 queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
                 broadcast-queue 1
                 multicast-queue 1
                 unknown-queue 1
@@ -4198,7 +4264,7 @@ echo "QoS Policy Configuration"
             exit 
             fc be create
                 queue 1
-                dot1p 1
+                dot1p 0
                 no dscp
             exit 
             fc ef create
@@ -4214,6 +4280,11 @@ echo "QoS Policy Configuration"
             fc l1 create
                 queue 3
                 dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -4288,7 +4359,7 @@ echo "QoS Policy Configuration"
             exit 
             fc be create
                 queue 1
-                dot1p 1
+                dot1p 0
                 no dscp
             exit 
             fc ef create
@@ -4304,6 +4375,11 @@ echo "QoS Policy Configuration"
             fc l1 create
                 queue 3
                 dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -4337,7 +4413,7 @@ echo "QoS Policy Configuration"
             exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -5388,6 +5464,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/5/2
+        shutdown
         description "LAG 10 to MEX-103H-RTN_01"
         ethernet
             dot1x
@@ -5475,7 +5552,6 @@ echo "Port Configuration"
             no phy-tx-clock
         exit
         ddm-events
-        no shutdown
     exit
     port 1/5/3
         description "To Serv NEC IPASOLINK 1000_01 HMEX0594 - HMEX1444 - HMEX0675 - HMEX1452"
@@ -6128,6 +6204,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/6/2
+        shutdown
         description "LAG 10 to MEX-103H-RTN_01"
         ethernet
             dot1x
@@ -6215,7 +6292,6 @@ echo "Port Configuration"
             no phy-tx-clock
         exit
         ddm-events
-        no shutdown
     exit
     port 1/6/3
         shutdown
@@ -6235,7 +6311,7 @@ echo "Port Configuration"
                 no mac-auth-wait
             exit
             mode access
-            no encap-type
+            encap-type dot1q
             no mtu
             no group-encryption
             crc-monitor
@@ -6488,7 +6564,6 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/6/6
-        shutdown
         description "MEXHUA1719 O&M"
         ethernet
             dot1x
@@ -6505,7 +6580,7 @@ echo "Port Configuration"
                 no mac-auth-wait
             exit
             mode access
-            no encap-type
+            encap-type dot1q
             no mtu
             no group-encryption
             crc-monitor
@@ -6576,6 +6651,7 @@ echo "Port Configuration"
             no phy-tx-clock
         exit
         ddm-events
+        no shutdown
     exit
     port 1/6/7
         description "10/100/Gig Ethernet SFP"
@@ -6761,6 +6837,7 @@ echo "Port Configuration"
 echo "LAG Configuration"
 #--------------------------------------------------
     lag 10
+        shutdown
         description "LAG 10 to MEX-103H-RTN_01"
         no mac
         mode access
@@ -6778,7 +6855,6 @@ echo "LAG Configuration"
         no selection-criteria
         no hold-time
         standby-signaling lacp
-        no shutdown
     exit
 #--------------------------------------------------
 echo "Redundancy Configuration"
@@ -7733,6 +7809,7 @@ echo "Service Configuration"
 #--------------------------------------------------
     service
         sdp 11115 mpls create
+            shutdown
             description "NEZA-MEX9079-GA"
             signaling tldp
             far-end 10.190.3.115
@@ -7756,7 +7833,6 @@ echo "Service Configuration"
             no metric
             no encryption-keygroup direction inbound
             no encryption-keygroup direction outbound
-            no shutdown
         exit
         sdp 11197 mpls create
             description "PANTIT-MEX118H-GA"
@@ -10129,13 +10205,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -11414,13 +11490,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -11463,13 +11539,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -16601,13 +16677,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -16797,13 +16873,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -16993,13 +17069,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -20093,13 +20169,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -20142,13 +20218,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -20191,13 +20267,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -20240,13 +20316,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no agg-rate-limit
                     shaper-group default
@@ -21622,13 +21698,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21671,13 +21747,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21720,13 +21796,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21769,13 +21845,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21818,13 +21894,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21867,13 +21943,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21916,13 +21992,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -21965,13 +22041,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22014,13 +22090,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22063,13 +22139,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22112,13 +22188,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22161,13 +22237,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22210,13 +22286,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22259,13 +22335,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22308,13 +22384,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22357,13 +22433,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22406,13 +22482,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22455,13 +22531,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22504,13 +22580,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22553,13 +22629,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22602,13 +22678,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22651,13 +22727,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22700,13 +22776,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22749,13 +22825,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22798,13 +22874,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22847,13 +22923,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22896,13 +22972,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22945,13 +23021,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -22994,14 +23070,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23045,14 +23121,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23096,14 +23172,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23147,14 +23223,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23198,14 +23274,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23249,14 +23325,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23300,13 +23376,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23349,13 +23425,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23398,13 +23474,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23447,13 +23523,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23496,13 +23572,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23545,14 +23621,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23596,13 +23672,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23613,104 +23689,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11115:229605 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 269003 customer 2 create
-            description "To-MEXCHO0110-CFE"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "To-MEXCHO0110-CFE"
-            sap 1/6/5:25 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 201
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 201
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11115:269003 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 269004 customer 2 create
-            description "To-MEXTCM0625-CFE"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "To-MEXTCM0625-CFE"
-            sap 1/5/6:26 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 201
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 201
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11115:269004 vc-type ether create
                 no vlan-vc-tag
                 ingress
                     no vc-label
@@ -23743,14 +23721,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 201
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 201
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23762,104 +23740,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11115:269005 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 269006 customer 2 create
-            description "To-MEXHUA0294-CFE"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "To-MEXHUA0294-CFE"
-            sap 1/5/3:28 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 201
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 201
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11115:269006 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 269007 customer 2 create
-            description "To-MEXHUA0298-CFE"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "To-MEXHUA0298-CFE"
-            sap 1/5/6:29 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 201
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 201
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11115:269007 vc-type ether create
                 no vlan-vc-tag
                 ingress
                     no vc-label
@@ -23892,14 +23772,14 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 201
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 201
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -23911,6 +23791,300 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11115:269008 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522704 customer 2 create
+            description "To-MEXHUA1719-3G-AWS"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:1005 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522704 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522705 customer 2 create
+            description "To-MEXHUA1719-4G-AWS"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:1205 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522705 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522706 customer 2 create
+            description "To-MEXHUA1719-AWS-OYM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:1405 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522706 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522707 customer 2 create
+            description "To-MEXHUA1719-PCS_3G"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:1605 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522707 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522708 customer 2 create
+            description "To-MEXHUA1719-PCS_OYM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:1805 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522708 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 522709 customer 2 create
+            description "To-MEXHUA1719-GSM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/6/3:2105 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:522709 vc-type ether create
                 no vlan-vc-tag
                 ingress
                     no vc-label
@@ -24422,13 +24596,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -24495,13 +24669,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 200
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -24512,6 +24686,79 @@ echo "Service Configuration"
                 no shutdown
             exit
             sap 1/6/1:4021 create
+                no description
+                limit-mac-move blockable
+                no disable-learning
+                no disable-aging
+                no max-nbr-mac-addr
+                no discard-unknown-source
+                no force-c-vlan-forwarding
+                no mac-pinning
+                stp
+                    path-cost 10
+                    priority 128
+                    no edge-port
+                    auto-edge
+                    link-type pt-pt
+                    no root-guard
+                    no shutdown
+                exit
+                dhcp
+                    shutdown
+                    no description
+                    no snoop
+                    no option
+                exit
+                igmp-snooping
+                    no fast-leave
+                    no import
+                    no max-num-groups
+                    no max-num-sources
+                    no max-num-grp-sources
+                    last-member-query-interval 10
+                    no mrouter-port
+                    query-interval 125
+                    query-response-interval 10
+                    robust-count 2
+                    version 3
+                    no send-queries
+                    no disable-router-alert-check
+                    static
+                    exit
+                exit
+                mld-snooping
+                    no fast-leave
+                    no import
+                    no max-num-groups
+                    last-member-query-interval 10
+                    no mrouter-port
+                    no disable-router-alert-check
+                    query-interval 125
+                    query-response-interval 10
+                    robust-count 2
+                    version 2
+                    no send-queries
+                exit
+                eth-cfm
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    no filter
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no shutdown
+            exit
+            sap 1/6/6:4021 create
                 no description
                 limit-mac-move blockable
                 no disable-learning
@@ -25117,13 +25364,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -25166,13 +25413,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -25183,55 +25430,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11115:530098 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 530099 customer 2 create
-            description "To-MEXNEZ0455-PCS_3G"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "To-MEXNEZ0455-PCS_3G"
-            sap 1/5/8:1674 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 10
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 10
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11115:530099 vc-type ether create
                 no vlan-vc-tag
                 ingress
                     no vc-label
@@ -25264,13 +25462,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -25313,13 +25511,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -25989,17 +26187,21 @@ echo "Service Configuration"
         exit
         epipe 229605 customer 2 create
         exit
-        epipe 269003 customer 2 create
-        exit
-        epipe 269004 customer 2 create
-        exit
         epipe 269005 customer 2 create
         exit
-        epipe 269006 customer 2 create
-        exit
-        epipe 269007 customer 2 create
-        exit
         epipe 269008 customer 2 create
+        exit
+        epipe 522704 customer 2 create
+        exit
+        epipe 522705 customer 2 create
+        exit
+        epipe 522706 customer 2 create
+        exit
+        epipe 522707 customer 2 create
+        exit
+        epipe 522708 customer 2 create
+        exit
+        epipe 522709 customer 2 create
         exit
         epipe 529300 customer 2 create
         exit
@@ -26036,8 +26238,6 @@ echo "Service Configuration"
         epipe 530097 customer 2 create
         exit
         epipe 530098 customer 2 create
-        exit
-        epipe 530099 customer 2 create
         exit
         epipe 530100 customer 2 create
         exit
@@ -26217,7 +26417,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:32 2020 UTC
+# Finished WED MAR 17 02:31:03 2021 UTC
 A:BARRIOT-MEX103H-AA# show port 
 
 ===============================================================================
@@ -26226,28 +26426,28 @@ Ports on Slot 1
 Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
-1/1/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/1/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/1/1         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/1/2         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/1/3         Down  No   Down    1514 1514    - accs null xcme   
 1/1/4         Down  No   Down    1514 1514    - accs null xcme   10GBASE-LR  *
-1/1/5         Up    Yes  Up      1514 1514    - accs null xgige  10GBASE-LR  *
-1/1/6         Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-ER  *
-1/5/1         Up    Yes  Up      1572 1572    - hybr dotq xcme   MDX GIGE-T 
-1/5/2         Up    Yes  Link Up 1518 1518   10 accs dotq xcme   MDX GIGE-T 
-1/5/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-1/5/4         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
-1/5/5         Up    Yes  Up      2102 2102    - hybr dotq xcme   MDI GIGE-T 
+1/1/5         Up    No   Down    1514 1514    - accs null xgige  10GBASE-LR  *
+1/1/6         Up    No   Down    9212 9212    - netw null xgige  10GBASE-ER  *
+1/5/1         Up    Yes  Up      1572 1572    - hybr dotq xcme   MDI GIGE-T 
+1/5/2         Down  No   Down    1518 1518   10 accs dotq xcme   GIGE-T 
+1/5/3         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/5/4         Up    No   Down    1514 1514    - accs null xcme   GIGE-T 
+1/5/5         Up    No   Down    2102 2102    - hybr dotq xcme   GIGE-T 
 1/5/6         Up    Yes  Up      2102 2102    - hybr dotq xcme   MDI GIGE-T 
 1/5/7         Down  No   Down    1514 1514    - accs null xcme   
-1/5/8         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/6/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-1/6/2         Up    Yes  Up      1518 1518   10 accs dotq xcme   MDI GIGE-T 
-1/6/3         Down  No   Down    1514 1514    - accs null xcme   
-1/6/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/6/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/6/6         Down  No   Down    1514 1514    - accs null xcme   
-1/6/7         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/6/8         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/5/8         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/1         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/2         Down  No   Down    1518 1518   10 accs dotq xcme   GIGE-T 
+1/6/3         Down  No   Down    1518 1518    - accs dotq xcme   
+1/6/4         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/5         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/6         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/7         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
+1/6/8         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 
 ===============================================================================
 Ports on Slot A
@@ -26278,9 +26478,9 @@ Description        : LAG 10 to MEX-103H-RTN_01
 Details
 -------------------------------------------------------------------------------
 Lag-id              : 10                    Mode                 : access
-Adm                 : up                    Opr                  : up
-Thres. Exceeded Cnt : 3                     Port Threshold       : 0
-Thres. Last Cleared : 05/08/2020 09:51:58   Threshold Action     : down
+Adm                 : down                  Opr                  : down
+Thres. Exceeded Cnt : 0                     Port Threshold       : 0
+Thres. Last Cleared : 01/13/2021 15:22:29   Threshold Action     : down
 Dynamic Cost        : false                 Encap Type           : dot1q
 Configured Address  : 0c:54:b9:2d:b8:cb     Lag-IfIndex          : 1342177290
 Hardware Address    : 0c:54:b9:2d:b8:cb     Adapt Qos (access)   : link
@@ -26291,26 +26491,26 @@ LACP Transmit Intvl : fast                  LACP xmit stdby      : enabled
 Selection Criteria  : highest-count         Slave-to-partner     : disabled
 MUX control         : coupled               
 Subgrp hold time    : 0.0 sec               Remaining time       : 0.0 sec
-Subgrp selected     : 2                     Subgrp candidate     : -
+Subgrp selected     : 1                     Subgrp candidate     : -
 Subgrp count        : 2                     
 System Id           : 0c:54:b9:2d:b7:81     System Priority      : 32768
 Admin Key           : 32768                 Oper Key             : 32768
-Prtr System Id      : ac:4e:91:68:0c:b0     Prtr System Priority : 32768
-Prtr Oper Key       : 544                   
+Prtr System Id      :                       Prtr System Priority : 32768
+Prtr Oper Key       : 0                     
 Standby Signaling   : lacp                  
 
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
 -------------------------------------------------------------------------------
-1/5/2          up      standby   down    yes       1             -       32768
-1/6/2          up      active    up                2             -       32768
+1/5/2          down    active    down    yes       1             -       32768
+1/6/2          down    standby   down              2             -       32768
 
 -------------------------------------------------------------------------------
 Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 -------------------------------------------------------------------------------
-1/5/2          actor     No    No    No    No    No    Yes   Yes      Yes
-1/5/2          partner   No    No    No    No    Yes   Yes   No       Yes
-1/6/2          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
-1/6/2          partner   No    No    Yes   Yes   Yes   Yes   No       Yes
+1/5/2          actor     Yes   Yes   No    No    No    Yes   Yes      Yes
+1/5/2          partner   No    No    No    No    No    No    No       No
+1/6/2          actor     Yes   Yes   No    No    No    Yes   Yes      Yes
+1/6/2          partner   No    No    No    No    No    No    No       No
 ===============================================================================
 A:BARRIOT-MEX103H-AA# 

@@ -1,14 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.164
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.164
 Warning: Permanently added '10.190.2.164' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.164's password: 
+ca168b@10.190.2.164's password: 
 
 
-B:OAXAC2-OAX7002-AA# environment no more 
-B:OAXAC2-OAX7002-AA# show chassis 
+A:OAXAC2-OAX7002-AA# environment no more 
+A:OAXAC2-OAX7002-AA# show chassis 
 
 ===============================================================================
 Chassis Information
@@ -33,7 +33,7 @@ Hardware Data
     Manufacture date              : 12202011
     Manufacturing string          : PDM ECO         
     Manufacturing deviations      : D01774
-    Time of last boot             : 2017/09/03 00:44:54
+    Time of last boot             : 2020/06/11 00:49:39
     Current alarm state           : alarm cleared
 -------------------------------------------------------------------------------
 Environment Information
@@ -63,7 +63,7 @@ Hardware Data
     Manufacture date              : 10282011
     Manufacturing string          : C05745          
     Manufacturing deviations      : 
-    Time of last boot             : 2017/09/03 00:44:55
+    Time of last boot             : 2020/06/11 00:49:43
     Current alarm state           : alarm cleared
 -------------------------------------------------------------------------------
 Power Feed Information
@@ -77,13 +77,13 @@ Power Feed Information
       Type                        : dc
       Status                      : up
 ===============================================================================
-B:OAXAC2-OAX7002-AA# admin display-config detail 
+A:OAXAC2-OAX7002-AA# admin display-config detail 
 # TiMOS-B-6.2.R8 both/hops ALCATEL-LUCENT SAR 7705 
 # Copyright (c) 2000-2016 Alcatel-Lucent.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Thu Dec 15 12:41:38 EST 2016 by builder in /rel6.2/b1/R8/panos/main
 
-# Generated THU MAY 21 05:26:37 2020 UTC
+# Generated WED MAR 17 02:25:35 2021 UTC
 
 exit all
 configure
@@ -153,7 +153,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -218,6 +218,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -693,6 +703,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1207,7 +1257,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "ZEJU2YNip1mv/fShQtCR8U" hash2
+                password "ZEJU2YNip1mBXBoJBYHss1l4kcCU58PQ" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1220,7 +1270,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password ".tWKo7o8jc81MK9CLLH7F1VeM/OWSl0RiubfKa1GH/c" hash2
+                password ".tWKo7o8jc7qRmF5TS0uq1Fwq7kWs9T8/.AsNCr80yY" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1233,8 +1283,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "DXgTpkZ8fx7h6qGQcsZ2fUa8cZcWFoim" hash2
-                no access
+                password "DXgTpkZ8fx7h6qGQcsZ2fY93FdNNt/622Mjv4JWCy/U" hash2
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3391,6 +3441,7 @@ echo "Port Configuration"
         description "To_OAXAC207-AA-PUEMTX07-AB-107302"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -3405,6 +3456,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -3414,9 +3466,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4231,6 +4281,7 @@ echo "Port Configuration"
         description "PRUEBA27"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4245,6 +4296,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4254,9 +4306,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4791,6 +4841,7 @@ echo "Port Configuration"
         description "PRUEBA43"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4805,6 +4856,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4814,9 +4866,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4966,6 +5016,7 @@ echo "Port Configuration"
         description "OAXACA II 1/4/2 To PUEBLA AB1/4/16 GSM NOCHIXTLAN"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4980,6 +5031,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4989,9 +5041,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5001,6 +5051,7 @@ echo "Port Configuration"
         description "PRUEBA49"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5015,6 +5066,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5024,9 +5076,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5281,6 +5331,7 @@ echo "Port Configuration"
         description "OAX-7031_3542_Putla_de_Guerrero CDMA"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5295,6 +5346,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5304,9 +5356,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5316,6 +5366,7 @@ echo "Port Configuration"
         description "OAX-7066_Lindavista GSM"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5330,6 +5381,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5339,9 +5391,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7216,76 +7266,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        cpipe 179005 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            service-name "cpipe service-65 OAXAC2-OAX7002-AA (10.190.2.164)"
-            sap 1/3/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11158:179005 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179012 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/2/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11158:179012 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         cpipe 181245 customer 2 vc-type satop-e1 create
             description "Puebla.AB-OAXACAII-AA_255-255"
             service-mtu 1514
@@ -7379,181 +7359,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11158:181552 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181554 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/4/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11159:181554 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181555 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/4/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11159:181555 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181558 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/4/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11159:181558 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181559 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/1/5.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11159:181559 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181560 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            service-name "GSM NOCHIXTLAN"
-            sap 1/4/2.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11159:181560 create
                 ingress
                     no vc-label
                 exit
@@ -7731,8 +7536,8 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:50 2020 UTC
-B:OAXAC2-OAX7002-AA# show port 
+# Finished WED MAR 17 02:26:00 2021 UTC
+A:OAXAC2-OAX7002-AA# show port 
 
 ==============================================================================
 Ports on Slot 1
@@ -7749,7 +7554,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/4       Down  Yes  Link Up                                                
 1/1/4.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/5       Up    Yes  Link Up                                                
-1/1/5.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/1/5.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/6       Up    Yes  Link Up                                                
 1/1/6.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/1/7       Up    Yes  Link Up                                                
@@ -7797,7 +7602,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/12      Up    Yes  Link Up                                                
 1/2/12.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/2/13      Up    Yes  Link Up                                                
-1/2/13.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/2/13.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/2/14      Up    Yes  Link Up                                                
 1/2/14.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/2/15      Up    Yes  Link Up                                                
@@ -7829,7 +7634,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/3/12      Down  No   Down                                                   
 1/3/12.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/13      Up    Yes  Link Up                                                
-1/3/13.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/3/13.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/14      Up    Yes  Link Up                                                
 1/3/14.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/3/15      Up    Yes  Link Up                                                
@@ -7839,9 +7644,9 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/4/1       Down  Yes  Link Up                                                
 1/4/1.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/2       Up    Yes  Link Up                                                
-1/4/2.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/4/2.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/3       Up    Yes  Link Up                                                
-1/4/3.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/4/3.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/4       Up    Yes  Link Up                                                
 1/4/4.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/4/5       Up    Yes  Link Up                                                
@@ -7857,9 +7662,9 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/4/10      Up    Yes  Link Up                                                
 1/4/10.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/4/11      Up    Yes  Link Up                                                
-1/4/11.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/4/11.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/12      Up    Yes  Link Up                                                
-1/4/12.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/4/12.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/13      Up    Yes  Link Up                                                
 1/4/13.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/4/14      Up    Yes  Link Up                                                
@@ -7893,11 +7698,11 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 ------------------------------------------------------------------------------
 B/1         Up    No   Down    1514 1514    - netw null faste                 
 ==============================================================================
-B:OAXAC2-OAX7002-AA# show lag detail 
+A:OAXAC2-OAX7002-AA# show lag detail 
 
 ===============================================================================
 LAG Details
 ===============================================================================
 No Entries Found
 ===============================================================================
-B:OAXAC2-OAX7002-AA# 
+A:OAXAC2-OAX7002-AA# 

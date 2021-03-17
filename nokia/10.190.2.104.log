@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.104
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.104
 Warning: Permanently added '10.190.2.104' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.104's password: 
+ca168b@10.190.2.104's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 23 Minutes 
 A:NODOEC-PUE7014-GA# environment no more 
 A:NODOEC-PUE7014-GA# show chassis 
 ===============================================================================
@@ -42,7 +44,7 @@ A:NODOEC-PUE7014-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Wed Apr 24 06:59:13 PDT 2019 by builder in /builds/c/160B/R7-1/panos/main
 
-# Generated THU MAY 21 05:24:35 2020 UTC
+# Generated WED MAR 17 02:24:44 2021 UTC
 
 exit all
 configure
@@ -208,7 +210,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402c6255b"
             packet-size 9216
@@ -233,7 +235,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -243,20 +245,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -883,7 +885,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$HYw1zRgIciI7FuXMBsgxk.6gwjl0yHTTfsBqK0raPUfmJM6OHdSe."
+                password "$2y$10$rJe6O9kGSM6Lvmx.t4MW2.qxnTn.6UKf81uj6UDGBvUMQTg7hJ0gK"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -907,7 +909,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$UKOlreT6/1qjUAXr.qhL2.l6hctYiSykVRI.N8jfeEIGm6YLGED.m"
+                password "$2y$10$Os7FsXIN.0y4abyrnXp5M.87AKz7HwTl9O1W4sq9kuK8/zC1hTqsC"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -922,12 +924,32 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
+                    no member "default"
                     member "administrative"
-                    member "default"
                 exit
                 snmp
                     no authentication
                     no group
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$kzW1c5mUppLjpFauAidj..lTZitlZHO4kPW2I0bLVuKKMZDEyNw7."
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
                 exit
             exit
             snmp
@@ -4559,6 +4581,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4569,6 +4593,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4580,6 +4606,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -10940,8 +11166,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/1/4
-        shutdown
-        description "10-Gig Ethernet"
+        description "To-MXPUECUG0181RTBHCSRMOB01-Te0/0/0"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -10979,7 +11204,7 @@ echo "Port Configuration"
                     no amber-alarm-threshold
                     no red-alarm-threshold
                     resv-cbs default
-                    slope-policy "default"
+                    slope-policy "7x50-IPMEAN_ntw_wred"
                 exit
             exit
         exit
@@ -11002,7 +11227,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-network:unshaped"
             crc-monitor
                 no sd-threshold
                 no sf-threshold
@@ -11025,17 +11250,31 @@ echo "Port Configuration"
             egress
             exit
             network
-                queue-policy "default"
+                queue-policy "7x50-IPMEAN:standard"
                 no accounting-policy
                 no collect-stats
+                egress
+                    queue-group "IPMEAN-QG:10G" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no policer-control-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
             exit
             lldp
                 dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
+                    admin-status tx-rx
+                    notification
+                    tx-tlvs port-desc sys-name sys-desc sys-cap
                     no tunnel-nearest-bridge
-                    no tx-mgmt-address
+                    tx-mgmt-address system
                     port-id-subtype tx-local
                 exit
                 dest-mac nearest-non-tpmr
@@ -11060,7 +11299,7 @@ echo "Port Configuration"
                 no t392
             exit
             no down-on-internal-error
-            no hold-time
+            hold-time up 120 seconds
             eth-cfm
             exit
             min-frame-length 64
@@ -11161,6 +11400,7 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
+        no shutdown
     exit
     port 1/2/1
         shutdown
@@ -15574,6 +15814,53 @@ echo "LAG Configuration"
             exit
         exit
         no shutdown
+    exit
+    lag 4
+        shutdown
+        no mac
+        mode network
+        encap-type null
+        eth-cfm
+        exit
+        port-type standard
+        no port-weight-speed
+        no weight-threshold
+        port 1/1/4 priority 32768 sub-group 1
+        no dynamic-cost
+        lacp active administrative-key 32770
+        no port-threshold
+        lacp-mux-control coupled
+        lacp-xmit-interval fast
+        lacp-xmit-stdby
+        no selection-criteria
+        no hold-time
+        standby-signaling lacp
+        no per-link-hash
+        bfd
+            no disable-soft-reset-extension
+            family ipv4
+                shutdown
+                no bfd-on-distributing-only
+                no local-ip-address
+                max-admin-down-time 0
+                max-setup-time infinite
+                multiplier 3
+                receive-interval 100
+                no remote-ip-address
+                transmit-interval 100
+            exit
+            family ipv6
+                shutdown
+                no bfd-on-distributing-only
+                no local-ip-address
+                max-admin-down-time 0
+                max-setup-time infinite
+                multiplier 3
+                receive-interval 100
+                no remote-ip-address
+                transmit-interval 100
+            exit
+        exit
     exit
 #--------------------------------------------------
 echo "Forwarding Path Extensions Configuration"
@@ -20843,6 +21130,100 @@ echo "Router (Network Side) Configuration"
         exit
         admin-tags
         exit
+        interface "MXPUECUG0181RTBHCSRMOB01-Te0/0/1"
+            hold-time
+                no up ip
+                no down ip
+                no up ipv6
+                no down ipv6
+            exit
+            address 10.238.138.109/31 broadcast host-ones
+            network-domain "default"
+            no description
+            no enable-ingress-stats
+            no enable-mac-accounting
+            no tcp-mss
+            no ldp-sync-timer
+            cpu-protection 255
+            port lag-4
+            no unnumbered
+            no ptp-hw-assist
+            no urpf-check
+            eth-cfm
+            exit
+            no arp-timeout
+            arp-retry-timer 50
+            no arp-limit
+            no arp-learn-unsolicited
+            no arp-proactive-refresh
+            no allow-directed-broadcasts
+            tos-marking-state trusted
+            no strip-label
+            no proxy-arp-policy
+            no local-proxy-arp
+            no remote-proxy-arp
+            no mac
+            no ip-mtu
+            no ipv6
+            no urpf-selected-vprns
+            icmp
+                mask-reply
+                param-problem 100 10
+                redirects 100 10
+                ttl-expired 100 10
+                unreachables 100 10
+            exit
+            qos 1000 egress-port-redirect-group "IPMEAN-QG:10G" egress-instance 1
+            ingress
+                no filter
+            exit
+            egress
+                no filter
+            exit
+            cflowd-parameters
+            exit
+            no local-dhcp-server
+            dhcp
+                shutdown
+                no description
+                no gi-address
+                no python-policy
+                no relay-plain-bootp
+                no server
+                no trusted
+                option
+                    action keep
+                    circuit-id ascii-tuple
+                    no remote-id
+                    vendor-specific-option
+                        no client-mac-address
+                        no pool-name
+                        no port-id
+                        no service-id
+                        no string
+                        no system-id
+                    exit
+                exit
+            exit
+            load-balancing
+                no lsr-load-balancing
+                no teid-load-balancing
+                no egr-ip-load-balancing
+                no spi-load-balancing
+            exit
+            no qos-route-lookup
+            no lag-link-map-profile
+            no dist-cpu-protection
+            bfd 200 receive 200 multiplier 3 type cpm-np
+            if-attribute
+            exit
+            lag-per-link-hash class 1 weight 1
+            no vas-if-type
+            no ip-helper-address
+            no gre-termination
+            no untrusted
+            no shutdown
+        exit
         interface "To-LAPAZPUEBLA-GAM"
             hold-time
                 no up ip
@@ -21688,6 +22069,298 @@ echo "ISIS Configuration"
             no shutdown
         exit
 #--------------------------------------------------
+echo "ISIS (Inst: 10) Configuration"
+#--------------------------------------------------
+        isis 10
+            shutdown
+            no system-id
+            no router-id
+            level-capability level-1
+            no standard-multi-instance
+            no graceful-restart
+            area-id 49.0701.0101
+            no auth-keychain
+            no authentication-key
+            no authentication-type
+            authentication-check
+            csnp-authentication
+            no ignore-lsp-errors
+            no ignore-narrow-metric
+            lsp-lifetime 1200
+            lsp-mtu-size 1492
+            lsp-refresh-interval 600 half-lifetime enable
+            no database-export
+            no export-limit
+            no overload
+            no overload-on-boot
+            no overload-export-external
+            no overload-export-interlevel
+            no export
+            import "tag-csr"
+            hello-authentication
+            psnp-authentication
+            traffic-engineering
+            reference-bandwidth 1000000000
+            no default-route-tag
+            no disable-ldp-sync
+            no advertise-passive-only
+            no advertise-router-capability
+            no hello-padding
+            no ldp-over-rsvp
+            no advertise-tunnel-link
+            no ignore-attached-bit
+            no suppress-attached-bit
+            no all-l1isis
+            no all-l2isis
+            no iid-tlv-enable
+            no poi-tlv-enable
+            no prefix-attributes-tlv
+            no prefix-limit
+            loopfree-alternates
+                exclude
+                    no prefix-policy
+                exit
+                remote-lfa max-pq-cost 4261412864
+                    no node-protect
+                exit
+                ti-lfa max-sr-frr-labels 2
+                    no node-protect
+                exit
+            exit
+            no rib-priority high
+            ipv4-routing
+            no ipv6-routing
+            ipv4-multicast-routing native
+            no ipv6-multicast-routing
+            no multi-topology
+            no unicast-import-disable both
+            no multicast-import both
+            no strict-adjacency-check
+            entropy-label
+                no override-tunnel-elc
+            exit
+            igp-shortcut
+                shutdown
+                tunnel-next-hop
+                    family ipv4
+                        resolution disabled
+                        resolution-filter
+                            no rsvp
+                            no sr-te
+                        exit
+                    exit
+                    family ipv6
+                        resolution disabled
+                        resolution-filter
+                            no rsvp
+                            no sr-te
+                        exit
+                    exit
+                    family srv4
+                        resolution disabled
+                        resolution-filter
+                            no rsvp
+                            no sr-te
+                        exit
+                    exit
+                    family srv6
+                        resolution disabled
+                        resolution-filter
+                            no rsvp
+                            no sr-te
+                        exit
+                    exit
+                exit
+            exit
+            timers
+                lsp-wait 5000 lsp-initial-wait 10 lsp-second-wait 1000
+                spf-wait 10000 spf-initial-wait 1000 spf-second-wait 1000
+            exit
+            level 1
+                advertise-router-capability
+                no hello-padding
+                no lsp-mtu-size
+                no auth-keychain
+                no authentication-key
+                no authentication-type
+                csnp-authentication
+                no database-export-exclude
+                external-preference 160
+                hello-authentication
+                no loopfree-alternate-exclude
+                preference 15
+                psnp-authentication
+                wide-metrics-only
+                default-metric 10
+                default-ipv4-multicast-metric 10
+                default-ipv6-unicast-metric 10
+                default-ipv6-multicast-metric 10
+                bier
+                    shutdown
+                exit
+            exit
+            level 2
+                advertise-router-capability
+                no hello-padding
+                no lsp-mtu-size
+                no auth-keychain
+                no authentication-key
+                no authentication-type
+                csnp-authentication
+                no database-export-exclude
+                external-preference 165
+                hello-authentication
+                no loopfree-alternate-exclude
+                preference 18
+                psnp-authentication
+                no wide-metrics-only
+                default-metric 10
+                default-ipv4-multicast-metric 10
+                default-ipv6-unicast-metric 10
+                default-ipv6-multicast-metric 10
+                bier
+                    shutdown
+                exit
+            exit
+            segment-routing
+                shutdown
+                adj-sid-hold 15
+                entropy-label enable
+                no export-tunnel-table
+                no prefix-sid-range
+                no srlb
+                tunnel-table-pref 11
+                no tunnel-mtu
+                mapping-server
+                    shutdown
+                exit
+            exit
+            interface "system"
+                level-capability level-1/2
+                csnp-interval 10
+                no default-instance
+                no hello-auth-keychain
+                no hello-authentication-key
+                no hello-authentication-type
+                hello-authentication
+                no interface-type
+                no lfa-policy-map
+                lsp-pacing-interval 100
+                retransmit-interval 5
+                tag 102
+                no bfd-enable ipv4
+                no bfd-enable ipv6
+                no hello-padding
+                no loopfree-alternate-exclude
+                no ipv4-adjacency-sid
+                no ipv6-adjacency-sid
+                no ipv4-node-sid
+                no ipv6-node-sid
+                no ipv6-unicast-disable
+                no ipv4-multicast-disable
+                no ipv6-multicast-disable
+                no mesh-group
+                no passive
+                no load-balancing-weight
+                sid-protection
+                level 1
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    no metric
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                level 2
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    no metric
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                no shutdown
+            exit
+            interface "MXPUECUG0181RTBHCSRMOB01-Te0/0/1"
+                level-capability level-1/2
+                csnp-interval 10
+                no default-instance
+                no hello-auth-keychain
+                hello-authentication-key "2HXn0N3D7LlU0lnJZgNf0y2dL5l0T5A4zLfT30mWYH2b" hash2
+                hello-authentication-type message-digest
+                hello-authentication
+                interface-type point-to-point
+                no lfa-policy-map
+                lsp-pacing-interval 100
+                retransmit-interval 5
+                no tag
+                bfd-enable ipv4
+                no bfd-enable ipv6
+                no hello-padding
+                no loopfree-alternate-exclude
+                no ipv4-adjacency-sid
+                no ipv6-adjacency-sid
+                no ipv4-node-sid
+                no ipv6-node-sid
+                no ipv6-unicast-disable
+                no ipv4-multicast-disable
+                no ipv6-multicast-disable
+                no mesh-group
+                no passive
+                no load-balancing-weight
+                sid-protection
+                level 1
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    metric 100
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                level 2
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    no metric
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                no shutdown
+            exit
+        exit
+#--------------------------------------------------
 echo "ISIS (Inst: 11) Configuration"
 #--------------------------------------------------
         isis 11
@@ -22079,6 +22752,12 @@ echo "MPLS Configuration"
                 no te-metric
                 no shutdown
             exit
+            interface "MXPUECUG0181RTBHCSRMOB01-Te0/0/1"
+                no admin-group
+                no srlg-group
+                no te-metric
+                no shutdown
+            exit
             interface "To-MEXICO68-GAM"
                 admin-group "Enterprise"
                 admin-group "Fixed"
@@ -22145,6 +22824,21 @@ echo "RSVP Configuration"
                 no graceful-shutdown
                 no class-type-bw
                 no implicit-null-label
+                no te-up-threshold
+                no te-down-threshold
+            exit
+            interface "MXPUECUG0181RTBHCSRMOB01-Te0/0/1"
+                no authentication-key
+                no auth-keychain
+                hello-interval 3000
+                gr-helper disable
+                subscription 100
+                no refresh-reduction
+                no bfd-enable
+                no graceful-shutdown
+                no class-type-bw
+                no implicit-null-label
+                no shutdown
                 no te-up-threshold
                 no te-down-threshold
             exit
@@ -23233,9 +23927,9 @@ echo "LDP Configuration"
             fast-reroute
             no legacy-ipv4-lsr-interop
             no graceful-restart
-            no implicit-null-label
+            implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -23260,6 +23954,23 @@ echo "LDP Configuration"
                     no transport-address
                 exit
                 interface "To-MXPUEPUE0303RTBHCSRMOB-0/0/12" dual-stack
+                    bfd-enable ipv4
+                    ipv4
+                        no hello
+                        no keepalive
+                        no local-lsr-id
+                        fec-type-capability
+                            prefix-ipv4 enable
+                            prefix-ipv6 disable
+                            p2mp-ipv4 enable
+                            p2mp-ipv6 disable
+                        exit
+                        no transport-address
+                        no shutdown
+                    exit
+                    no shutdown
+                exit
+                interface "MXPUECUG0181RTBHCSRMOB01-Te0/0/1" dual-stack
                     bfd-enable ipv4
                     ipv4
                         no hello
@@ -25897,6 +26608,11 @@ echo "ISIS Configuration"
             no shutdown
         exit
 #--------------------------------------------------
+echo "ISIS (Inst: 10) Configuration"
+#--------------------------------------------------
+        isis 10
+        exit
+#--------------------------------------------------
 echo "ISIS (Inst: 11) Configuration"
 #--------------------------------------------------
         isis 11
@@ -25944,6 +26660,10 @@ echo "Policy Configuration"
 #--------------------------------------------------
         policy-options
             begin
+            prefix-list "CSR-R7"
+                prefix 10.240.0.0/16 longer
+                prefix 10.241.0.0/16 longer
+            exit
             prefix-list "system"
                 prefix 10.190.2.104/32 exact
             exit
@@ -25961,6 +26681,9 @@ echo "Policy Configuration"
             exit
             community "MTY-DB"
                 members "target:65000:935"
+            exit
+            community "EDGE-R7"
+                members "65000:17000"
             exit
             community "EDGE-R9"
                 members "65000:19000"
@@ -26019,6 +26742,9 @@ echo "Policy Configuration"
             community "ACCESO-ENLACE-INT"
                 members "target:65000:93005"
             exit
+            community "DATA-CENTER-CISCO"
+                expression "65000:1.400"
+            exit
             community "TLALNE-DA-INT-ENLACE"
                 members "target:65000:93004"
             exit
@@ -26026,6 +26752,300 @@ echo "Policy Configuration"
                 members "target:65000:93006"
             exit
             global-variables
+            exit
+            policy-statement "TO-CSR"
+                no description
+                entry 20
+                    description "Allow IPv4 communities from Edge Nodes"
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        community "EDGE-R9"
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                entry 30
+                    description "Exporta prefijos IPv4 asociados a las comunidades definidas para  Datacenter"
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        community "DATA-CENTER-CISCO"
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                entry 40
+                    description "Allow IPv4 communities from Edge Nodes R6"
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        community "EDGE-R7"
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                entry 60
+                    description "Allow City communities"
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        community "BH-PUE"
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                default-action accept
+                    no add-paths-send-limit
+                    no admin-tag-policy
+                    no advertise-label
+                    no bgp-leak
+                    no create-udp-tunnel
+                    no install-backup-path
+                    no as-path
+                    no as-path-prepend
+                    no community
+                    no origin
+                    no local-preference
+                    no preference
+                    no metric
+                    no multicast-redirection
+                    no damping
+                    no next-hop-self
+                    no next-hop
+                    no tag
+                    no type
+                    no aigp-metric
+                    no dest-class
+                    no source-class
+                    no origin-validation-state
+                    no resolve-static
+                    no sticky-ecmp
+                exit
             exit
             policy-statement "TO-PAG"
                 no description
@@ -26187,6 +27207,237 @@ echo "Policy Configuration"
                     no origin-validation-state
                     no resolve-static
                     no sticky-ecmp
+                exit
+            exit
+            policy-statement "tag-csr"
+                no description
+                entry 20
+                    no description
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        no community
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        tag 101
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                default-action drop
+                    no add-paths-send-limit
+                    no admin-tag-policy
+                    no advertise-label
+                    no bgp-leak
+                    no create-udp-tunnel
+                    no install-backup-path
+                    no as-path
+                    no as-path-prepend
+                    no community
+                    no origin
+                    no local-preference
+                    no preference
+                    no metric
+                    no multicast-redirection
+                    no damping
+                    no next-hop-self
+                    no next-hop
+                    no tag
+                    no type
+                    no aigp-metric
+                    no dest-class
+                    no source-class
+                    no origin-validation-state
+                    no resolve-static
+                    no sticky-ecmp
+                exit
+            exit
+            policy-statement "FROM-CSR"
+                no description
+                entry 500
+                    no description
+                    from
+                        no protocol
+                        no neighbor
+                        prefix-list "DEFAULT"
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        no community
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action drop
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
+                exit
+                entry 1000
+                    no description
+                    from
+                        no protocol
+                        no neighbor
+                        prefix-list "CSR-R7"
+                        no as-path
+                        no as-path-group
+                        no as-path-length
+                        no cluster-id
+                        no community
+                        no community-count
+                        no local-preference
+                        no metric
+                        no next-hop
+                        no origin
+                        no evpn-type
+                        no mvpn-type
+                        no path-type
+                        no type
+                        no area
+                        no level
+                        no external
+                        no flow-spec-dest
+                        no flow-spec-source
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no state
+                        no tag
+                        no family
+                        policy-variables
+                        exit
+                        no policy
+                        no origin-validation-state
+                    exit
+                    action accept
+                        no add-paths-send-limit
+                        no admin-tag-policy
+                        no advertise-label
+                        no bgp-leak
+                        no create-udp-tunnel
+                        no install-backup-path
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        local-preference 200
+                        no preference
+                        no metric
+                        no multicast-redirection
+                        no damping
+                        no fc
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                        no dest-class
+                        no source-class
+                        no origin-validation-state
+                        no resolve-static
+                        no sticky-ecmp
+                    exit
                 exit
             exit
             policy-statement "import-DAs"
@@ -28241,6 +29492,828 @@ echo "BGP Configuration"
                 no spf-wait
             exit
             no initial-send-delay-zero
+            group "CSR-BH"
+                no shutdown
+                description "To-CSR-BH"
+                family vpn-ipv4 route-target label-ipv4
+                no authentication-key
+                no connect-retry
+                no keepalive
+                no hold-time
+                no damping
+                no local-preference
+                loop-detect discard-route
+                no loop-detect-threshold
+                min-route-advertisement 5
+                no prefix-limit ipv4
+                no prefix-limit ipv6
+                no prefix-limit vpn-ipv4
+                no prefix-limit mcast-ipv4
+                no prefix-limit vpn-ipv6
+                no prefix-limit l2-vpn
+                no prefix-limit mvpn-ipv4
+                no prefix-limit mdt-safi
+                no prefix-limit ms-pw
+                no prefix-limit flow-ipv4
+                no prefix-limit route-target
+                no prefix-limit mcast-vpn-ipv4
+                no prefix-limit mvpn-ipv6
+                no prefix-limit flow-ipv6
+                no prefix-limit evpn
+                no prefix-limit mcast-ipv6
+                no prefix-limit label-ipv4
+                no prefix-limit label-ipv6
+                no prefix-limit bgp-ls
+                no prefix-limit mcast-vpn-ipv6
+                no prefix-limit sr-policy-ipv4
+                no med-out
+                next-hop-self
+                no aggregator-id-zero
+                no passive
+                type internal
+                no multihop
+                no preference
+                no label-preference
+                no remove-private
+                cluster 10.190.2.104
+                no disable-client-reflect
+                no disable-4byte-asn
+                no outbound-route-filtering
+                no vpn-apply-import
+                no vpn-apply-export
+                import "FROM-CSR"
+                export "TO-CSR"
+                no graceful-restart
+                no local-as
+                peer-as 65000
+                no path-mtu-discovery
+                no disable-capability-negotiation
+                no local-address
+                no disable-fast-external-failover
+                no disable-communities
+                no ttl-security
+                advertise-inactive
+                enable-peer-tracking
+                bfd-enable
+                no auth-keychain
+                no split-horizon
+                no third-party-nexthop
+                add-paths
+                    ipv4 send 2 receive
+                    no ipv6
+                    vpn-ipv4 send 2 receive
+                    no vpn-ipv6
+                    no mvpn-ipv4
+                    no mcast-vpn-ipv4
+                    no mvpn-ipv6
+                    label-ipv4 send 2 receive
+                    no label-ipv6
+                    no mcast-vpn-ipv6
+                exit
+                default-route-target
+                no aigp
+                error-handling
+                    no update-fault-tolerance
+                exit
+                no damp-peer-oscillations
+                no next-hop-unchanged
+                no enable-origin-validation
+                link-bandwidth
+                    no add-to-received-ebgp
+                    no accept-from-ebgp
+                    no send-to-ebgp
+                    no aggregate-used-paths
+                exit
+                no dynamic-neighbor-limit
+                no def-recv-evpn-encap
+                no enforce-first-as
+                no initial-send-delay-zero
+                no extended-nh-encoding
+                no advertise-ipv6-next-hops
+                no monitor
+                dynamic-neighbor
+                exit
+                neighbor 10.240.144.52
+                    shutdown
+                    description "MXPUEPUE0786RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf06+N2lyOg9/moXv9t0Wesr9a" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.53
+                    shutdown
+                    description "MXPUEPUE0764RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0w2BbusX+Jg8LIvapjcywO2Z" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.54
+                    shutdown
+                    description "MXPUEPUE0182RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0x2n8EbsVI4sXlySR90cyDQS" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.55
+                    shutdown
+                    description "MXPUEPUE1383RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0xr7niI3pBb8aU6YuX4iNEUb" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.56
+                    shutdown
+                    description "MXPUEPUE0751RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf02WOQHNU17rkjAw2h+EllEpa" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.57
+                    shutdown
+                    description "MXPUEPUE0752RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf05FO8J14n6STFpW8E0xg3B1p" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.58
+                    shutdown
+                    description "MXPUEPUE0184RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0/0TcINFKnoGquNHmKXr6CCZ" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.144.59
+                    shutdown
+                    description "MXPUEPUE0181RTBHCSRMOB01"
+                    no family
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0ys4SRUolNhVII087THrSLIo" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+            exit
             group "PAG-BH"
                 no shutdown
                 description "To-PAG-BH-Dual_Homed"
@@ -29060,7 +31133,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:24:41 2020 UTC
+# Finished WED MAR 17 02:24:51 2021 UTC
 A:NODOEC-PUE7014-GA# show port 
 
 ===============================================================================
@@ -29072,7 +31145,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/1         Up    Yes  Up      9212 9212    2 netw null xgige  10GBASE-LR  *
 1/1/2         Up    Yes  Up      9212 9212    2 netw null xgige  10GBASE-LR  *
 1/1/3         Up    Yes  Up      9212 9212    2 netw null xgige  10GBASE-LR  *
-1/1/4         Down  No   Down    9212 9212    - netw null xgige  
+1/1/4         Up    No   Down    9212 9212    4 netw null xgige  
 1/2/1         Down  No   Down    9212 9212    - netw null xgige  10GBASE-ER  *
 1/2/2         Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-ER  *
 1/2/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-ER  *
@@ -29138,7 +31211,7 @@ Details
 Lag-id              : 2                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 08/28/2019 00:52:19   Port Thres. Action   : down
+Thres. Last Cleared : 01/06/2021 02:20:12   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:c6:26:9d     Lag-IfIndex          : 1342177282
@@ -29195,7 +31268,7 @@ Details
 Lag-id              : 3                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 08/28/2019 00:52:19   Port Thres. Action   : down
+Thres. Last Cleared : 01/06/2021 02:20:12   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:c6:26:9e     Lag-IfIndex          : 1342177283
@@ -29241,5 +31314,56 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 4/1/2          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
 4/1/3          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
 4/1/3          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
+
+-------------------------------------------------------------------------------
+LAG 4
+-------------------------------------------------------------------------------
+Description        : N/A
+-------------------------------------------------------------------------------
+Details
+-------------------------------------------------------------------------------
+Lag-id              : 4                     Mode                 : network
+Adm                 : down                  Opr                  : down
+Thres. Exceeded Cnt : 0                     Port Threshold       : 0
+Thres. Last Cleared : 01/06/2021 02:20:12   Port Thres. Action   : down
+Dynamic Cost        : false                 Port Static Cost     : N/A
+Encap Type          : null                  
+Configured Address  : 0c:a4:02:c6:26:9f     Lag-IfIndex          : 1342177284
+Hardware Address    : 0c:a4:02:c6:26:9f
+Hold-time Down      : 0.0 sec               Port Type            : standard
+Per-Link-Hash       : disabled              
+Include-Egr-Hash-Cfg: disabled              Forced               : -
+Per FP Ing Queuing  : disabled              Per FP Egr Queuing   : disabled
+Per FP SAP Instance : disabled              
+Access Bandwidth    : N/A                   Access Booking Factor: 100
+Access Available BW : 0                     
+Access Booked BW    : 0                     
+LACP                : enabled               Mode                 : active
+LACP Transmit Intvl : fast                  LACP xmit stdby      : enabled
+Selection Criteria  : highest-count         Slave-to-partner     : disabled
+MUX control         : coupled               
+Subgrp hold time    : 0.0 sec               Remaining time       : 0.0 sec
+Subgrp selected     : 1                     Subgrp candidate     : -
+Subgrp count        : 1                     
+System Id           : 0c:a4:02:c6:25:5b     System Priority      : 32768
+Admin Key           : 32770                 Oper Key             : 32770
+Prtr System Id      : 00:00:00:00:00:00     Prtr System Priority : 32768
+Prtr Oper Key       : 0                     
+Standby Signaling   : lacp                  
+Port weight speed   : 0 gbps                Number/Weight Up     : 0
+Weight Threshold    : 0                     
+Weight Thres. Action: down                  
+Weight Static Cost  : N/A                   
+
+-------------------------------------------------------------------------------
+Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
+-------------------------------------------------------------------------------
+1/1/4          up      active    down    yes       1             -       32768
+
+-------------------------------------------------------------------------------
+Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
+-------------------------------------------------------------------------------
+1/1/4          actor     Yes   Yes   No    No    No    Yes   Yes      Yes
+1/1/4          partner   No    No    No    No    No    No    No       No
 ===============================================================================
 A:NODOEC-PUE7014-GA# 

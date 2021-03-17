@@ -1,10 +1,10 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.144
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.144
 Warning: Permanently added '10.190.0.144' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.144's password: 
+ca168b@10.190.0.144's password: 
 
 
 A:MOCMTX-LML169-AA# environment no more 
@@ -83,7 +83,7 @@ A:MOCMTX-LML169-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Thu Dec 15 12:41:38 EST 2016 by builder in /rel6.2/b1/R8/panos/main
 
-# Generated THU MAY 21 05:23:30 2020 UTC
+# Generated WED MAR 17 02:21:07 2021 UTC
 
 exit all
 configure
@@ -153,7 +153,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MDT
+            dst-zone MDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -218,6 +218,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -693,6 +703,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1207,7 +1257,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "ZEJU2YNip1mv/fShQtCR8U" hash2
+                password "ZEJU2YNip1mBXBoJBYHss1l4kcCU58PQ" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1220,7 +1270,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password ".tWKo7o8jc81MK9CLLH7F1VeM/OWSl0RiubfKa1GH/c" hash2
+                password ".tWKo7o8jc7qRmF5TS0uq1Fwq7kWs9T8/.AsNCr80yY" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1233,8 +1283,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "DXgTpkZ8fx7h6qGQcsZ2fUa8cZcWFoim" hash2
-                no access
+                password "DXgTpkZ8fx7h6qGQcsZ2fY93FdNNt/622Mjv4JWCy/U" hash2
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -2894,6 +2944,240 @@ echo "QoS Policy Configuration"
             default-fc "af"
             default-priority low
         exit
+        sap-ingress 200 create
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                mbs 12
+                cbs 12
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
+            dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
+            dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
+            dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 201 create
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                mbs 12
+                cbs 12
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
+            dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
+            dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
+            dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
+            default-fc "be"
+            default-priority low
+        exit
         sap-ingress 301 create
             description "OAM_7705"
             scope template
@@ -3082,32 +3366,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3164,32 +3453,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3204,9 +3498,22 @@ echo "QoS Policy Configuration"
                 high-prio-only default
                 slope-policy "default"
             exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -7055,13 +7362,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7097,13 +7404,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7139,13 +7446,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7181,13 +7488,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7223,13 +7530,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 10 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -7724,13 +8031,13 @@ echo "Service Configuration"
                     no option
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -7941,7 +8248,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:23:54 2020 UTC
+# Finished WED MAR 17 02:21:23 2021 UTC
 A:MOCMTX-LML169-AA# show port 
 
 ==============================================================================

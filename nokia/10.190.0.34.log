@@ -1,10 +1,10 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.34
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.34
 Warning: Permanently added '10.190.0.34' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.34's password: 
+ca168b@10.190.0.34's password: 
 
 
 A:SLRCOL-SON202-AA# environment no more 
@@ -83,7 +83,7 @@ A:SLRCOL-SON202-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Thu Dec 15 12:41:38 EST 2016 by builder in /rel6.2/b1/R8/panos/main
 
-# Generated THU MAY 21 05:25:35 2020 UTC
+# Generated WED MAR 17 02:22:09 2021 UTC
 
 exit all
 configure
@@ -153,11 +153,6 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MST
-                start first sunday april 02:00
-                end last sunday october 02:00
-                offset 60
-            exit
             zone MST -07
         exit
         thresholds
@@ -218,6 +213,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -693,6 +698,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1207,7 +1252,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "ZEJU2YNip1mv/fShQtCR8U" hash2
+                password "ZEJU2YNip1mBXBoJBYHss1l4kcCU58PQ" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1220,7 +1265,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password ".tWKo7o8jc81MK9CLLH7F1VeM/OWSl0RiubfKa1GH/c" hash2
+                password ".tWKo7o8jc7qRmF5TS0uq1Fwq7kWs9T8/.AsNCr80yY" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1233,8 +1278,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "DXgTpkZ8fx7h6qGQcsZ2fUa8cZcWFoim" hash2
-                no access
+                password "DXgTpkZ8fx7h6qGQcsZ2fY93FdNNt/622Mjv4JWCy/U" hash2
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -2320,6 +2365,38 @@ echo "QoS Policy Configuration"
             exit
             time-average-factor 3
         exit
+        slope-policy "COS2_queue_wred_policy1" create
+            description "wred_policy_COS2_hi_28_40_15_lo_24_40_15"
+            high-slope
+                start-avg 28
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            time-average-factor 3
+        exit
+        slope-policy "COS3_queue_wred_policy1" create
+            description "wred_policy_COS3_hi_24_40_15_lo_20_40_15"
+            high-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 20
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            time-average-factor 3
+        exit
         network-queue "default" create
             description "Default network queue QoS policy."
             queue 1 auto-expedite create
@@ -2809,6 +2886,240 @@ echo "QoS Policy Configuration"
             default-fc "af"
             default-priority low
         exit
+        sap-ingress 200 create
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                mbs 12
+                cbs 12
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
+            dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
+            dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
+            dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 201 create
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                mbs 12
+                cbs 12
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
+            dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
+            dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
+            dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
+            default-fc "be"
+            default-priority low
+        exit
         sap-ingress 301 create
             description "OAM_7705"
             scope template
@@ -2828,6 +3139,60 @@ echo "QoS Policy Configuration"
                 no de-1-out-profile
             exit
             default-fc "l2"
+            default-priority low
+        exit
+        sap-ingress 2000 create
+            description "Mobile:All_Traffic"
+            scope template
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs 12
+                high-prio-only default
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
+            default-fc "be"
             default-priority low
         exit
         sap-egress 1 create
@@ -2920,32 +3285,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3002,32 +3372,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3042,11 +3417,36 @@ echo "QoS Policy Configuration"
                 high-prio-only default
                 slope-policy "default"
             exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
+            fc nc create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+        exit
+        sap-egress 2000 create
+            description "Mobile:All_Traffic:standard_access_with_dot1p_marking"
+            scope template
+            queue 1 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
         exit
         mc-mlppp
             sap-egress 1 create
@@ -6792,8 +7192,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/6/8
-        shutdown
-        description "EXFO"
+        description "To-SRLGTA-IUSTB00989-WA-GE3/1/2-IMPLEMENTACION"
         ethernet
             dot1x
                 port-control force-auth
@@ -6863,6 +7262,7 @@ echo "Port Configuration"
             no ptp-asymmetry
         exit
         ddm-events
+        no shutdown
     exit
 #--------------------------------------------------
 echo "Redundancy Configuration"
@@ -6913,6 +7313,31 @@ echo "External Alarm Configuration"
 echo "Filter Configuration"
 #--------------------------------------------------
     filter 
+        ip-filter 2021 create
+            default-action drop
+            description "Data:dscp_marking" 
+            scope template
+            entry 100 create
+                no description
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-ip
+                    no src-port
+                    no tcp-syn
+                    no tcp-ack
+                    no icmp-type
+                    no icmp-code
+                exit 
+                no log
+                action drop
+            exit 
+        exit 
     exit 
 #--------------------------------------------------
 echo "Ethernet Tunnel Configuration"
@@ -7288,37 +7713,6 @@ echo "MPLS LSP Configuration"
             path "primary"
                 no shutdown
             exit
-            lsp "To-TIJMTX01-AA"
-                to 10.190.0.39
-                rsvp-resv-style se
-                adaptive
-                cspf
-                no include
-                no exclude
-                no adspec
-                fast-reroute facility
-                    no hop-limit
-                    node-protect
-                exit
-                hop-limit 255
-                retry-limit 0
-                retry-timer 30
-                no least-fill
-                metric 0
-                vprn-auto-bind include
-                bgp-transport-tunnel include
-                primary "primary"
-                    no hop-limit
-                    no adaptive
-                    no include
-                    no exclude
-                    record
-                    record-label
-                    no bandwidth
-                    no shutdown
-                exit
-                no shutdown
-            exit
             lsp "To-MORTVA-GA"
                 to 10.190.0.16
                 rsvp-resv-style se
@@ -7437,1532 +7831,6 @@ echo "Service Configuration"
             no metric
             no shutdown
         exit
-        sdp 11039 mpls create
-            no description
-            far-end 10.190.0.39
-            no ldp
-            no bgp-tunnel
-            lsp "To-TIJMTX01-AA"
-            signaling tldp
-            no vlan-vc-etype
-            no path-mtu
-            no adv-mtu-override
-            keep-alive
-                shutdown
-                hello-time 10
-                hold-down-time 10
-                max-drop-count 3
-                timeout 5
-                no message-length
-            exit
-            no metric
-            no shutdown
-        exit
-        cpipe 181392 customer 2 vc-type satop-e1 create
-            description "Troncal_722"
-            service-mtu 1514
-            service-name "cpipe service-5704 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/1/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181392 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181411 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-20"
-            service-mtu 1514
-            service-name "cpipe service-6131 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/4.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181411 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181412 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-21"
-            service-mtu 1514
-            service-name "cpipe service-6132 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/5.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181412 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181413 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-22"
-            service-mtu 1514
-            service-name "cpipe service-6133 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/6.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181413 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181414 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-23"
-            service-mtu 1514
-            service-name "cpipe service-6134 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/7.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181414 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181415 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-24"
-            service-mtu 1514
-            service-name "cpipe service-6135 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/8.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181415 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181416 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-25"
-            service-mtu 1514
-            service-name "cpipe service-6136 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181416 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181417 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-26"
-            service-mtu 1514
-            service-name "cpipe service-6137 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/10.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181417 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181418 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-27"
-            service-mtu 1514
-            service-name "cpipe service-6138 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181418 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181419 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-28"
-            service-mtu 1514
-            service-name "cpipe service-6139 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181419 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181420 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-29"
-            service-mtu 1514
-            service-name "cpipe service-5263 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181420 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181421 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-30"
-            service-mtu 1514
-            service-name "cpipe service-6101 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181421 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181422 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-31"
-            service-mtu 1514
-            service-name "cpipe service-6102 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181422 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181423 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-32"
-            service-mtu 1514
-            service-name "cpipe service-6140 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/2/16.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181423 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181424 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-33"
-            service-mtu 1514
-            service-name "cpipe service-6141 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181424 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181425 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-34"
-            service-mtu 1514
-            service-name "cpipe service-6142 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/2.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181425 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181426 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-35"
-            service-mtu 1514
-            service-name "cpipe service-6143 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181426 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181427 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-36"
-            service-mtu 1514
-            service-name "cpipe service-6144 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/4.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181427 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181428 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-37"
-            service-mtu 1514
-            service-name "cpipe service-6145 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/5.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181428 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181429 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-38"
-            service-mtu 1514
-            service-name "cpipe service-5718 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/6.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181429 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181430 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-39"
-            service-mtu 1514
-            service-name "cpipe service-5719 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/7.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181430 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181431 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-40"
-            service-mtu 1514
-            service-name "cpipe service-5720 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/8.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181431 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181435 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-44"
-            service-mtu 1514
-            service-name "cpipe service-6149 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181435 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181436 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-45"
-            service-mtu 1514
-            service-name "cpipe service-6150 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181436 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181437 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-46"
-            service-mtu 1514
-            service-name "cpipe service-6151 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181437 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181438 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-47"
-            service-mtu 1514
-            service-name "cpipe service-6152 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181438 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181439 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-48"
-            service-mtu 1514
-            service-name "cpipe service-6153 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/3/16.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181439 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181440 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-49"
-            service-mtu 1514
-            service-name "cpipe service-6154 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181440 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181441 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-50"
-            service-mtu 1514
-            service-name "cpipe service-6155 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/2.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181441 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181442 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-51"
-            service-mtu 1514
-            service-name "cpipe service-6156 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181442 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181443 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-52"
-            service-mtu 1514
-            service-name "cpipe service-6157 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/4.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181443 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181444 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-53"
-            service-mtu 1514
-            service-name "cpipe service-6158 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/5.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181444 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181445 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-54"
-            service-mtu 1514
-            service-name "cpipe service-6159 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/6.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181445 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181446 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-55"
-            service-mtu 1514
-            service-name "cpipe service-6160 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/7.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181446 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181447 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-56"
-            service-mtu 1514
-            service-name "cpipe service-6161 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/8.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181447 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181448 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-57"
-            service-mtu 1514
-            service-name "cpipe service-6162 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181448 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181449 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-58"
-            service-mtu 1514
-            service-name "cpipe service-6163 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/10.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181449 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181450 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-59"
-            service-mtu 1514
-            service-name "cpipe service-6164 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181450 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181451 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-60"
-            service-mtu 1514
-            service-name "cpipe service-6165 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181451 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181452 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-61"
-            service-mtu 1514
-            service-name "cpipe service-6166 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181452 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181453 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-62"
-            service-mtu 1514
-            service-name "cpipe service-6167 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181453 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181454 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-63"
-            service-mtu 1514
-            service-name "cpipe service-5916 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181454 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181455 customer 2 vc-type satop-e1 create
-            description "To-SLRC.AA-To-TIJUANA.AA-64"
-            service-mtu 1514
-            service-name "cpipe service-6168 SLRCOL-SON202-AA (10.190.0.34)"
-            sap 1/4/16.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11039:181455 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         vpls 259595 customer 2 create
             no description
             service-mtu 1514
@@ -9012,13 +7880,13 @@ echo "Service Configuration"
                     no option
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -9074,13 +7942,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9116,13 +7984,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9158,13 +8026,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9200,13 +8068,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9242,13 +8110,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9284,13 +8152,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9326,13 +8194,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9368,13 +8236,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9410,13 +8278,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9452,13 +8320,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9494,13 +8362,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9536,13 +8404,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9578,13 +8446,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9620,13 +8488,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9662,13 +8530,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9704,13 +8572,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9746,13 +8614,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 200 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9788,13 +8656,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9869,13 +8737,13 @@ echo "Service Configuration"
                     no option
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -9969,13 +8837,13 @@ echo "Service Configuration"
                     no option
                 exit
                 ingress
-                    qos 1 
+                    qos 301 
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -10186,7 +9054,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:56 2020 UTC
+# Finished WED MAR 17 02:22:26 2021 UTC
 A:SLRCOL-SON202-AA# show port 
 
 ==============================================================================
@@ -10199,7 +9067,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/1.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/1/2       Down  No   Down                                                   
 1/1/2.1     Down  No   Down    1514 1514    - accs cem  tdm                   
-1/1/3       Up    Yes  Link Up                                                
+1/1/3       Up    No   Down                                                   
 1/1/3.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/4       Down  No   Down                                                   
 1/1/4.1     Down  No   Down    1514 1514    - accs cem  tdm                   
@@ -10324,9 +9192,9 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/4/16      Up    Yes  Link Up                                                
 1/4/16.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
 1/5/1       Down  No   Down    1518 1518    - accs dotq faste                 
-1/5/2       Up    Yes  Up      1518 1518    - accs dotq faste  MDI            
+1/5/2       Up    No   Down    1518 1518    - accs dotq faste                 
 1/5/3       Down  No   Down    1518 1518    - accs dotq faste                 
-1/5/4       Up    Yes  Up      1514 1514    - accs null faste  MDX            
+1/5/4       Up    Yes  Up      1514 1514    - accs null faste  MDI            
 1/5/5       Down  No   Down    1514 1514    - accs null faste                 
 1/5/6       Down  No   Down    1518 1518    - accs dotq faste                 
 1/5/7       Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T     
@@ -10338,7 +9206,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/6/5       Down  No   Down    1514 1514    - accs null faste                 
 1/6/6       Down  No   Down    1514 1514    - accs null faste                 
 1/6/7       Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T     
-1/6/8       Down  No   Down    1514 1514    - accs null xcme                  
+1/6/8       Up    No   Down    1514 1514    - accs null xcme   GIGE-LX  40KM  
 
 ==============================================================================
 Ports on Slot A

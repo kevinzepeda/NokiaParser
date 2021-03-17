@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.21
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.21
 Warning: Permanently added '10.190.3.21' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.21's password: 
+ca168b@10.190.3.21's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
 A:CANMTX-ROO8018-AA# environment no more 
 A:CANMTX-ROO8018-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:CANMTX-ROO8018-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:24:27 2020 UTC
+# Generated WED MAR 17 02:29:04 2021 UTC
 
 exit all
 configure
@@ -107,17 +109,13 @@ echo "System Configuration"
                 authentication-check
                 no mda-timestamp
                 server 196.18.6.12 version 4
+                server 196.18.12.75 version 4
                 server 196.18.20.11 version 4 prefer
                 no shutdown
             exit
             sntp
                 shutdown
                 no broadcast-client
-            exit
-            dst-zone EST
-                start first sunday april 02:00
-                end last sunday october 02:00
-                offset 60
             exit
             zone EST -05
         exit
@@ -182,6 +180,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -662,6 +670,46 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 250
                         description "Permit SNMP from Src IP - ACC"
                         no src-port
@@ -1065,7 +1113,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$jRis5B24o3nuW1PqR.Ol2.Nl3esw7dwogXO2Cn3g1/AuErCYqWszG"
+                password "$2y$10$nAsfEZXryc1vUxjletz6s.RWLQb3jecSf..CPVwiUeyc8xdeMLLdm"
                 no access
                 no home-directory
                 no restricted-to-home
@@ -1078,7 +1126,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$83PNM/BTU.ax9C6fHJE7H.KNQeNcldFGqmfD31AWybuQsQECKKpTy"
+                password "$2y$10$Vznp7NX6Z09QblhytWk7M.hho1B0v1Ac62zpnYWdT89N3E5J2hJiW"
                 access console ftp 
                 no home-directory
                 no restricted-to-home
@@ -1104,8 +1152,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$7/9W/4nIZO7KVlwnsYvjQ.aBY9o.d5vc/P/.9CuO57fc/sBCZScl6"
-                no access
+                password "$2y$10$tSnlW5bYNmGQPYuep233s.sLJwSicraZVATPF2xrpX80bOwGAEEeu"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -11933,7 +11981,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:24:31 2020 UTC
+# Finished WED MAR 17 02:29:08 2021 UTC
 A:CANMTX-ROO8018-AA# show port 
 
 ===============================================================================

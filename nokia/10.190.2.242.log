@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.242
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.242
 Warning: Permanently added '10.190.2.242' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.242's password: 
+ca168b@10.190.2.242's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 21 Minutes 
 A:MERMTX-YUC8012-AA# environment no more 
 A:MERMTX-YUC8012-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:MERMTX-YUC8012-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:24:18 2020 UTC
+# Generated WED MAR 17 02:26:31 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -183,6 +185,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -658,6 +670,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1187,7 +1239,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$CqAoA0saaw0TvYi3FivaA.cg7bYvZWK2tShyiMwLOnlFAW30mWuRm"
+                password "$2y$10$ZDLozvgK3YQTYiHOfEbCM.vSHGmfABN.RzGe65MqvPpw24rjR4tIu"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1204,7 +1256,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$bYyHpV6g./uSqemcTRZSU.sdqvRqevXGLeY6EXMjtkg1sz64.SITO"
+                password "$2y$10$RRjCxoRLuZ.d6LPXDb6bU.pKQ70qy55TqnXwG5Z93jQ/2BoZpEaKG"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1221,8 +1273,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$H276OVbTs2hgV5DqGozeA.FFZgFW7BUShkLcqyiYqKVWTUTn.Hbai"
-                no access
+                password "$2y$10$dY38FCY8DQA0TXcBLslX6.ZvZZ0.EcJ7uPdeNYDfS9j8N2i8dTrbS"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -5762,6 +5814,7 @@ echo "Port Configuration"
         description "To-MERIDA.AA-SAMULA.AA_30"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5776,6 +5829,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5785,9 +5839,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -12127,42 +12179,6 @@ echo "Service Configuration"
                 ad-per-es-route-target evi-rt
             exit
         exit
-        cpipe 181184 customer 2 vc-type satop-e1 create
-            shutdown
-            description "prueba15"
-            service-mtu 1514
-            service-name "cpipe service-4671 MERMTX-YUC8012-AA (10.190.2.242)"
-            sap 1/2/15.1 create
-                shutdown
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-            exit
-            spoke-sdp 11206:181184 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
     exit
 #--------------------------------------------------
 echo "Filter Configuration"
@@ -12423,7 +12439,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:24:23 2020 UTC
+# Finished WED MAR 17 02:26:36 2021 UTC
 A:MERMTX-YUC8012-AA# show port 
 
 ===============================================================================
@@ -12493,7 +12509,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/14        Down  No   Down                                    
 1/2/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/15        Down  No   Down                                    
-1/2/15.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/2/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/16        Down  No   Down                                    
 1/2/16.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/1         Down  No   Down                                    

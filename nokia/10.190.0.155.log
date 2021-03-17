@@ -1,13 +1,15 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.155
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.155
 Warning: Permanently added '10.190.0.155' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.155's password: 
+ca168b@10.190.0.155's password: 
 
-*A:CULMTX-CUL011-AA# environment no more 
-*A:CULMTX-CUL011-AA# show chassis 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 27 Minutes 
+A:CULMTX-CUL011-AA# environment no more 
+A:CULMTX-CUL011-AA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -33,12 +35,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-*A:CULMTX-CUL011-AA# admin display-config detail 
+A:CULMTX-CUL011-AA# admin display-config detail 
 # TiMOS-B-9.0.R6 both/hops Nokia 7705 SAR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:30:41 2020 UTC
+# Generated WED MAR 17 02:21:13 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone MDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone MST -07
@@ -183,6 +185,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -658,6 +670,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1187,7 +1239,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$PZSPC9k0/NFb7pDwCKGDo.vGw/w3c2qIstO60TpO2Dc93gJC.EeFK"
+                password "$2y$10$kyeA7KWvfYy98HjaDkwW6.27gmUNkPwiwLVuQyer1fDPig/pB4KAS"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1204,7 +1256,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$83PNM/BTU.ax9C6fHJE7H.xqKkR0s3srsJiU4JCzJ3rj.7/9yWwam"
+                password "$2y$10$LyZQi6tqJEJ06d/CRca5c.FjJZjgRiT7rKkDJVuu9pcyDI1guGdc2"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1221,8 +1273,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$fo7ZHOutPeJxRFCOerlas.AspajYHEhpIFSiAn7AjPLExL1dRP.Wa"
-                no access
+                password "$2y$10$Ujm9ZP3DXE4dIWxhIgyJg.5TtCL8cYTk.V6CosjB5i0xEhkmfULk2"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3661,6 +3713,242 @@ echo "QoS Policy Configuration"
             default-fc "af"
             default-priority low
         exit
+        sap-ingress 200 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 201 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
         sap-ingress 301 create
             no policy-name
             description "OAM_7705"
@@ -3790,32 +4078,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3880,32 +4173,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3923,9 +4221,23 @@ echo "QoS Policy Configuration"
                 no packet-byte-offset
                 slope-policy "default"
             exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -4536,6 +4848,7 @@ echo "Port Configuration"
         description "To-OBREGON_AA_CULIACAN_AA_01"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4550,6 +4863,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4559,9 +4873,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4606,6 +4918,7 @@ echo "Port Configuration"
         description "To-OBREGON_AA_CULIACAN_AA_03"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4620,6 +4933,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4629,9 +4943,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4816,6 +5128,7 @@ echo "Port Configuration"
         description "To-OBREGON_AA_CULIACAN_AA_09"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4830,6 +5143,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4839,9 +5153,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4956,6 +5268,7 @@ echo "Port Configuration"
         description "To-OBREGON_AA_CULIACAN_AA_13"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4970,6 +5283,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4979,9 +5293,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5096,6 +5408,7 @@ echo "Port Configuration"
         description "GUAYGUAYMOO:01"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5110,6 +5423,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5119,9 +5433,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5617,9 +5929,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/2/16
+        shutdown
         description "EMP-512_Zaragoza"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5634,6 +5948,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5643,19 +5958,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/3/1
         shutdown
         description "NAVONAVOMOO"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5670,6 +5983,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5679,9 +5993,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5691,6 +6003,7 @@ echo "Port Configuration"
         description "MORENAVOLDB"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5705,6 +6018,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5714,9 +6028,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5936,6 +6248,7 @@ echo "Port Configuration"
         description "NAVONAVOMOI"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5950,6 +6263,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5959,9 +6273,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -5971,6 +6283,7 @@ echo "Port Configuration"
         description "YANENAVOLDB"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5985,6 +6298,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5994,9 +6308,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7126,6 +7438,7 @@ echo "Port Configuration"
         description "To_CULIACAN_AA-To_GUAMUCHIL_AA-27"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7140,6 +7453,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7149,9 +7463,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7196,6 +7508,7 @@ echo "Port Configuration"
         description "To_CULIACAN_AA-To_GUAMUCHIL_AA-29"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7210,6 +7523,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7219,9 +7533,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7231,6 +7543,7 @@ echo "Port Configuration"
         description "To_CULIACAN_AA-To_GUAMUCHIL_AA-30"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7245,6 +7558,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7254,9 +7568,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7266,6 +7578,7 @@ echo "Port Configuration"
         description "To_CULIACAN_AA-To_GUAMUCHIL_AA-31"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7280,6 +7593,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7289,9 +7603,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7700,6 +8012,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7709,7 +8022,6 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
                 no shutdown
             exit
@@ -7721,6 +8033,7 @@ echo "Port Configuration"
         description "To-SW_Culiacan-Hermosillo"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7735,6 +8048,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7744,9 +8058,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7756,6 +8068,7 @@ echo "Port Configuration"
         description "To-SW_Culiacan-Hermosillo"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7770,6 +8083,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7779,9 +8093,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7791,6 +8103,7 @@ echo "Port Configuration"
         description "To-SW_Culiacan-Hermosillo"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -7805,6 +8118,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -7814,9 +8128,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7927,6 +8239,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/7/2
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -7959,9 +8272,9 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/3
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -7994,7 +8307,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/4
         shutdown
@@ -8032,6 +8344,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/7/5
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -8064,12 +8377,13 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/6
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8084,6 +8398,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8093,13 +8408,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/7
         shutdown
@@ -8137,9 +8449,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/7/8
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8154,6 +8468,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8163,18 +8478,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/9
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8189,6 +8503,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8198,13 +8513,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/10
         shutdown
@@ -8242,9 +8554,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/7/11
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8259,6 +8573,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8268,18 +8583,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/12
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8294,6 +8608,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8303,13 +8618,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/13
         shutdown
@@ -8347,9 +8659,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/7/14
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8364,6 +8678,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8373,18 +8688,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/15
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8399,6 +8713,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8408,13 +8723,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/7/16
         shutdown
@@ -8452,9 +8764,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/8/1
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8469,6 +8783,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8478,15 +8793,13 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/2
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -8504,6 +8817,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8513,13 +8827,11 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
                 no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/3
         shutdown
@@ -8557,9 +8869,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/8/4
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8574,6 +8888,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8583,13 +8898,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/5
         shutdown
@@ -8662,9 +8974,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/8/7
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8679,6 +8993,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8688,18 +9003,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/8
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8714,6 +9028,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8723,13 +9038,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/9
         shutdown
@@ -8767,9 +9079,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/8/10
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8784,6 +9098,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8793,18 +9108,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/11
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8819,6 +9133,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8828,13 +9143,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/12
         shutdown
@@ -8872,9 +9184,11 @@ echo "Port Configuration"
         exit
     exit
     port 1/8/13
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8889,6 +9203,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8898,18 +9213,17 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/14
+        shutdown
         description "DS1/E1"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8924,6 +9238,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8933,13 +9248,10 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/8/15
         shutdown
@@ -9082,6 +9394,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/9/3
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_02-CUL008-EVDO1"
         tdm
             e1 
@@ -9114,9 +9427,9 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/4
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_03-CUL008-EVDO2"
         tdm
             e1 
@@ -9149,7 +9462,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/5
         shutdown
@@ -9187,6 +9499,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/9/6
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_05-CUL014-EVDO1"
         tdm
             e1 
@@ -9219,9 +9532,9 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/7
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_06-CUL014-EVDO2"
         tdm
             e1 
@@ -9254,7 +9567,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/8
         shutdown
@@ -9292,6 +9604,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/9/9
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_08-COWCUL10-EVDO1"
         tdm
             e1 
@@ -9324,7 +9637,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/10
         description "To-CULIACAN.AA-DIAMANTE.AA_09-COWCUL10-EVDO2"
@@ -9397,6 +9709,7 @@ echo "Port Configuration"
         exit
     exit
     port 1/9/12
+        shutdown
         description "To-CULIACAN.AA-DIAMANTE.AA_11-CUL056-EVDO1"
         tdm
             e1 
@@ -9429,7 +9742,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/9/13
         description "To-CULIACAN.AA-DIAMANTE.AA_12-CUL056-EVDO2"
@@ -9747,7 +10059,8 @@ echo "Port Configuration"
         exit
     exit
     port 1/10/6
-        description "HERTGARU03IFIO / MXCULM01MGW01    FN=1,SN=3,PN=9"
+        shutdown
+        description "HERTGARU03IFIO / MXCULM01MGW01    APAGADO EL 16/12/2020 CRQ72145"
         tdm
             e1 
                 framing e1-unframed
@@ -9779,9 +10092,9 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/10/7
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -9814,9 +10127,9 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/10/8
+        shutdown
         description "DS1/E1"
         tdm
             e1 
@@ -9849,7 +10162,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/10/9
         description "DS1/E1"
@@ -13556,186 +13868,6 @@ echo "Service Configuration"
                 ad-per-es-route-target evi-rt
             exit
         exit
-        cpipe 102041 customer 2 vc-type satop-e1 create
-            description "PTN-OBRMTX-MORECDOLDB-01"
-            service-mtu 1514
-            no service-name
-            sap 1/6/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:102041 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 102042 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_OBREGON_AA-30"
-            service-mtu 1514
-            no service-name
-            sap 1/6/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:102042 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 102043 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_OBREGON_AA-31"
-            service-mtu 1514
-            no service-name
-            sap 1/6/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:102043 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 102044 customer 2 vc-type satop-e1 create
-            description "TO-HERMTX-HMO404-AA"
-            service-mtu 1514
-            no service-name
-            sap 1/6/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11130:102044 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 169534 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_GUAMUCHIL_AA-27"
-            service-mtu 1514
-            no service-name
-            sap 1/5/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11138:169534 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         cpipe 169535 customer 2 vc-type satop-e1 create
             description "To_CULIACAN_AA-To_GUAMUCHIL_AA-28"
             service-mtu 1514
@@ -13759,114 +13891,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11138:169535 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 169536 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_GUAMUCHIL_AA-29"
-            service-mtu 1514
-            no service-name
-            sap 1/5/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11138:169536 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 169537 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_GUAMUCHIL_AA-30"
-            service-mtu 1514
-            no service-name
-            sap 1/5/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11138:169537 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 169538 customer 2 vc-type satop-e1 create
-            description "To_CULIACAN_AA-To_GUAMUCHIL_AA-31"
-            service-mtu 1514
-            no service-name
-            sap 1/5/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11138:169538 create
                 ingress
                     no vc-label
                 exit
@@ -13916,330 +13940,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        cpipe 179487 customer 2 vc-type satop-e1 create
-            description "OBREOBREMOO_01"
-            service-mtu 1514
-            no service-name
-            sap 1/1/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:179487 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179489 customer 2 vc-type satop-e1 create
-            description "To-OBREGON_AA_CULIACAN_AA_03"
-            service-mtu 1514
-            no service-name
-            sap 1/1/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:179489 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179495 customer 2 vc-type satop-e1 create
-            description "OBREOBREMOO_02"
-            service-mtu 1514
-            no service-name
-            sap 1/1/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:179495 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179499 customer 2 vc-type satop-e1 create
-            description "OBREOBREMOI_01"
-            service-mtu 1514
-            no service-name
-            sap 1/1/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11141:179499 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179503 customer 2 vc-type satop-e1 create
-            description "GUAYGUAYMOO:01"
-            service-mtu 1514
-            no service-name
-            sap 1/2/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 15 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11137:179503 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179519 customer 2 vc-type satop-e1 create
-            description "NAVONAVOMOO"
-            service-mtu 1514
-            no service-name
-            sap 1/3/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11145:179519 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179520 customer 2 vc-type satop-e1 create
-            description "MORENAVOLDB"
-            service-mtu 1514
-            no service-name
-            sap 1/3/2.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11145:179520 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179527 customer 2 vc-type satop-e1 create
-            description "NAVONAVOMOI"
-            service-mtu 1514
-            no service-name
-            sap 1/3/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11145:179527 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179528 customer 2 vc-type satop-e1 create
-            description "YANENAVOLDB"
-            service-mtu 1514
-            no service-name
-            sap 1/3/10.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11145:179528 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         cpipe 179602 customer 2 vc-type satop-e1 create
             description "To-SW_Culiacan-Hermosillo"
             service-mtu 1514
@@ -14263,618 +13963,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11130:179602 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181292 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/6.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181292 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181294 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/8.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181294 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181295 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181295 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181297 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181297 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181298 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181298 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181300 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181300 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181301 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181301 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181303 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/1.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181303 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181304 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/2.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181304 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181306 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/4.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181306 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181309 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/7.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181309 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181310 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/8.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181310 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181312 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/10.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181312 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181313 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181313 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181315 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/13.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181315 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 181316 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/8/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:181316 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 195011 customer 2 vc-type satop-e1 create
-            description "Abastos Culiacan Cul-044"
-            service-mtu 1514
-            no service-name
-            sap 1/2/16.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 110
-                exit
-                egress
-                    qos 110
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11151:195011 create
                 ingress
                     no vc-label
                 exit
@@ -15069,8 +14157,8 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:30:46 2020 UTC
-*A:CULMTX-CUL011-AA# show port 
+# Finished WED MAR 17 02:21:18 2021 UTC
+A:CULMTX-CUL011-AA# show port 
 
 ===============================================================================
 Ports on Slot 1
@@ -15079,11 +14167,11 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 1/1/1         Down  No   Down                                    
-1/1/1.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/1/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/2         Down  No   Down                                    
 1/1/2.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/3         Down  No   Down                                    
-1/1/3.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/1/3.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/4         Down  No   Down                                    
 1/1/4.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/5         Down  No   Down                                    
@@ -15095,7 +14183,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/8         Down  No   Down                                    
 1/1/8.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/9         Down  No   Down                                    
-1/1/9.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/1/9.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/10        Down  No   Down                                    
 1/1/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/11        Down  No   Down                                    
@@ -15103,7 +14191,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/12        Down  No   Down                                    
 1/1/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/13        Down  No   Down                                    
-1/1/13.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/1/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/14        Down  No   Down                                    
 1/1/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/1/15        Down  No   Down                                    
@@ -15111,7 +14199,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/16        Up    Yes  Link Up                                 
 1/1/16.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
 1/2/1         Down  No   Down                                    
-1/2/1.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/2/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/2         Down  No   Down                                    
 1/2/2.1       Up    No   Down    1514 1514    - accs cem  tdm    
 1/2/3         Down  No   Down                                    
@@ -15140,12 +14228,12 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/15        Down  No   Down                                    
 1/2/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/2/16        Up    Yes  Link Up                                 
-1/2/16.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/2/16        Down  No   Down                                    
+1/2/16.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/1         Down  No   Down                                    
-1/3/1.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/3/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/2         Down  No   Down                                    
-1/3/2.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/3/2.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/3         Down  No   Down                                    
 1/3/3.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/4         Down  No   Down                                    
@@ -15159,9 +14247,9 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/3/8         Down  No   Down                                    
 1/3/8.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/9         Down  No   Down                                    
-1/3/9.1       Up    No   Down    1514 1514    - accs cem  tdm    
+1/3/9.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/10        Down  No   Down                                    
-1/3/10.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/3/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/11        Down  No   Down                                    
 1/3/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/3/12        Down  No   Down                                    
@@ -15227,15 +14315,15 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/5/10        Down  No   Down                                    
 1/5/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/11        Down  No   Down                                    
-1/5/11.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/5/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/12        Up    Yes  Link Up                                 
 1/5/12.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
 1/5/13        Down  No   Down                                    
-1/5/13.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/5/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/14        Down  No   Down                                    
-1/5/14.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/5/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/15        Down  No   Down                                    
-1/5/15.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/5/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/16        Up    Yes  Link Up                                 
 1/5/16.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
 1/6/1         Up    Yes  Link Up                                 
@@ -15259,77 +14347,77 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/6/10        Down  No   Down                                    
 1/6/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/11        Down  No   Down                                    
-1/6/11.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/6/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/12        Down  No   Down                                    
-1/6/12.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/6/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/13        Down  No   Down                                    
-1/6/13.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/6/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/14        Down  No   Down                                    
-1/6/14.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/6/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/15        Down  No   Down                                    
 1/6/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/6/16        Up    Yes  Link Up                                 
 1/6/16.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
 1/7/1         Down  No   Down                                    
 1/7/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/2         Up    Yes  Link Up                                 
+1/7/2         Down  No   Down                                    
 1/7/2.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/3         Up    Yes  Link Up                                 
+1/7/3         Down  No   Down                                    
 1/7/3.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/4         Down  No   Down                                    
 1/7/4.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/5         Up    Yes  Link Up                                 
+1/7/5         Down  No   Down                                    
 1/7/5.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/6         Up    Yes  Link Up                                 
-1/7/6.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/7/6         Down  No   Down                                    
+1/7/6.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/7         Down  No   Down                                    
 1/7/7.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/8         Up    Yes  Link Up                                 
-1/7/8.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/7/9         Up    Yes  Link Up                                 
-1/7/9.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/7/8         Down  No   Down                                    
+1/7/8.1       Down  No   Down    1514 1514    - accs cem  tdm    
+1/7/9         Down  No   Down                                    
+1/7/9.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/10        Down  No   Down                                    
 1/7/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/11        Up    Yes  Link Up                                 
-1/7/11.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/7/12        Up    Yes  Link Up                                 
-1/7/12.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/7/11        Down  No   Down                                    
+1/7/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
+1/7/12        Down  No   Down                                    
+1/7/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/13        Down  No   Down                                    
 1/7/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/7/14        Up    Yes  Link Up                                 
-1/7/14.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/7/15        Up    Yes  Link Up                                 
-1/7/15.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/7/14        Down  No   Down                                    
+1/7/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
+1/7/15        Down  No   Down                                    
+1/7/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/16        Down  No   Down                                    
 1/7/16.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/8/1         Up    Yes  Link Up                                 
-1/8/1.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/8/2         Up    Yes  Link Up                                 
-1/8/2.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/8/1         Down  No   Down                                    
+1/8/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
+1/8/2         Down  No   Down                                    
+1/8/2.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/3         Down  No   Down                                    
 1/8/3.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/8/4         Up    Yes  Link Up                                 
-1/8/4.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/8/4         Down  No   Down                                    
+1/8/4.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/5         Down  No   Down                                    
 1/8/5.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/6         Down  No   Down                                    
 1/8/6.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/8/7         Up    Yes  Link Up                                 
-1/8/7.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/8/8         Up    Yes  Link Up                                 
-1/8/8.1       Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/8/7         Down  No   Down                                    
+1/8/7.1       Down  No   Down    1514 1514    - accs cem  tdm    
+1/8/8         Down  No   Down                                    
+1/8/8.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/9         Down  No   Down                                    
 1/8/9.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/8/10        Up    Yes  Link Up                                 
-1/8/10.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/8/11        Up    Yes  Link Up                                 
-1/8/11.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/8/10        Down  No   Down                                    
+1/8/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
+1/8/11        Down  No   Down                                    
+1/8/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/12        Down  No   Down                                    
 1/8/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/8/13        Up    Yes  Link Up                                 
-1/8/13.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/8/14        Up    Yes  Link Up                                 
-1/8/14.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
+1/8/13        Down  No   Down                                    
+1/8/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
+1/8/14        Down  No   Down                                    
+1/8/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/15        Down  No   Down                                    
 1/8/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/8/16        Down  No   Down                                    
@@ -15338,25 +14426,25 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/9/1.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/2         Down  No   Down                                    
 1/9/2.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/3         Up    Yes  Link Up                                 
+1/9/3         Down  No   Down                                    
 1/9/3.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/4         Up    Yes  Link Up                                 
+1/9/4         Down  No   Down                                    
 1/9/4.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/5         Down  No   Down                                    
 1/9/5.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/6         Up    Yes  Link Up                                 
+1/9/6         Down  No   Down                                    
 1/9/6.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/7         Up    Yes  Link Up                                 
+1/9/7         Down  No   Down                                    
 1/9/7.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/8         Down  No   Down                                    
 1/9/8.1       Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/9         Up    Yes  Link Up                                 
+1/9/9         Down  No   Down                                    
 1/9/9.1       Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/10        Up    Yes  Link Up                                 
 1/9/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/11        Down  No   Down                                    
 1/9/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/9/12        Up    Yes  Link Up                                 
+1/9/12        Down  No   Down                                    
 1/9/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/9/13        Up    Yes  Link Up                                 
 1/9/13.1      Down  No   Down    1514 1514    - accs cem  tdm    
@@ -15376,11 +14464,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/10/4.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/10/5        Down  No   Down                                    
 1/10/5.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/10/6        Up    Yes  Link Up                                 
-1/10/6.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
-1/10/7        Up    Yes  Link Up                                 
+1/10/6        Down  No   Down                                    
+1/10/6.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/10/7        Down  No   Down                                    
 1/10/7.1      Down  No   Down    1514 1514    - accs cem  tdm    
-1/10/8        Up    Yes  Link Up                                 
+1/10/8        Down  No   Down                                    
 1/10/8.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/10/9        Up    Yes  Link Up                                 
 1/10/9.1      Up    Yes  Up      1514 1514    - accs cem  tdm    
@@ -15431,11 +14519,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 B/1           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-*A:CULMTX-CUL011-AA# show lag detail 
+A:CULMTX-CUL011-AA# show lag detail 
 
 ===============================================================================
 LAG Details
 ===============================================================================
 No Entries Found
 ===============================================================================
-*A:CULMTX-CUL011-AA# 
+A:CULMTX-CUL011-AA# 

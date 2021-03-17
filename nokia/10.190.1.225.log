@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.1.225
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.1.225
 Warning: Permanently added '10.190.1.225' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.1.225's password: 
+ca168b@10.190.1.225's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 24 Minutes 
 A:TLAJOM-JAL5074-AA# environment no more 
 A:TLAJOM-JAL5074-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:TLAJOM-JAL5074-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:23:44 2020 UTC
+# Generated WED MAR 17 02:23:56 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$Wk0BXbMHIV6JoVx75VFj..QlP54U5e1P/rZONoXk1adeMU/SbnmJe"
+                password "$2y$10$0nwW5l8cCPRgQ3XDN41yM.7dkJjV.RoCtNjsfSGB5GAp2NL/g36CC"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$DkfDCuDOeMCycfK91QyO2.aenIGV.SttZCTHQBgqEsJz5sGL0Z812"
+                password "$2y$10$Qs46tZLBYjds88J30Isdw.yBDzrAJJMudUjItHcuHn2ldtOx2qHmq"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1193,8 +1245,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$uvfsCMxMZa0EWD18Gc9Dk.2Df9G2dvwb9UsFSyPaM/J/4znZzK/v."
-                no access
+                password "$2y$10$ssdaiM6Zu.LOyp76Ze56Q.vx5QZBjWI313x/g1d5bB014q5Is/cXW"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -7584,55 +7636,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        epipe 555235 customer 2 create
-            description "Servicio GSM PCS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio GSM PCS HGDL1046"
-            sap 1/3/3:2126 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:555235 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         epipe 555242 customer 2 create
             description "To-JALTLZ2917-3G-AWS"
             service-mtu 1514
@@ -8027,13 +8030,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -8220,13 +8223,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -11813,13 +11816,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 10
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 10
+                    qos 200
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -20688,545 +20691,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        epipe 90004094 customer 2 create
-            description "Servicio 3G AWS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio 3G AWS HGDL1046"
-            sap 1/3/3:1026 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004094 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004095 customer 2 create
-            description "Servicio LTE AWS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio LTE AWS HGDL1046"
-            sap 1/3/3:1226 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004095 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004096 customer 2 create
-            description "Servicio O&M AWS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio O&M AWS HGDL1046"
-            sap 1/3/3:1426 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004096 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004097 customer 2 create
-            description "Servicio 3G PCS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio 3G PCS HGDL1046"
-            sap 1/3/3:1626 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004097 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004098 customer 2 create
-            description "Servicio O&M PCS HGDL1046"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio O&M PCS HGDL1046"
-            sap 1/3/3:1826 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 301
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 301
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004098 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004106 customer 2 create
-            description "Servicio 3G AWS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            no service-name
-            sap 1/3/3:1028 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004106 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004107 customer 2 create
-            description "Servicio LTE AWS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio LTE AWS JALTLZ2015"
-            sap 1/3/3:1228 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004107 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004108 customer 2 create
-            description "Servicio O&M AWS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio O&M AWS JALTLZ2015"
-            sap 1/3/3:1428 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004108 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004109 customer 2 create
-            description "Servicio 3G PCS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            no service-name
-            sap 1/3/3:1628 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004109 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004110 customer 2 create
-            description "Servicio O&M PCS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            service-name "Servicio O&M PCS JALTLZ2015"
-            sap 1/3/3:1828 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 301
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 301
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004110 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        epipe 90004111 customer 2 create
-            description "Servicio GSM PCS JALTLZ2015"
-            service-mtu 1514
-            load-balancing
-                no per-service-hashing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            no service-name
-            sap 1/3/3:2128 create
-                no description
-                eth-cfm
-                    no hold-mep-up-on-failure
-                exit
-                ingress
-                    qos 200
-                    no match-qinq-dot1p
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                egress
-                    qos 200
-                    no qinq-mark-top-only
-                    scheduler-mode 4-priority
-                    no agg-rate-limit
-                exit
-                no collect-stats
-                no accounting-policy
-                no loopback
-                no shutdown
-            exit
-            spoke-sdp 11158:90004111 vc-type ether create
-                no vlan-vc-tag
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                pw-status-signaling
-                no entropy-label
-                no control-word
-                eth-cfm
-                exit
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         epipe 90004112 customer 2 create
             description "Servicio 3G AWS JAL-5198"
             service-mtu 1514
@@ -22405,8 +21869,6 @@ echo "Service Configuration"
         exit
         epipe 555229 customer 2 create
         exit
-        epipe 555235 customer 2 create
-        exit
         epipe 555242 customer 2 create
         exit
         epipe 555243 customer 2 create
@@ -22568,28 +22030,6 @@ echo "Service Configuration"
         epipe 90004091 customer 2 create
         exit
         epipe 90004092 customer 2 create
-        exit
-        epipe 90004094 customer 2 create
-        exit
-        epipe 90004095 customer 2 create
-        exit
-        epipe 90004096 customer 2 create
-        exit
-        epipe 90004097 customer 2 create
-        exit
-        epipe 90004098 customer 2 create
-        exit
-        epipe 90004106 customer 2 create
-        exit
-        epipe 90004107 customer 2 create
-        exit
-        epipe 90004108 customer 2 create
-        exit
-        epipe 90004109 customer 2 create
-        exit
-        epipe 90004110 customer 2 create
-        exit
-        epipe 90004111 customer 2 create
         exit
         epipe 90004112 customer 2 create
         exit
@@ -22809,7 +22249,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:23:50 2020 UTC
+# Finished WED MAR 17 02:24:01 2021 UTC
 A:TLAJOM-JAL5074-AA# show port 
 
 ===============================================================================
@@ -22833,11 +22273,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/3/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 1/3/2         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
 1/3/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-1/3/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/3/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+1/3/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+1/3/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 1/3/6         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
 1/3/7         Down  No   Down    1514 1514    - accs null xcme   
-1/3/8         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/3/8         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 
 ===============================================================================
 Ports on Slot A

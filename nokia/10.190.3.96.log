@@ -1,12 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.96
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.96
 Warning: Permanently added '10.190.3.96' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.96's password: 
-A:ARAGON-MEX9301-GA# environment no more 
-A:ARAGON-MEX9301-GA# show chassis 
+ca168b@10.190.3.96's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
+*A:ARAGON-MEX9301-GA# environment no more 
+*A:ARAGON-MEX9301-GA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -38,12 +40,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-A:ARAGON-MEX9301-GA# admin display-config detail 
+*A:ARAGON-MEX9301-GA# admin display-config detail 
 # TiMOS-C-16.0.R5-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:24:58 2020 UTC
+# Generated WED MAR 17 02:30:31 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402654001"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$a3WfCvIQJsF4zUCgbdTp6.7TGpSQGt5fCi0H.zP.gTQOvyV3VViQK"
+                password "$2y$10$2XNlFNEt/7jCNCPyB0Gpg.N5WOBRZ26415dcdBdcLS6VO7knioAqO"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -910,7 +912,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$83PNM/BTU.ax9C6fHJE7E.eP8HzWrDVfshD9vt3nXIStSz3hpfWQS"
+                password "$2y$10$J2C2L3.2x1MzgQZnEYBJg.QYL5iT5xATGvhcXCTubVHlO1jiRNWd2"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -934,8 +936,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$HLxI.VO8KfrYUBPk04BSk.mkc1Pi2Wb.OUul87CLuX8gCWs3mih1C"
-                no access
+                password "$2y$10$tAQYu0YG0GJAN/x5JDJ7U.ok7HmYTVTpxNH/MRtfaragjN9aLCM6O"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4304,9 +4306,7 @@ echo "Log Configuration"
         snmp-trap-group 98
             description "5620sam"
             trap-target "10.150.10.203:162" address 10.150.10.203 port 162 snmpv2c notify-community "netviewtrap98"
-            trap-target "10.190.60.162:162" address 10.190.60.162 port 162 snmpv2c notify-community "galateatrap98"
             trap-target "10.32.240.171:162" address 10.32.240.171 port 162 snmpv2c notify-community "netview"
-            trap-target "3CA82A0A7404:main1" address 10.190.60.130 port 162 snmpv2c notify-community "galateatrap98"
         exit
         snmp-trap-group 99
             no description
@@ -4776,6 +4776,18 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+                no description
+                prefix 10.32.2.104/32
+                prefix 10.32.224.132/32
+                prefix 10.32.240.171/32
+                prefix 10.32.241.38/32
+                prefix 10.32.242.132/32
+                prefix 10.32.242.136/32
+                prefix 10.36.231.244/32
+                prefix 10.150.10.71/32
+                prefix 10.150.10.200/32
+            exit
             ip-prefix-list "ntp-host" create
                 no description
                 prefix 196.18.6.12/32
@@ -4846,6 +4858,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4856,6 +4870,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4867,6 +4883,26 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "Deny SNMP"
+                        no log
+                        match protocol none
+                            no dscp
+                            no dst-ip
+                            no dst-port
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip ip-prefix-list "denysnmp"
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -24033,7 +24069,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 4/1/1
-        description "LAG-5 To-PANTITLAN-GA puerto 5/1/1"
+        description "To-PANTITLAN-CAM puerto 2/1/10"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -26353,7 +26389,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 4/2/1
-        description "To-PANTITLAN-CA-ATT-100G puerto 5/1/1"
+        description "To-PANTITLAN-CA-ATT-100G puerto 4/2/1"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -40034,7 +40070,7 @@ echo "Router (Network Side) Configuration"
             no gre-termination
             no untrusted
         exit
-        interface "To-PANTITLAN-GA-ATT"
+        interface "To-PANTITLAN-CA-ATT"
             hold-time
                 no up ip
                 no down ip
@@ -40128,7 +40164,7 @@ echo "Router (Network Side) Configuration"
             no untrusted
             no shutdown
         exit
-        interface "To-PANTITLAN-GAM"
+        interface "To-PANTITLAN-CAM"
             hold-time
                 no up ip
                 no down ip
@@ -40751,68 +40787,6 @@ echo "ISIS Configuration"
                 exit
                 no shutdown
             exit
-            interface "To-PANTITLAN-GAM"
-                level-capability level-1/2
-                csnp-interval 10
-                no default-instance
-                no hello-auth-keychain
-                no hello-authentication-key
-                no hello-authentication-type
-                hello-authentication
-                interface-type point-to-point
-                no lfa-policy-map
-                lsp-pacing-interval 100
-                retransmit-interval 5
-                no tag
-                bfd-enable ipv4
-                no bfd-enable ipv6
-                no hello-padding
-                no loopfree-alternate-exclude
-                no ipv4-adjacency-sid
-                no ipv6-adjacency-sid
-                no ipv4-node-sid
-                no ipv6-node-sid
-                no ipv6-unicast-disable
-                no ipv4-multicast-disable
-                no ipv6-multicast-disable
-                no mesh-group
-                no passive
-                no load-balancing-weight
-                sid-protection
-                level 1
-                    no hello-auth-keychain
-                    no hello-authentication-key
-                    no hello-authentication-type
-                    hello-interval 9
-                    hello-multiplier 3
-                    no ipv6-unicast-metric
-                    no metric
-                    no ipv4-multicast-metric
-                    no ipv6-multicast-metric
-                    no passive
-                    no hello-padding
-                    priority 64
-                    no sd-offset
-                    no sf-offset
-                exit
-                level 2
-                    no hello-auth-keychain
-                    no hello-authentication-key
-                    no hello-authentication-type
-                    hello-interval 9
-                    hello-multiplier 3
-                    no ipv6-unicast-metric
-                    no metric
-                    no ipv4-multicast-metric
-                    no ipv6-multicast-metric
-                    no passive
-                    no hello-padding
-                    priority 64
-                    no sd-offset
-                    no sf-offset
-                exit
-                no shutdown
-            exit
             interface "To-XALOSTOC-GAM"
                 level-capability level-1/2
                 csnp-interval 10
@@ -40875,7 +40849,69 @@ echo "ISIS Configuration"
                 exit
                 no shutdown
             exit
-            interface "To-PANTITLAN-GA-ATT"
+            interface "To-PANTITLAN-CA-ATT"
+                level-capability level-1/2
+                csnp-interval 10
+                no default-instance
+                no hello-auth-keychain
+                no hello-authentication-key
+                no hello-authentication-type
+                hello-authentication
+                interface-type point-to-point
+                no lfa-policy-map
+                lsp-pacing-interval 100
+                retransmit-interval 5
+                no tag
+                bfd-enable ipv4
+                no bfd-enable ipv6
+                no hello-padding
+                no loopfree-alternate-exclude
+                no ipv4-adjacency-sid
+                no ipv6-adjacency-sid
+                no ipv4-node-sid
+                no ipv6-node-sid
+                no ipv6-unicast-disable
+                no ipv4-multicast-disable
+                no ipv6-multicast-disable
+                no mesh-group
+                no passive
+                no load-balancing-weight
+                sid-protection
+                level 1
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    no metric
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                level 2
+                    no hello-auth-keychain
+                    no hello-authentication-key
+                    no hello-authentication-type
+                    hello-interval 9
+                    hello-multiplier 3
+                    no ipv6-unicast-metric
+                    no metric
+                    no ipv4-multicast-metric
+                    no ipv6-multicast-metric
+                    no passive
+                    no hello-padding
+                    priority 64
+                    no sd-offset
+                    no sf-offset
+                exit
+                no shutdown
+            exit
+            interface "To-PANTITLAN-CAM"
                 level-capability level-1/2
                 csnp-interval 10
                 no default-instance
@@ -41325,15 +41361,6 @@ echo "MPLS Configuration"
                 no te-metric
                 no shutdown
             exit
-            interface "To-PANTITLAN-GAM"
-                admin-group "Enterprise"
-                admin-group "Fixed"
-                admin-group "Mobile"
-                admin-group "TP-ONLY"
-                no srlg-group
-                no te-metric
-                no shutdown
-            exit
             interface "To-XALOSTOC-GAM"
                 admin-group "Enterprise"
                 admin-group "Fixed"
@@ -41343,7 +41370,7 @@ echo "MPLS Configuration"
                 no te-metric
                 no shutdown
             exit
-            interface "To-PANTITLAN-GA-ATT"
+            interface "To-PANTITLAN-CA-ATT"
                 admin-group "ATT-ONLY"
                 no srlg-group
                 no te-metric
@@ -41351,6 +41378,15 @@ echo "MPLS Configuration"
             exit
             interface "To-MEX-BH-PAN907-MEX9301"
                 no admin-group
+                no srlg-group
+                no te-metric
+                no shutdown
+            exit
+            interface "To-PANTITLAN-CAM"
+                admin-group "Enterprise"
+                admin-group "Fixed"
+                admin-group "Mobile"
+                admin-group "TP-ONLY"
                 no srlg-group
                 no te-metric
                 no shutdown
@@ -41393,21 +41429,6 @@ echo "RSVP Configuration"
                 no te-up-threshold
                 no te-down-threshold
             exit
-            interface "To-PANTITLAN-GAM"
-                no authentication-key
-                no auth-keychain
-                hello-interval 3000
-                gr-helper disable
-                subscription 100
-                no refresh-reduction
-                bfd-enable
-                no graceful-shutdown
-                no class-type-bw
-                no implicit-null-label
-                no shutdown
-                no te-up-threshold
-                no te-down-threshold
-            exit
             interface "To-XALOSTOC-GAM"
                 authentication-key "4AOSyHhj8FrK4feDhSh1QQO2Ei40hlB8" hash2
                 no auth-keychain
@@ -41423,7 +41444,7 @@ echo "RSVP Configuration"
                 no te-up-threshold
                 no te-down-threshold
             exit
-            interface "To-PANTITLAN-GA-ATT"
+            interface "To-PANTITLAN-CA-ATT"
                 no authentication-key
                 no auth-keychain
                 hello-interval 3000
@@ -41450,6 +41471,21 @@ echo "RSVP Configuration"
                 no graceful-shutdown
                 no class-type-bw
                 no implicit-null-label
+                no te-up-threshold
+                no te-down-threshold
+            exit
+            interface "To-PANTITLAN-CAM"
+                no authentication-key
+                no auth-keychain
+                hello-interval 3000
+                gr-helper disable
+                subscription 100
+                no refresh-reduction
+                bfd-enable
+                no graceful-shutdown
+                no class-type-bw
+                no implicit-null-label
+                no shutdown
                 no te-up-threshold
                 no te-down-threshold
             exit
@@ -42908,7 +42944,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -42932,23 +42968,6 @@ echo "LDP Configuration"
                     no keepalive
                     no transport-address
                 exit
-                interface "To-PANTITLAN-GAM" dual-stack
-                    bfd-enable ipv4
-                    ipv4
-                        no hello
-                        no keepalive
-                        no local-lsr-id
-                        fec-type-capability
-                            prefix-ipv4 enable
-                            prefix-ipv6 enable
-                            p2mp-ipv4 enable
-                            p2mp-ipv6 enable
-                        exit
-                        no transport-address
-                        no shutdown
-                    exit
-                    no shutdown
-                exit
                 interface "To-XALOSTOC-GAM" dual-stack
                     bfd-enable ipv4
                     ipv4
@@ -42966,7 +42985,7 @@ echo "LDP Configuration"
                     exit
                     no shutdown
                 exit
-                interface "To-PANTITLAN-GA-ATT" dual-stack
+                interface "To-PANTITLAN-CA-ATT" dual-stack
                     bfd-enable ipv4
                     ipv4
                         no hello
@@ -42994,6 +43013,23 @@ echo "LDP Configuration"
                             prefix-ipv6 disable
                             p2mp-ipv4 enable
                             p2mp-ipv6 disable
+                        exit
+                        no transport-address
+                        no shutdown
+                    exit
+                    no shutdown
+                exit
+                interface "To-PANTITLAN-CAM" dual-stack
+                    bfd-enable ipv4
+                    ipv4
+                        no hello
+                        no keepalive
+                        no local-lsr-id
+                        fec-type-capability
+                            prefix-ipv4 enable
+                            prefix-ipv6 enable
+                            p2mp-ipv4 enable
+                            p2mp-ipv6 enable
                         exit
                         no transport-address
                         no shutdown
@@ -45925,6 +45961,8 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+            exit
             ip-prefix-list "ntp-host" create
             exit
             ip-prefix-list "snmp-list" create
@@ -49852,8 +49890,8 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:07 2020 UTC
-A:ARAGON-MEX9301-GA# show port 
+# Finished WED MAR 17 02:30:37 2021 UTC
+*A:ARAGON-MEX9301-GA# show port 
 
 ===============================================================================
 Ports on Slot 1
@@ -49944,7 +49982,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 4/1/8         Down  No   Down    9212 9212    - netw null xgige  
 4/1/9         Up    No   Down    9212 9212  200 netw null xgige  10GBASE-SR 
 4/1/10        Up    No   Down    9182 9182    - accs dotq xgige  10GBASE-SR 
-4/2/1         Up    Yes  Up      9212 9212    - netw null cgige  100GBASE-ER4*
+4/2/1         Up    No   Down    9212 9212    - netw null cgige  100GBASE-ER4*
 
 ===============================================================================
 Ports on Slot 6
@@ -50009,7 +50047,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 B/1           Up    No   Down    1514 1514    - netw null faste  
 B/4           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-A:ARAGON-MEX9301-GA# show lag detail 
+*A:ARAGON-MEX9301-GA# show lag detail 
 
 ===============================================================================
 LAG Details
@@ -50024,7 +50062,7 @@ Details
 Lag-id              : 4                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 03:25:08   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 06:53:01   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:41:45     Lag-IfIndex          : 1342177284
@@ -50078,7 +50116,7 @@ Details
 Lag-id              : 5                     Mode                 : network
 Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 03:25:08   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 06:53:01   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:41:46     Lag-IfIndex          : 1342177285
@@ -50129,7 +50167,7 @@ Details
 Lag-id              : 200                   Mode                 : network
 Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 03:25:08   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 06:53:01   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:42:09     Lag-IfIndex          : 1342177480
@@ -50170,4 +50208,4 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 4/1/9          actor     No    Yes   No    No    No    Yes   Yes      Yes
 4/1/9          partner   Yes   Yes   No    No    No    No    Yes      No
 ===============================================================================
-A:ARAGON-MEX9301-GA# 
+*A:ARAGON-MEX9301-GA# 

@@ -1,5 +1,5 @@
 Value Filldown sysname (\S+)
-Value Filldown model (\S+)
+Value Filldown model ([^:\b]+)
 Value source_ip (\S+)
 Value cs1_1 (\S+)
 Value cs1_2 (\S+)
@@ -8,6 +8,7 @@ Value cs1_4 (\S+)
 Value cs1_5 (\S+)
 Value cs1_6 (\S+)
 Value cs1_7 (\S+)
+Value cs1_8 (\S+)
 
 
 Start
@@ -35,7 +36,7 @@ Sgt
   ^\s{12}application telnet dscp ${cs1_5}
   ^\s{12}application tftp dscp ${cs1_6}
   ^\s{12}application ptp dscp ${cs1_7}
-  ^\s{12}dscp cs1 fc l2 -> Record
+  ^\s{12}dscp cs1 fc ${cs1_8} -> Record
   ^\s{8}exit -> Base
  
 

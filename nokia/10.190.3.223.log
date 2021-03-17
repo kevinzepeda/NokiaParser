@@ -1,10 +1,10 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.223
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.223
 Warning: Permanently added '10.190.3.223' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.223's password: 
+ca168b@10.190.3.223's password: 
 
 
 B:TLALNE-MEX9226-AA# environment no more 
@@ -83,7 +83,7 @@ B:TLALNE-MEX9226-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Thu Dec 15 12:41:38 EST 2016 by builder in /rel6.2/b1/R8/panos/main
 
-# Generated THU MAY 21 05:26:38 2020 UTC
+# Generated WED MAR 17 02:29:10 2021 UTC
 
 exit all
 configure
@@ -153,7 +153,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -218,6 +218,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -693,6 +703,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1207,7 +1257,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "ZEJU2YNip1mv/fShQtCR8U" hash2
+                password "ZEJU2YNip1mBXBoJBYHss1l4kcCU58PQ" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1220,7 +1270,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password ".tWKo7o8jc81MK9CLLH7F1VeM/OWSl0RiubfKa1GH/c" hash2
+                password ".tWKo7o8jc7qRmF5TS0uq1Fwq7kWs9T8/.AsNCr80yY" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1233,8 +1283,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "DXgTpkZ8fx7h6qGQcsZ2fUa8cZcWFoim" hash2
-                no access
+                password "DXgTpkZ8fx7h6qGQcsZ2fY93FdNNt/622Mjv4JWCy/U" hash2
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3248,7 +3298,8 @@ echo "Card Configuration"
 echo "Port Configuration"
 #--------------------------------------------------
     port 1/1/1
-        description "To-ALBERCAOLIMPICA-AAT01"
+        shutdown
+        description "To-ALBERCAOLIMPICA-AAT01///INC000004788834"
         tdm
             e1 
                 shutdown
@@ -3280,7 +3331,6 @@ echo "Port Configuration"
             exit
             line-impedance 120
         exit
-        no shutdown
     exit
     port 1/1/2
         shutdown
@@ -4442,6 +4492,7 @@ echo "Port Configuration"
         description "To-Telmex-LD"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4456,6 +4507,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4465,9 +4517,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4477,6 +4527,7 @@ echo "Port Configuration"
         description "To-Telmex-LD"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4491,6 +4542,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4500,9 +4552,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4512,6 +4562,7 @@ echo "Port Configuration"
         description "To-Telmex-LD"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4526,6 +4577,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4535,9 +4587,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4652,6 +4702,7 @@ echo "Port Configuration"
         description "CBD-0104-0009_TMX-CUERNAVACA-BORDA-MOV-LD-2W_LD-Y-LOCAL_UNEFON"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4666,6 +4717,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4675,9 +4727,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4833,6 +4883,7 @@ echo "Port Configuration"
         description "TMX_CUERNAVACA_MOVIL_IC_857"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4847,6 +4898,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4856,9 +4908,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -7618,216 +7668,6 @@ echo "Service Configuration"
             no metric
             no shutdown
         exit
-        cpipe 109027 customer 2 vc-type satop-e1 create
-            shutdown
-            description "CBD-0104-0009_TMX-CUERNAVACA-BORDA-MOV-LD-2W_LD-Y-LOCAL_UNEFON"
-            service-mtu 1514
-            no service-name
-            sap 1/3/9.1 create
-                no description
-                cem
-                    packet jitter-buffer 32 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:109027 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
-        cpipe 109030 customer 2 vc-type satop-e1 create
-            shutdown
-            description "Interconexion con Telmex en TDM - LD"
-            service-mtu 1514
-            no service-name
-            sap 1/3/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 32 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:109030 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
-        cpipe 109031 customer 2 vc-type satop-e1 create
-            shutdown
-            description "Interconexion con Telmex en TDM - LD"
-            service-mtu 1514
-            no service-name
-            sap 1/3/4.1 create
-                no description
-                cem
-                    packet jitter-buffer 32 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:109031 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
-        cpipe 109032 customer 2 vc-type satop-e1 create
-            shutdown
-            description "Interconexion con Telmex en TDM - LD"
-            service-mtu 1514
-            no service-name
-            sap 1/3/5.1 create
-                no description
-                cem
-                    packet jitter-buffer 32 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:109032 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
-        cpipe 109096 customer 2 vc-type satop-e1 create
-            shutdown
-            description "To-MXTLAM02MGW02"
-            service-mtu 1514
-            no service-name
-            sap 1/1/3.1 create
-                no description
-                cem
-                    packet jitter-buffer 32 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:109096 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
-        cpipe 179064 customer 2 vc-type satop-e1 create
-            shutdown
-            description "TMX_CUERNAVACA_MOVIL_IC_857"
-            service-mtu 1514
-            service-name "cpipe service-949 TLALNE-MEX9226-AA (10.190.3.223)"
-            sap 1/3/15.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11179:179064 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-        exit
     exit
 #--------------------------------------------------
 echo "Router (Service Side) Configuration"
@@ -8020,7 +7860,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:53 2020 UTC
+# Finished WED MAR 17 02:29:24 2021 UTC
 B:TLALNE-MEX9226-AA# show port 
 
 ==============================================================================
@@ -8029,7 +7869,7 @@ Ports on Slot 1
 Port        Admin Link Port    Cfg  Oper LAG/ Port Port Port   SFP/XFP/        
 Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX          
 ------------------------------------------------------------------------------
-1/1/1       Up    Yes  Link Up                                                
+1/1/1       Down  No   Down                                                   
 1/1/1.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/2       Down  No   Down                                                   
 1/1/2.1     Down  No   Down    1514 1514    - accs cem  tdm                   
@@ -8095,14 +7935,14 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/16.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/1       Down  No   Down                                                   
 1/3/1.1     Down  No   Down    1514 1514    - accs cem  tdm                   
-1/3/2       Up    Yes  Link Up                                                
-1/3/2.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/3/2       Up    No   Down                                                   
+1/3/2.1     Up    No   Down    1514 1514    - accs cem  tdm                   
 1/3/3       Down  No   Down                                                   
-1/3/3.1     Up    No   Down    1514 1514    - accs cem  tdm                   
+1/3/3.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/4       Down  No   Down                                                   
-1/3/4.1     Up    No   Down    1514 1514    - accs cem  tdm                   
+1/3/4.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/5       Down  No   Down                                                   
-1/3/5.1     Up    No   Down    1514 1514    - accs cem  tdm                   
+1/3/5.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/6       Down  No   Down                                                   
 1/3/6.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/7       Down  No   Down                                                   
@@ -8110,7 +7950,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/3/8       Down  No   Down                                                   
 1/3/8.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/9       Down  No   Down                                                   
-1/3/9.1     Up    No   Down    1514 1514    - accs cem  tdm                   
+1/3/9.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/10      Down  No   Down                                                   
 1/3/10.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/11      Down  No   Down                                                   
@@ -8121,7 +7961,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/3/13.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/14      Down  No   Down                                                   
 1/3/15      Down  No   Down                                                   
-1/3/15.1    Up    No   Down    1514 1514    - accs cem  tdm                   
+1/3/15.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/3/16      Down  No   Down                                                   
 1/3/16.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/4/1       Down  No   Down                                                   

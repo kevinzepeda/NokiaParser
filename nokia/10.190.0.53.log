@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.53
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.53
 Warning: Permanently added '10.190.0.53' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.53's password: 
+ca168b@10.190.0.53's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 26 Minutes 
 B:LCAMTX-BCS1003-AB# environment no more 
 B:LCAMTX-BCS1003-AB# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ B:LCAMTX-BCS1003-AB# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:26:33 2020 UTC
+# Generated WED MAR 17 02:22:15 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone MDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone MST -07
@@ -183,6 +185,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -658,6 +670,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1187,7 +1239,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$zWtn0OM7B.pfD/20rQxG..xuF10ubKkyNBGk6EVt6Mt3frRjtMpL2"
+                password "$2y$10$aiRRiBKa2rMt59681nvdA.yZlppgAKSGUJoFsUFyvW9oFW0HWvsM."
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1204,7 +1256,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$5ofLwgyeXPFWZDV1UVgGs.zpZqtLYaGmvp6hgrkdSuTomr9LWWUFi"
+                password "$2y$10$62Kvf6VAINn9/QkE4Zudg.25GPiTva/DqQr7iApn6igM0Sb8kx.0y"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1221,8 +1273,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$mxTl9UfpBEaAzXFW.k8aE.KMryHYqDRWSuSKsxUx0Y5tIZKsJr1Fu"
-                no access
+                password "$2y$10$2/Vzqws5Jq0E9WM3dGaok.2hQLZ7PCnAGeESs10p7keBJvg2p7/DS"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3106,6 +3158,38 @@ echo "QoS Policy Configuration"
             exit
             time-average-factor 3
         exit
+        slope-policy "COS2_queue_wred_policy1" create
+            description "wred_policy_COS2_hi_28_40_15_lo_24_40_15"
+            high-slope
+                start-avg 28
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            time-average-factor 3
+        exit
+        slope-policy "COS3_queue_wred_policy1" create
+            description "wred_policy_COS3_hi_24_40_15_lo_20_40_15"
+            high-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 20
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            time-average-factor 3
+        exit
         network-queue "default" create
             description "Default network queue QoS policy."
             no packet-byte-offset
@@ -3628,6 +3712,361 @@ echo "QoS Policy Configuration"
             default-fc "af"
             default-priority low
         exit
+        sap-ingress 111 create
+            no policy-name
+            description "CPIPES_VLL:TDM"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            default-fc "af"
+            default-priority low
+        exit
+        sap-ingress 200 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 201 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 301 create
+            no policy-name
+            description "OAM_7705"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 2500
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "l2" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            default-fc "l2"
+            default-priority low
+        exit
+        sap-ingress 2000 create
+            no policy-name
+            description "Mobile:All_Traffic"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            default-fc "be"
+            default-priority low
+        exit
         sap-egress 1 create
             policy-name "default"
             description "Default SAP egress QoS policy."
@@ -3671,6 +4110,245 @@ echo "QoS Policy Configuration"
                 no dot1p
                 no dscp
             exit 
+        exit
+        sap-egress 200 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            no packet-byte-offset
+            queue 1 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                cbs 12
+                mbs 12 kilobytes
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc af create
+                queue 2
+                dot1p 2
+                no dscp
+            exit 
+            fc be create
+                queue 1
+                dot1p 0
+                no dscp
+            exit 
+            fc ef create
+                queue 5
+                dot1p 5
+                no dscp
+            exit 
+            fc h2 create
+                queue 4
+                dot1p 4
+                no dscp
+            exit 
+            fc l1 create
+                queue 3
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+        exit
+        sap-egress 201 create
+            no policy-name
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            no packet-byte-offset
+            queue 1 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                cbs 12
+                mbs 12 kilobytes
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc af create
+                queue 2
+                dot1p 2
+                no dscp
+            exit 
+            fc be create
+                queue 1
+                dot1p 0
+                no dscp
+            exit 
+            fc ef create
+                queue 5
+                dot1p 5
+                no dscp
+            exit 
+            fc h2 create
+                queue 4
+                dot1p 4
+                no dscp
+            exit 
+            fc l1 create
+                queue 3
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+        exit
+        sap-egress 301 create
+            no policy-name
+            description "OAM-7705"
+            scope template
+            no packet-byte-offset
+            queue 1 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 2500
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc l2 create
+                queue 1
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
+                no dscp
+            exit 
+        exit
+        sap-egress 2000 create
+            no policy-name
+            description "Mobile:All_Traffic:standard_access_with_dot1p_marking"
+            scope template
+            no packet-byte-offset
+            queue 1 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
         exit
         mc-mlppp
             sap-egress 1 create
@@ -7687,6 +8365,84 @@ echo "External Alarm Configuration"
 echo "Filter Configuration"
 #--------------------------------------------------
     filter 
+        ip-filter 2021 create
+            no filter-name
+            default-action drop
+            description "Data:dscp_marking" 
+            scope template
+            entry 100 create
+                no description
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-ip
+                    no src-port
+                    no tcp-syn
+                    no tcp-ack
+                    no icmp-type
+                    no icmp-code
+                exit 
+                no log
+                no action
+            exit 
+        exit 
+        ip-filter 2031 create
+            no filter-name
+            default-action drop
+            description "Signaling:dscp_marking" 
+            scope template
+            entry 100 create
+                no description
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-ip
+                    no src-port
+                    no tcp-syn
+                    no tcp-ack
+                    no icmp-type
+                    no icmp-code
+                exit 
+                no log
+                no action
+            exit 
+        exit 
+        ip-filter 3001 create
+            no filter-name
+            default-action drop
+            description "OAM:dscp_marking" 
+            scope template
+            entry 100 create
+                no description
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-ip
+                    no src-port
+                    no tcp-syn
+                    no tcp-ack
+                    no icmp-type
+                    no icmp-code
+                exit 
+                no log
+                no action
+            exit 
+        exit 
     exit 
 #--------------------------------------------------
 echo "Network Security Configuration"
@@ -8546,6 +9302,18 @@ echo "Service Configuration"
 echo "Filter Configuration"
 #--------------------------------------------------
     filter 
+        ip-filter 2021 create
+            entry 100 create
+            exit 
+        exit 
+        ip-filter 2031 create
+            entry 100 create
+            exit 
+        exit 
+        ip-filter 3001 create
+            entry 100 create
+            exit 
+        exit 
     exit 
 #--------------------------------------------------
 echo "Router (Service Side) Configuration"
@@ -8801,7 +9569,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:36 2020 UTC
+# Finished WED MAR 17 02:22:19 2021 UTC
 B:LCAMTX-BCS1003-AB# show port 
 
 ===============================================================================

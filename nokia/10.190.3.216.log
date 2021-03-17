@@ -1,12 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.216
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.216
 Warning: Permanently added '10.190.3.216' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.216's password: 
-A:MCSXOC-MEX506H-GA# environment no more 
-A:MCSXOC-MEX506H-GA# show chassis 
+ca168b@10.190.3.216's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
+*A:MCSXOC-MEX506H-GA# environment no more 
+*A:MCSXOC-MEX506H-GA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -38,12 +40,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-A:MCSXOC-MEX506H-GA# admin display-config detail 
+*A:MCSXOC-MEX506H-GA# admin display-config detail 
 # TiMOS-C-16.0.R5-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:29:00 2020 UTC
+# Generated WED MAR 17 02:29:08 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402e91d5b"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -718,7 +720,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$z6kTCcIo/YBZUuzNYFauE.MKwGocvgWVOTzzydgeLkOBchDOczSUe"
+                password "$2y$10$vQebwWIy.P4xH5avrw.Wk.5hHiuVQPAodcNU61N.LLl5vVFzfk.Km"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -742,7 +744,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$dky7pcymJ8gjmXjxAFETU.3DrcrlU558467aAum6MNQqtZ3f2NMCe"
+                password "$2y$10$ed4D0e.pHvsOGAavs1.IM.5i75CldFha9aT4bMJ4ygfm8FUf0HtJW"
                 access console ftp
                 no home-directory
                 no restricted-to-home
@@ -762,8 +764,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$Q21/vw57jF/8vaUovu.mU.kWyqVqkwip.b0tDcAaklFKnG9vQ0EK6"
-                no access
+                password "$2y$10$A40xsYKqSZeU/sTHTvt9k.mTokQOrGytNm7euSD.3dFEt7O4xTzNq"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4124,9 +4126,7 @@ echo "Log Configuration"
         snmp-trap-group 98
             description "5620sam"
             trap-target "10.150.10.203:162" address 10.150.10.203 port 162 snmpv2c notify-community "netviewtrap98"
-            trap-target "10.190.60.162:162" address 10.190.60.162 port 162 snmpv2c notify-community "galateatrap98"
             trap-target "10.32.240.171:162" address 10.32.240.171 port 162 snmpv2c notify-community "netview"
-            trap-target "3CA82A0A7404:main1" address 10.190.60.130 port 162 snmpv2c notify-community "galateatrap98"
         exit
         snmp-trap-group 99
             no description
@@ -4577,6 +4577,18 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+                no description
+                prefix 10.32.2.104/32
+                prefix 10.32.224.132/32
+                prefix 10.32.240.171/32
+                prefix 10.32.241.38/32
+                prefix 10.32.242.132/32
+                prefix 10.32.242.136/32
+                prefix 10.36.231.244/32
+                prefix 10.150.10.71/32
+                prefix 10.150.10.200/32
+            exit
             ip-prefix-list "ntp-host" create
                 no description
                 prefix 196.18.6.12/32
@@ -4647,6 +4659,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4657,6 +4671,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4668,6 +4684,26 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "Deny SNMP"
+                        no log
+                        match protocol none
+                            no dscp
+                            no dst-ip
+                            no dst-port
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip ip-prefix-list "denysnmp"
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -11256,6 +11292,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/1/4
+        shutdown
         description "To-OLT-0-19-1-TOTAL-PLAY-ENLACE"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
@@ -11488,7 +11525,6 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
-        no shutdown
     exit
     port 1/2/1
         shutdown
@@ -12160,6 +12196,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/2/4
+        shutdown
         description "TO-MANAGEMENT-OLT"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
@@ -12392,7 +12429,6 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
-        no shutdown
     exit
     port 2/1/1
         description "LAG 4 To-CIRCUITOAZTECA-GA puerto 1/1/1"
@@ -13106,6 +13142,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 2/1/4
+        shutdown
         description "To-MEX-BH-PAN907-MEX506_Te0/3/0"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
@@ -13340,7 +13377,6 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
-        no shutdown
     exit
     port 2/1/5
         shutdown
@@ -32634,7 +32670,7 @@ echo "LDP Configuration"
             no graceful-restart
             no implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -37997,6 +38033,8 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+            exit
             ip-prefix-list "ntp-host" create
             exit
             ip-prefix-list "snmp-list" create
@@ -41955,8 +41993,8 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:05 2020 UTC
-A:MCSXOC-MEX506H-GA# show port 
+# Finished WED MAR 17 02:29:12 2021 UTC
+*A:MCSXOC-MEX506H-GA# show port 
 
 ===============================================================================
 Ports on Slot 1
@@ -41967,11 +42005,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/1         Up    Yes  Up      9212 9212    6 netw null xgige  10GBASE-LR  *
 1/1/2         Down  No   Down    9212 9212    6 netw null xgige  10GBASE-LR  *
 1/1/3         Up    Yes  Up      9212 9212    6 netw null xgige  10GBASE-LR  *
-1/1/4         Up    No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 1*
+1/1/4         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 1*
 1/2/1         Down  No   Down    9212 9212    - netw null xgige  
 1/2/2         Down  No   Down    9212 9212    - netw null xgige  
 1/2/3         Down  No   Down    9212 9212    - netw null xgige  
-1/2/4         Up    No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 1*
+1/2/4         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 1*
 
 ===============================================================================
 Ports on Slot 2
@@ -41982,7 +42020,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 2/1/1         Up    Yes  Up      9212 9212    4 netw null xgige  10GBASE-ER  *
 2/1/2         Down  No   Down    9212 9212    4 netw null xgige  10GBASE-ER  *
 2/1/3         Up    Yes  Up      9212 9212    4 netw null xgige  10GBASE-ER  *
-2/1/4         Up    No   Down    9212 9212  200 netw null xgige  10GBASE-SR 1*
+2/1/4         Down  No   Down    9212 9212  200 netw null xgige  10GBASE-SR 1*
 2/1/5         Down  No   Down    9212 9212    - netw null xgige  
 
 ===============================================================================
@@ -42067,7 +42105,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 B/1           Up    No   Down    1514 1514    - netw null faste  
 B/4           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-A:MCSXOC-MEX506H-GA# show lag detail 
+*A:MCSXOC-MEX506H-GA# show lag detail 
 
 ===============================================================================
 LAG Details
@@ -42082,7 +42120,7 @@ Details
 Lag-id              : 4                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/18/2019 17:31:15   Port Thres. Action   : down
+Thres. Last Cleared : 07/27/2020 20:59:08   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:e9:1e:9f     Lag-IfIndex          : 1342177284
@@ -42139,7 +42177,7 @@ Details
 Lag-id              : 6                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/18/2019 17:31:15   Port Thres. Action   : down
+Thres. Last Cleared : 07/27/2020 20:59:08   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:e9:1e:a1     Lag-IfIndex          : 1342177286
@@ -42196,7 +42234,7 @@ Details
 Lag-id              : 200                   Mode                 : network
 Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/18/2019 17:31:15   Port Thres. Action   : down
+Thres. Last Cleared : 07/27/2020 20:59:08   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:e9:1f:63     Lag-IfIndex          : 1342177480
@@ -42229,7 +42267,7 @@ Weight Static Cost  : N/A
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
 -------------------------------------------------------------------------------
-2/1/4          up      active    down    yes       1             -       32768
+2/1/4          down    active    down    yes       1             -       32768
 
 -------------------------------------------------------------------------------
 Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
@@ -42237,4 +42275,4 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 2/1/4          actor     No    Yes   No    No    No    Yes   Yes      Yes
 2/1/4          partner   Yes   Yes   No    No    No    No    Yes      No
 ===============================================================================
-A:MCSXOC-MEX506H-GA# 
+*A:MCSXOC-MEX506H-GA# 

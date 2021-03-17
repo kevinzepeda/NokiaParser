@@ -82,7 +82,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','interface','lag','port','port_type','queue_group_port','address','isis','mpls','rsvp','slope-policy','egress-scheduler-policy','queue-policy','qos','queue-group']]
+        data = [['sysname','chassis','source_ip','interface','lag','port','port_description','port_type','queue_group_port','address','isis','mpls','rsvp','slope-policy','egress-scheduler-policy','queue-policy','qos','queue-group']]
 
         ###############  Template #######################
         template = open(temp)
@@ -113,6 +113,7 @@ class Nokia(object):
             port_pr = ''
             isis_list = {}
             lag_ports = {}
+            port_descriptions = {}
 
             for row in fsm_results:
                 if row[3] != '' and count == 0:
@@ -149,6 +150,8 @@ class Nokia(object):
                     port_types[row[17]] = row[18]
                 if row[19] != '':
                     queue_group_name[row[5]] = row[19]
+                if row[22] != '':
+                    port_descriptions[row[5]] = row[22]
             for i in interfaces:
                 port = i["port"] if i["port"] not in lag_ports else lag_ports[i['port']]
                 data.append([
@@ -158,6 +161,7 @@ class Nokia(object):
                     i["interface"],
                     '' if i["port"] not in lag_ports else i["port"][4:],
                     port,
+                    '' if port not in port_descriptions else port_descriptions[port],
                     '' if port not in port_types else port_types[port],
                     '' if port not in queue_group_name else queue_group_name[port],
                     i["address"],
@@ -215,7 +219,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','bgp','neighbor','sap','ingress_qos_id','egress_qos_id','port','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','bgp','neighbor','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
 
         ###############  Template #######################
         template = open(temp)
@@ -236,6 +240,7 @@ class Nokia(object):
             customer_id = ''
             l3vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = {}
             ############ Structure results ############
@@ -268,9 +273,11 @@ class Nokia(object):
                     })
                 if row[11] != '':
                     ports_policys[row[11]] = row[13]
+                if row[12] != '':
+                    port_descriptions[row[11]] = row[12]
                 if row[14] != '':
                     lags[row[14]] = row[15]
-                if row[16] != '' and row[19] != '':
+                if row[16] != '':
                     cards[row[16]] = {
                         "buffer_min":row[17],
                         "buffer_max":row[18],
@@ -286,7 +293,7 @@ class Nokia(object):
                         lag = i["sap"][4:i["sap"].find(":")] if ":" in i["sap"] else i["sap"][4:]
                         port = '' if lag not in lags else lags[lag]
                         card = '' if port[:1] not in cards else cards[port[:1]]
-                        data.append([
+                    data.append([
                         i["sysname"],
                         i["chassis"],
                         i["source_ip"],
@@ -301,6 +308,7 @@ class Nokia(object):
                         i["ingress_qos_id"],
                         i["egress_qos_id"],
                         port,
+                        '' if port not in port_descriptions else port_descriptions[port],
                         '' if port not in ports_policys else ports_policys[port],
                         port[:1],
                         '' if card == '' else card["buffer_min"],
@@ -308,11 +316,7 @@ class Nokia(object):
                         '' if card == '' else card["resv_min"],
                         '' if card == '' else card["resv_max"],
                         '' if card == '' else card["shutdown"]
-                        ])
-
-                    pass
-                else:
-                    pass
+                    ])
 
         if console:
             myFile = open('Nokia_'+str(len(files))+'_files_scenery_3.csv', 'w')
@@ -358,7 +362,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','interface','lag','port','port_type','queue_group_port','address','isis','mpls','rsvp','slope-policy','egress-scheduler-policy','queue-policy','qos','queue-group']]
+        data = [['sysname','chassis','source_ip','interface','lag','port','port_description','port_type','queue_group_port','address','isis','mpls','rsvp','slope-policy','egress-scheduler-policy','queue-policy','qos','queue-group']]
 
         ###############  Template #######################
         template = open(temp)
@@ -389,6 +393,7 @@ class Nokia(object):
             port_pr = ''
             isis_list = {}
             lag_ports = {}
+            port_descriptions = {}
 
             for row in fsm_results:
                 if row[3] != '' and count == 0:
@@ -425,6 +430,9 @@ class Nokia(object):
                     port_types[row[17]] = row[18]
                 if row[19] != '':
                     queue_group_name[row[5]] = row[19]
+                if row[22] != '':
+                    port_descriptions[row[5]] = row[22]
+            
             for i in interfaces:
                 port = i["port"] if i["port"] not in lag_ports else lag_ports[i['port']]
                 data.append([
@@ -434,6 +442,7 @@ class Nokia(object):
                     i["interface"],
                     '' if i["port"] not in lag_ports else i["port"][4:],
                     port,
+                    '' if port not in port_descriptions else port_descriptions[port],
                     '' if port not in port_types else port_types[port],
                     '' if port not in queue_group_name else queue_group_name[port],
                     i["address"],
@@ -446,6 +455,7 @@ class Nokia(object):
                     i["qos"],
                     i["queue-group"]
                 ])
+
 
 
         if console:
@@ -491,7 +501,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','sap','ingress_qos_id','egress_qos_id','port','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
 
         ###############  Template #######################
         template = open(temp)
@@ -512,6 +522,7 @@ class Nokia(object):
             customer_id = ''
             l3vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = {}
             ############ Structure results ############
@@ -542,9 +553,11 @@ class Nokia(object):
                     })
                 if row[11] != '':
                     ports_policys[row[11]] = row[13]
+                if row[12] != '':
+                    port_descriptions[row[11]] = row[12]
                 if row[14] != '':
                     lags[row[14]] = row[15]
-                if row[16] != '' and row[19] != '':
+                if row[16] != '':
                     cards[row[16]] = {
                         "buffer_min":row[17],
                         "buffer_max":row[18],
@@ -572,6 +585,7 @@ class Nokia(object):
                     i["ingress_qos_id"],
                     i["egress_qos_id"],
                     port,
+                    '' if port not in port_descriptions else port_descriptions[port],
                     '' if port not in ports_policys else ports_policys[port],
                     port[:1],
                     '' if card == '' else card["buffer_min"],
@@ -629,7 +643,7 @@ class Nokia(object):
         # 'service_name', 'customer_id', 'sap', 'ingress_qos_id',8
         #  'egress_qos_id', 'port', 'port_address', 'policy', 'lag_id',13
         #  'port_lag', 'card','buffer_min', 'buffer_max', 'shutdown', 'resv_min', 'resv_max']20
-        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','sap','ingress_qos_id','egress_qos_id','port','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
+        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
 
         ###############  Template #######################
         template = open(temp)
@@ -650,6 +664,7 @@ class Nokia(object):
             customer_id = ''
             l2vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = {}
             ############ Structure results ############
@@ -679,6 +694,8 @@ class Nokia(object):
                     })
                 if row[10] != '':
                     ports_policys[row[10]] = row[12]
+                if row[11] != '':
+                    port_descriptions[row[10]] = row[11]
                 if row[13] != '':
                     lags[row[13]] = row[14]
                 if row[15] != '':
@@ -708,6 +725,7 @@ class Nokia(object):
                     i["ingress_qos_id"],
                     i["egress_qos_id"],
                     sap,
+                    '' if sap not in port_descriptions else port_descriptions[sap],
                     '' if sap not in ports_policys else ports_policys[sap],
                     sap[:1],
                     '' if card == '' else card["buffer_min"],
@@ -715,7 +733,7 @@ class Nokia(object):
                     '' if card == '' else card["resv_min"],
                     '' if card == '' else card["resv_max"],
                     '' if card == '' else card["shutdown"]
-                    ])
+                ])
 
         if console:
             myFile = open('Nokia_'+str(len(files))+'_files_scenery_6.csv', 'w')
@@ -760,7 +778,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','spoke_spd_id','spoke_svc_id','sap','far_end_system_ip','port','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
+        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','spoke_spd_id','spoke_svc_id','sap','ingress_qos','egress_qos','far_end_system_ip','port','port_description','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
         ###############  Template #######################
         template = open(temp)
         ############# File Processor ##########################
@@ -775,6 +793,7 @@ class Nokia(object):
             source_ip = ''
             l2vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             sdp_ids = {}
             lags = {}
             cards = {}
@@ -787,7 +806,7 @@ class Nokia(object):
             for row in fsm_results:
                 if row[2] != '':
                     source_ip = row[2]
-                if row[7] != '' and row[9] != '':
+                if row[3] != '' and row[4] != '':
                     l2vpn_list.append({
                         "sysname": row[0],
                         "chassis": row[1],
@@ -799,11 +818,15 @@ class Nokia(object):
                         "spoke_spd_id": row[7],
                         "spoke_svc_id": row[8],
                         "sap": row[9],
+                        "ingress_qos": row[22],
+                        "egress_qos": row[23]
                     })
                 if row[10] != '':
                     sdp_ids[row[10]] = row[11]
                 if row[12] != '':
                     ports_policys[row[12]] = row[13]
+                if row[24] != '':
+                    port_descriptions[row[12]] = row[24]
                 if row[14] != '':
                     lags[row[14]] = row[15]
                 if row[16] != '':
@@ -816,34 +839,52 @@ class Nokia(object):
                     }
 
             for i in l2vpn_list:
-                if "lag" not in i["sap"]:
-                    sap = i["sap"][:i["sap"].find(":")] if ":" in i["sap"] else i["sap"]
+                if i["sap"] != '':
+                    if "lag" not in i["sap"]:
+                        sap = i["sap"][:i["sap"].find(":")] if ":" in i["sap"] else i["sap"]
+                    else:
+                        lag = i["sap"][4:i["sap"].find(":")] if ":" in i["sap"] else i["sap"][4:]
+                        sap = '' if lag not in lags else lags[lag]
+                    card = '' if sap[:1] not in cards else cards[sap[:1]]
+                    data.append([
+                        i["sysname"],
+                        i["chassis"],
+                        i["source_ip"],
+                        i["l2vpn"],
+                        i["service_id"],
+                        i["service_name"],
+                        i["customer_id"],
+                        i["spoke_spd_id"],
+                        i["spoke_svc_id"],
+                        i['sap'],
+                        i['ingress_qos'],
+                        i['egress_qos'],
+                        '' if i['spoke_spd_id'] not in sdp_ids else sdp_ids[i['spoke_spd_id']],
+                        sap,
+                        '' if sap not in port_descriptions else port_descriptions[sap],
+                        '' if sap not in ports_policys else ports_policys[sap],
+                        sap[:1],
+                        '' if card == '' else card["buffer_min"],
+                        '' if card == '' else card["buffer_max"],
+                        '' if card == '' else card["resv_min"],
+                        '' if card == '' else card["resv_max"],
+                        '' if card == '' else card["shutdown"]
+                        ])
                 else:
-                    lag = i["sap"][4:i["sap"].find(":")] if ":" in i["sap"] else i["sap"][4:]
-                    sap = '' if lag not in lags else lags[lag]
-                card = '' if sap[:1] not in cards else cards[sap[:1]]
-                data.append([
-                    i["sysname"],
-                    i["chassis"],
-                    i["source_ip"],
-                    i["l2vpn"],
-                    i["service_id"],
-                    i["service_name"],
-                    i["customer_id"],
-                    i["spoke_spd_id"],
-                    i["spoke_svc_id"],
-                    i['sap'],
-                    '' if i['spoke_spd_id'] not in sdp_ids else sdp_ids[i['spoke_spd_id']],
-                    sap,
-                    '' if sap not in ports_policys else ports_policys[sap],
-                    sap[:1],
-                    '' if card == '' else card["buffer_min"],
-                    '' if card == '' else card["buffer_max"],
-                    '' if card == '' else card["resv_min"],
-                    '' if card == '' else card["resv_max"],
-                    '' if card == '' else card["shutdown"]
-                    ])
-
+                    data.append([
+                        i["sysname"],
+                        i["chassis"],
+                        i["source_ip"],
+                        i["l2vpn"],
+                        i["service_id"],
+                        i["service_name"],
+                        i["customer_id"],
+                        i["spoke_spd_id"],
+                        i["spoke_svc_id"],
+                        i['sap'],
+                        i['ingress_qos'],
+                        i['egress_qos']
+                    ])    
         if console:
             myFile = open('Nokia_'+str(len(files))+'_files_scenery_7.csv', 'w')
             with myFile:
@@ -888,7 +929,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','vpls','sap','ingress_qos_id','egress_qos_id','port','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','vpls','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card','buffer_min','buffer_max','resv_min','resv_max','shutdown']]
 
         ###############  Template #######################
         template = open(temp)
@@ -910,6 +951,7 @@ class Nokia(object):
             l3vpn_list = []
             vplss = {}
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = {}
             ############ Structure results ############
@@ -944,6 +986,8 @@ class Nokia(object):
                     }
                 if row[12] != '':
                     ports_policys[row[12]] = row[13]
+                if row[22] != '':
+                    port_descriptions[row[12]] = row[22]
                 if row[14] != '':
                     lags[row[14]] = row[15]
                 if row[16] != '':
@@ -977,6 +1021,7 @@ class Nokia(object):
                         match['ingress'],
                         match['egress'],
                         port,
+                        '' if port not in port_descriptions else port_descriptions[port],
                         '' if port not in ports_policys else ports_policys[port],
                         port[:1],
                         '' if card == '' else card["buffer_min"],
@@ -1033,8 +1078,8 @@ class Nokia(object):
         if len(files) < 1:
             return Get(404,'Files are empty',None)
         data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name',
-        'customer_id','interface','spoke_spd_id','spoke_svc_id','sap',
-        'ingress_qos_id','egress_qos_id','port','policy','card','buffer_min',
+        'customer_id','interface','spoke_spd_id','spoke_svc_id','far_end_ip','sap',
+        'ingress_qos_id','egress_qos_id','port','port_description','policy','card','buffer_min',
         'buffer_max','resv_min','resv_max','shutdown']]
 
         ###############  Template #######################
@@ -1058,6 +1103,7 @@ class Nokia(object):
             l2vpn_list = []
             sdp_ids = {}
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = {}
             ############ Structure results ############
@@ -1102,6 +1148,8 @@ class Nokia(object):
                     sdp_ids[row[13]] = row[14]
                 if row[15] != '':
                     ports_policys[row[15]] = row[16]
+                if row[25] != '':
+                    port_descriptions[row[15]] = row[25]
                 if row[17] != '':
                     lags[row[17]] = row[18]
                 if row[19] != '':
@@ -1133,10 +1181,12 @@ class Nokia(object):
                                 i["interface"],
                                 i['spoke_spd_id'],
                                 i['spoke_svc_id'],
+                                '' if i['spoke_spd_id'] not in sdp_ids else sdp_ids[i['spoke_spd_id']], 
                                 n['sap'],
                                 n['ingress'],
                                 n['egress'],
                                 port,
+                                '' if port not in port_descriptions else port_descriptions[port],
                                 '' if port not in ports_policys else ports_policys[port],
                                 port[:1],
                                 '' if card == '' else card["buffer_min"],
@@ -1194,7 +1244,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','interface','lag','port','port_type','address','isis','mpls','rsvp','queue-policy','qos','card','mda','fabric_network','fabric_access']]
+        data = [['sysname','chassis','source_ip','interface','lag','port','port_description','port_type','address','isis','mpls','rsvp','queue-policy','qos','card','mda','fabric_network','fabric_access']]
 
         ###############  Template #######################
         template = open(temp)
@@ -1214,6 +1264,7 @@ class Nokia(object):
             source_ip = ''
             queue_policy_list = {}
             port_types = {}
+            port_descriptions = {}
             mpls_interfaces = []
             rsvp_interfaces = []
             lag = 0
@@ -1238,6 +1289,8 @@ class Nokia(object):
                     })
                 if row[6] != '':
                     queue_policy_list[row[5]] = row[6]
+                if row[18] != '':
+                    port_descriptions[row[5]] = row[18]
                 if row[7] != '':
                     isis_list.append(row[7])
                 if row[8] != '':
@@ -1269,6 +1322,7 @@ class Nokia(object):
                                 i["interface"],
                                 '' if i["port"] not in lag_ports else i["port"][4:],
                                 port,
+                                '' if port not in port_descriptions else port_descriptions[port],
                                 '' if port not in port_types else port_types[port],
                                 i["address"],
                                 0,
@@ -1328,7 +1382,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','sap','ingress_qos_id','egress_qos_id','port','policy','card','mda','fabric_network','fabric_access']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','sap','ingress_qos_id','egress_qos_id','port','port_descriptions','policy','card','mda','fabric_network','fabric_access']]
         file_list = []
         ###############  Template #######################
         template = open(temp)
@@ -1351,6 +1405,7 @@ class Nokia(object):
             customer_id = ''
             l3vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             card_name = ''
             cards = []
@@ -1388,6 +1443,8 @@ class Nokia(object):
                     })
                 if row[11] != '':
                     ports_policys[row[11]] = row[12]
+                if row[19] != '':
+                    port_descriptions[row[11]] = row[19]
                 if row[13] != '':
                     lags[row[13]] = row[14]
                 if row[15] != '':
@@ -1421,6 +1478,7 @@ class Nokia(object):
                             i["ingress_qos_id"],
                             i["egress_qos_id"],
                             port,
+                            '' if port not in port_descriptions else port_descriptions[port],
                             '' if port not in ports_policys else ports_policys[port],
                             card['card'],
                             card['mda'],
@@ -1473,7 +1531,7 @@ class Nokia(object):
         if len(files) < 1:
             return Get(404,'Files are empty',None)
 
-        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','sap','ingress_qos_id','egress_qos_id','port','policy','card', 'mda', 'fabric_network', 'fabric_access']]
+        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card', 'mda', 'fabric_network', 'fabric_access']]
 
         ###############  Template #######################
         template = open(temp)
@@ -1494,6 +1552,7 @@ class Nokia(object):
             customer_id = ''
             l2vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             card_name = ''
             cards = []
@@ -1529,6 +1588,8 @@ class Nokia(object):
                     })
                 if row[10] != '':
                     ports_policys[row[10]] = row[11]
+                if row[18] != '':
+                    port_descriptions[row[10]] = row[18]
                 if row[12] != '':
                     lags[row[12]] = row[13]
                 if row[14] != '':
@@ -1561,6 +1622,7 @@ class Nokia(object):
                             i["ingress_qos_id"],
                             i["egress_qos_id"],
                             sap,
+                            '' if sap not in port_descriptions else port_descriptions[sap],
                             '' if sap not in ports_policys else ports_policys[sap],
                             card['card'],
                             card['mda'],
@@ -1610,7 +1672,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','spoke_spd_id','spoke_svc_id','sap','far_end_system_ip','port','policy','card', 'mda', 'fabric_network', 'fabric_access']]
+        data = [['sysname','chassis','source_ip','l2vpn','service_id','service_name','customer_id','spoke_spd_id','spoke_svc_id','sap','far_end_system_ip','port','port_description','policy','card', 'mda', 'fabric_network', 'fabric_access']]
         ###############  Template #######################
         template = open(temp)
         ############# File Processor ##########################
@@ -1625,6 +1687,7 @@ class Nokia(object):
             source_ip = ''
             l2vpn_list = []
             ports_policys = {}
+            port_descriptions = {}
             sdp_ids = {}
             lags = {}
             cards = []
@@ -1655,6 +1718,8 @@ class Nokia(object):
                     sdp_ids[row[10]] = row[11]
                 if row[12] != '':
                     ports_policys[row[12]] = row[13]
+                if row[20] != '':
+                    port_descriptions[row[12]] = row[20]
                 if row[14] != '':
                     lags[row[14]] = row[15]
                 if row[16] != '':
@@ -1689,6 +1754,7 @@ class Nokia(object):
                         i['sap'],
                         '' if i['spoke_spd_id'] not in sdp_ids else sdp_ids[i['spoke_spd_id']],
                         sap,
+                        '' if sap not in port_descriptions else port_descriptions[sap],
                         '' if sap not in ports_policys else ports_policys[sap],
                         card['card'],
                         card['mda'],
@@ -1739,7 +1805,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','vpls','sap','ingress_qos_id','egress_qos_id','port','policy','card', 'mda', 'fabric_network', 'fabric_access']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','vpls','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card', 'mda', 'fabric_network', 'fabric_access']]
 
         ###############  Template #######################
         template = open(temp)
@@ -1761,6 +1827,7 @@ class Nokia(object):
             l3vpn_list = []
             vplss = {}
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = []
             card_name = ''
@@ -1801,6 +1868,8 @@ class Nokia(object):
                     }
                 if row[12] != '':
                     ports_policys[row[12]] = row[13]
+                if row[20] != '':
+                    port_descriptions[row[12]] = row[20]
                 if row[14] != '':
                     lags[row[14]] = row[15]
                 if row[16] != '':
@@ -1837,6 +1906,7 @@ class Nokia(object):
                                 match['ingress'],
                                 match['egress'],
                                 port,
+                                '' if port not in port_descriptions else port_descriptions[port],
                                 '' if port not in ports_policys else ports_policys[port],
                                 card['card'],
                                 card['mda'],
@@ -1889,7 +1959,7 @@ class Nokia(object):
         """
         if len(files) < 1:
             return Get(404,'Files are empty',None)
-        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','spoke_spd_id','spoke_svc_id','sap','ingress_qos_id','egress_qos_id','port','policy','card', 'mda', 'fabric_network', 'fabric_access']]
+        data = [['sysname','chassis','source_ip','l3vpn','service_id','service_name','customer_id','interface','spoke_spd_id','spoke_svc_id','sap','ingress_qos_id','egress_qos_id','port','port_description','policy','card', 'mda', 'fabric_network', 'fabric_access']]
 
         ###############  Template #######################
         template = open(temp)
@@ -1912,6 +1982,7 @@ class Nokia(object):
             l2vpn_list = []
             sdp_ids = {}
             ports_policys = {}
+            port_descriptions = {}
             lags = {}
             cards = []
             card_name = ''
@@ -1957,6 +2028,8 @@ class Nokia(object):
                     sdp_ids[row[13]] = row[14]
                 if row[15] != '':
                     ports_policys[row[15]] = row[16]
+                if row[23] != '':
+                    port_descriptions[row[15]] = row[23]
                 if row[17] != '':
                     lags[row[17]] = row[18]
                 if row[19] != '':
@@ -1995,6 +2068,7 @@ class Nokia(object):
                                         n['ingress'],
                                         n['egress'],
                                         port,
+                                        '' if port not in port_descriptions else port_descriptions[port],
                                         '' if port not in ports_policys else ports_policys[port],
                                         card['card'],
                                         card['mda'],
@@ -2003,7 +2077,18 @@ class Nokia(object):
                                         ])
                             pass
                         else:
-                            pass
+                            data.append([
+                                i["sysname"],
+                                i["chassis"],
+                                i["source_ip"],
+                                i["l3vpn"],
+                                i["service_id"],
+                                i["service_name"],
+                                i["customer_id"],
+                                i["interface"],
+                                i['spoke_spd_id'],
+                                i['spoke_svc_id']
+                            ])
 
         if console:
             myFile = open('Nokia_'+str(len(files))+'_files_scenery_16.csv', 'w')
@@ -2071,7 +2156,7 @@ class Nokia(object):
 
             for row in fsm_results:
                 if row[3] == 'cs1' and row[4] == 'cs1' and row[5] == 'cs1' and row[6] == 'cs1' and row[7] == 'cs1' and row[8] == 'cs1':
-                    data.append([row[0],row[1],row[2],1,1,1,1,1,1,row[9],1])
+                    data.append([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10]])
                 else:
                     data.append([
                         row[0],
@@ -2084,7 +2169,7 @@ class Nokia(object):
                         row[7],
                         row[8],
                         row[9],
-                        1
+                        row[10]
                     ])
 
 
@@ -2267,7 +2352,6 @@ class Nokia(object):
             ############ Structure results ############
 
             # If fsm_results contains 102 that means all policies is in the file 
-
             if len(fsm_results) == 102:
                 data.append([
                     fsm_results[0][0],

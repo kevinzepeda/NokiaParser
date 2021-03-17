@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.94
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.94
 Warning: Permanently added '10.190.2.94' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.94's password: 
+ca168b@10.190.2.94's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 20 Minutes 
 A:APIZACO-PUE7073-WA# environment no more 
 A:APIZACO-PUE7073-WA# show chassis 
 ===============================================================================
@@ -39,11 +41,12 @@ Chassis   Role                Status
 1         Standalone          up
 ===============================================================================
 A:APIZACO-PUE7073-WA# admin display-config detail 
-# TiMOS-C-19.10.R2 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
+# TiMOS-C-20.2.R1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2020 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
-# Built on Mon Dec 16 15:37:51 PST 2019 by builder in /builds/c/1910B/R2/panos/main
+# Built on Sat Feb 29 10:39:32 PST 2020 by builder in /builds/c/202B/R1/panos/main/sros
+# Configuration format version 20.2 revision 0
 
-# Generated THU MAY 21 05:26:54 2020 UTC
+# Generated WED MAR 17 02:27:32 2021 UTC
 
 exit all
 configure
@@ -81,6 +84,7 @@ echo "System Configuration"
         no boot-bad-exec
         allow-boot-license-violations
         no switchover-exec
+        no ospf-dynamic-hostnames
         power-supply 1 dc
         power-supply 2 dc
         l2tp
@@ -91,6 +95,9 @@ echo "System Configuration"
             no enforce-unique-if-index
             no forward-6in4
             no forward-ip-over-gre
+            mpls
+                label-stack-statistics-count 1
+            exit
         exit
         load-balancing
             no l2tp-load-balancing
@@ -213,7 +220,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f000010e8787fd751"
             packet-size 9216
@@ -238,7 +245,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -248,20 +255,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -492,6 +499,7 @@ echo "System Security Configuration"
                         gnoi-cert-mgmt-rotate deny
                         gnoi-cert-mgmt-install deny
                         gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-revoke deny
                         gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
@@ -567,6 +575,11 @@ echo "System Security Configuration"
                     match "enable-admin"
                     action permit
                 exit
+                entry 90
+                    no description
+                    match "enable"
+                    action permit
+                exit
                 entry 100
                     no description
                     match "configure li"
@@ -580,6 +593,7 @@ echo "System Security Configuration"
                         gnoi-cert-mgmt-rotate deny
                         gnoi-cert-mgmt-install deny
                         gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-revoke deny
                         gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
@@ -693,6 +707,7 @@ echo "System Security Configuration"
                         gnoi-cert-mgmt-rotate deny
                         gnoi-cert-mgmt-install deny
                         gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-revoke deny
                         gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
@@ -861,7 +876,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$1f1yhmCGD3SqNjMCbGCpM./TCxpSolSzQgsrtpFCKX5DeE1Fl8wsy"
+                password "$2y$10$fvSkm9Xd2OtT9Hkb07GHk.ZAijA0O7aWlVhEy2S11QvWVcgQPZ5CC"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -885,7 +900,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$ZneGx5jifYbTsAT5IoeSp.VHOJMWEgOuFbMAMLCb7d2NcNwtfmXkK"
+                password "$2y$10$wHJm6eG4P1yuZnjR55n9E.uncKNXOunT5CDlFjJBomHqT8989f3re"
                 access console ftp
                 no home-directory
                 no restricted-to-home
@@ -905,8 +920,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$EmndIukXkPv39qWRsoNI2.M/BJ7kBbU.qvESJMuP58nVEWDDtWM66"
-                no access
+                password "$2y$10$OiE6KjkoErN95QMtz19Gg.6Tvs0wpMq64YyuqwRCI6B/mHKvm6klC"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -1538,6 +1553,10 @@ echo "System Security Configuration"
                     mac 215 name hmac-sha1
                     mac 230 name hmac-ripemd160
                     mac 235 name hmac-ripemd160-openssh-com
+                exit
+                client-kex-list
+                exit
+                server-kex-list
                 exit
                 key-re-exchange
                     client
@@ -2632,6 +2651,7 @@ echo "Log Configuration"
         event-control "chassis" 2033 generate major disable-specific-throttle
         event-control "chassis" 2034 generate major throttle disable-specific-throttle
         event-control "chassis" 2052 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2055 suppress
         event-control "chassis" 2056 generate major throttle disable-specific-throttle
         event-control "chassis" 2057 generate minor throttle disable-specific-throttle
         event-control "chassis" 2058 generate minor disable-specific-throttle
@@ -2734,6 +2754,8 @@ echo "Log Configuration"
         event-control "chassis" 2205 generate minor throttle disable-specific-throttle
         event-control "chassis" 2206 generate minor throttle disable-specific-throttle
         event-control "chassis" 2207 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2221 generate major throttle disable-specific-throttle
+        event-control "chassis" 2222 generate minor throttle disable-specific-throttle
         event-control "chassis" 2275 generate minor throttle disable-specific-throttle
         event-control "chassis" 2276 generate cleared throttle disable-specific-throttle
         event-control "chassis" 2277 generate minor throttle disable-specific-throttle
@@ -2905,6 +2927,7 @@ echo "Log Configuration"
         event-control "ip" 2008 generate minor throttle disable-specific-throttle
         event-control "ip" 2009 generate minor throttle disable-specific-throttle
         event-control "ip" 2010 generate minor throttle disable-specific-throttle
+        event-control "ip" 2011 generate minor throttle disable-specific-throttle
         event-control "ipsec" 2001 generate warning throttle disable-specific-throttle
         event-control "ipsec" 2002 generate warning throttle disable-specific-throttle
         event-control "ipsec" 2003 generate minor throttle disable-specific-throttle
@@ -3037,9 +3060,11 @@ echo "Log Configuration"
         event-control "li" 2207 generate warning throttle disable-specific-throttle
         event-control "li" 2208 generate warning throttle disable-specific-throttle
         event-control "li" 2209 generate warning throttle disable-specific-throttle
-        event-control "li" 2210 suppress
+        event-control "li" 2210 generate minor throttle disable-specific-throttle
         event-control "li" 2212 generate warning throttle disable-specific-throttle
         event-control "li" 2213 generate major throttle disable-specific-throttle
+        event-control "li" 2223 suppress
+        event-control "li" 2224 suppress
         event-control "li" 2300 generate indeterminate throttle disable-specific-throttle
         event-control "li" 2401 generate minor throttle disable-specific-throttle
         event-control "li" 2402 generate minor throttle disable-specific-throttle
@@ -3247,7 +3272,6 @@ echo "Log Configuration"
         event-control "ospf" 2005 generate warning throttle disable-specific-throttle
         event-control "ospf" 2007 generate warning throttle disable-specific-throttle
         event-control "ospf" 2009 generate warning throttle disable-specific-throttle
-        event-control "ospf" 2011 generate warning disable-specific-throttle
         event-control "ospf" 2012 suppress
         event-control "ospf" 2013 generate warning throttle disable-specific-throttle
         event-control "ospf" 2014 generate warning throttle disable-specific-throttle
@@ -3266,7 +3290,6 @@ echo "Log Configuration"
         event-control "ospf" 2033 generate warning throttle disable-specific-throttle
         event-control "ospf" 2034 generate warning throttle disable-specific-throttle
         event-control "ospf" 2035 generate warning throttle disable-specific-throttle
-        event-control "ospf" 2036 generate warning throttle disable-specific-throttle
         event-control "ospf" 2037 generate warning throttle disable-specific-throttle
         event-control "ospf" 2038 generate warning throttle disable-specific-throttle
         event-control "ospf" 2039 generate major throttle disable-specific-throttle
@@ -3276,7 +3299,6 @@ echo "Log Configuration"
         event-control "ospf" 2043 generate warning throttle disable-specific-throttle
         event-control "ospf" 2044 generate warning throttle disable-specific-throttle
         event-control "ospf" 2045 generate warning throttle disable-specific-throttle
-        event-control "ospf" 2046 generate warning disable-specific-throttle
         event-control "ospf" 2047 generate warning throttle disable-specific-throttle
         event-control "ospf" 2048 generate warning throttle disable-specific-throttle
         event-control "ospf" 2049 generate warning disable-specific-throttle
@@ -3291,6 +3313,8 @@ echo "Log Configuration"
         event-control "ospf" 2058 generate warning throttle disable-specific-throttle
         event-control "ospf" 2059 generate warning throttle disable-specific-throttle
         event-control "ospf" 2060 generate warning throttle disable-specific-throttle
+        event-control "ospf" 2061 generate warning throttle disable-specific-throttle
+        event-control "ospf" 2062 generate warning throttle disable-specific-throttle
         event-control "pim" 2001 generate minor throttle disable-specific-throttle
         event-control "pim" 2002 generate minor throttle disable-specific-throttle
         event-control "pim" 2003 generate warning throttle disable-specific-throttle
@@ -3962,6 +3986,7 @@ echo "Log Configuration"
         event-control "vrtr" 2092 generate minor throttle specific-throttle-rate 10 interval 10
         event-control "vrtr" 2093 generate minor throttle specific-throttle-rate 100 interval 10
         event-control "vrtr" 2094 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "vrtr" 2095 generate minor throttle disable-specific-throttle
         event-control "radius" 2001 generate minor throttle disable-specific-throttle
         event-control "radius" 2002 generate minor throttle disable-specific-throttle
         event-control "radius" 2003 generate minor throttle disable-specific-throttle
@@ -4062,6 +4087,12 @@ echo "Log Configuration"
         event-control "macsec" 2008 generate minor throttle disable-specific-throttle
         event-control "macsec" 2009 generate minor throttle disable-specific-throttle
         event-control "macsec" 2010 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2011 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2012 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2013 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2014 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2015 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2016 generate minor throttle disable-specific-throttle
         event-control "pcap" 2001 generate minor throttle disable-specific-throttle
         event-control "pcap" 2002 generate minor throttle disable-specific-throttle
         event-control "pcap" 2003 generate major throttle disable-specific-throttle
@@ -4623,6 +4654,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4633,6 +4666,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4644,6 +4679,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -6056,7 +6291,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6075,7 +6309,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6094,7 +6327,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6113,7 +6345,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6132,7 +6363,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6151,7 +6381,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6170,7 +6399,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6189,7 +6417,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6208,7 +6435,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6227,7 +6453,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6246,7 +6471,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6265,7 +6489,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6284,7 +6507,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6303,7 +6525,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6322,7 +6543,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6341,7 +6561,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6498,7 +6717,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs 10
@@ -6517,7 +6735,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6536,7 +6753,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs 10
@@ -6642,7 +6858,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6653,7 +6868,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6664,7 +6878,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6675,7 +6888,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6686,7 +6898,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6697,7 +6908,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6708,7 +6918,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6719,7 +6928,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6730,7 +6938,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6741,7 +6948,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6752,7 +6958,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6763,7 +6968,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6774,7 +6978,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6785,7 +6988,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6796,7 +6998,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6807,7 +7008,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6818,7 +7018,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6829,7 +7028,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6840,7 +7038,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6851,7 +7048,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6862,7 +7058,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6873,7 +7068,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6884,7 +7078,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6895,7 +7088,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6906,7 +7098,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6917,7 +7108,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6928,7 +7118,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6939,7 +7128,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6950,7 +7138,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6961,7 +7148,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6972,7 +7158,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -6983,7 +7168,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7045,7 +7229,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7056,7 +7239,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7067,7 +7249,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7078,7 +7259,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7089,7 +7269,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7100,7 +7279,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7111,7 +7289,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7122,7 +7299,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7133,7 +7309,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7144,7 +7319,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7155,7 +7329,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7166,7 +7339,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7177,7 +7349,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7188,7 +7359,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7199,7 +7369,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7210,7 +7379,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7272,7 +7440,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 0 fir 0
                 mbs 50
                 cbs 1
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7283,7 +7450,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7294,7 +7460,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7305,7 +7470,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 25 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7316,7 +7480,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7327,7 +7490,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 100 fir 0
                 mbs 50
                 cbs 10
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7338,7 +7500,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7349,7 +7510,6 @@ echo "QoS Policy Configuration"
                 rate 100 cir 10 fir 0
                 mbs 25
                 cbs 3
-                no pool
                 drop-tail
                     low
                         percent-reduction-from-mbs default
@@ -7856,7 +8016,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -7889,7 +8048,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -7922,7 +8080,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -7955,7 +8112,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -7988,7 +8144,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8021,7 +8176,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8054,7 +8208,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8192,7 +8345,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8225,7 +8377,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8258,7 +8409,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8291,7 +8441,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8324,7 +8473,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8357,7 +8505,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8390,7 +8537,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8528,7 +8674,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8561,7 +8706,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8594,7 +8738,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8627,7 +8770,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8660,7 +8802,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8693,7 +8834,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8726,7 +8866,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         packet-byte-offset add 20
                         no burst-limit
@@ -8864,7 +9003,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         no packet-byte-offset
                         no burst-limit
@@ -8897,7 +9035,6 @@ echo "QoS Policy Configuration"
                                 percent-reduction-from-mbs default
                             exit
                         exit
-                        no pool
                         no wred-queue
                         no packet-byte-offset
                         no burst-limit
@@ -9013,6 +9150,12 @@ echo "QoS Policy Configuration"
                         queue 2
                     exit
                 exit
+            exit
+        exit
+        fp-resource-policy "default" create
+            description "Default FP Resource Policy"
+            queues
+                ingress-percent-of-total 50.00
             exit
         exit
     exit
@@ -9140,7 +9283,6 @@ echo "MACsec Configuration"
 echo "Card Configuration"
 #--------------------------------------------------
     card 1
-        no named-pool-mode
         card-type imm12-10gb-sf+
         no fail-on-error
         no reset-on-recoverable-error
@@ -9154,14 +9296,6 @@ echo "Card Configuration"
         no power-save
         mda 1
             sync-e
-            named-pool-mode
-                ingress
-                    no named-pool-policy
-                exit
-                egress
-                    no named-pool-policy
-                exit
-            exit
             ingress-xpl
                 threshold 1000
                 window 60
@@ -9211,6 +9345,7 @@ echo "Card Configuration"
         fp 1
             no stable-pool-sizing
             ingress-buffer-allocation 50.00
+            no fp-resource-policy
             no hi-bw-mcast-src
             dist-cpu-protection
                 no dynamic-enforcement-policer-pool
@@ -9244,7 +9379,6 @@ echo "Card Configuration"
         no shutdown
     exit
     card 2
-        no named-pool-mode
         card-type imm12-10gb-sf+
         no fail-on-error
         no reset-on-recoverable-error
@@ -9258,14 +9392,6 @@ echo "Card Configuration"
         no power-save
         mda 1
             sync-e
-            named-pool-mode
-                ingress
-                    no named-pool-policy
-                exit
-                egress
-                    no named-pool-policy
-                exit
-            exit
             ingress-xpl
                 threshold 1000
                 window 60
@@ -9315,6 +9441,7 @@ echo "Card Configuration"
         fp 1
             no stable-pool-sizing
             ingress-buffer-allocation 50.00
+            no fp-resource-policy
             no hi-bw-mcast-src
             dist-cpu-protection
                 no dynamic-enforcement-policer-pool
@@ -9348,7 +9475,6 @@ echo "Card Configuration"
         no shutdown
     exit
     card 3
-        no named-pool-mode
         no card-type
         no fail-on-error
         no reset-on-recoverable-error
@@ -9356,7 +9482,6 @@ echo "Card Configuration"
         no shutdown
     exit
     card 4
-        no named-pool-mode
         no card-type
         no fail-on-error
         no reset-on-recoverable-error
@@ -9364,7 +9489,6 @@ echo "Card Configuration"
         no shutdown
     exit
     card 5
-        no named-pool-mode
         no card-type
         no fail-on-error
         no reset-on-recoverable-error
@@ -9402,14 +9526,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -9639,14 +9755,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -9878,14 +9986,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -10100,14 +10200,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -10324,14 +10416,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -10546,14 +10630,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -10770,14 +10846,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -10992,14 +11060,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -11216,14 +11276,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -11438,14 +11490,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -11662,14 +11706,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -11885,14 +11921,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -12106,14 +12134,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -12343,14 +12363,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -12582,14 +12594,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -12805,14 +12809,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -13026,14 +13022,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -13265,14 +13253,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -13487,14 +13467,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -13711,14 +13683,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -13933,14 +13897,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -14157,14 +14113,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -14380,14 +14328,6 @@ echo "Port Configuration"
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
         exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
         access
             ingress
                 pool default
@@ -14602,14 +14542,6 @@ echo "Port Configuration"
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
             egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
         exit
         access
             ingress
@@ -14979,7 +14911,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -14996,7 +14927,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15028,7 +14958,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15045,7 +14974,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15062,7 +14990,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15079,7 +15006,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15096,7 +15022,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15113,7 +15038,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15130,7 +15054,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15313,7 +15236,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15330,7 +15252,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15377,7 +15298,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15394,7 +15314,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15411,7 +15330,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15458,7 +15376,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15475,7 +15392,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15492,7 +15408,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15509,7 +15424,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15526,7 +15440,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs 12 kilobytes
                 cbs 12
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15543,7 +15456,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15560,7 +15472,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15705,7 +15616,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15722,7 +15632,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs 12 kilobytes
                 cbs 12
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15739,7 +15648,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15756,7 +15664,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15835,7 +15742,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15852,7 +15758,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15869,7 +15774,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15886,7 +15790,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -15903,7 +15806,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16000,7 +15902,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16017,7 +15918,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16064,7 +15964,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16081,7 +15980,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16098,7 +15996,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16161,7 +16058,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16178,7 +16074,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16225,7 +16120,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16242,7 +16136,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16289,7 +16182,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16306,7 +16198,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16353,7 +16244,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16370,7 +16260,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16387,7 +16276,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16404,7 +16292,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16421,7 +16308,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs 3663 kilobytes
                 cbs 3663
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16438,7 +16324,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs 3052 kilobytes
                 cbs 3052
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16455,7 +16340,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16472,7 +16356,6 @@ echo "QoS Policy Configuration"
                 no cir-non-profiling
                 mbs default
                 cbs default
-                no pool
                 no packet-byte-offset
                 no burst-limit
                 no adv-config-policy
@@ -16634,7 +16517,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16763,7 +16645,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16795,7 +16676,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16827,7 +16707,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16859,7 +16738,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16891,7 +16769,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -16923,7 +16800,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -17208,7 +17084,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 no packet-byte-offset
                 no burst-limit
@@ -17351,7 +17226,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17383,7 +17257,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -17415,7 +17288,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -17447,7 +17319,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17479,7 +17350,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17511,7 +17381,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17742,7 +17611,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17774,7 +17642,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17806,7 +17673,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17963,7 +17829,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -17995,7 +17860,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -18027,7 +17891,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -18059,7 +17922,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18234,7 +18096,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18266,7 +18127,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18409,7 +18269,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18441,7 +18300,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18598,7 +18456,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18630,7 +18487,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18662,7 +18518,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -18694,7 +18549,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
                 packet-byte-offset add 20
                 no burst-limit
@@ -18726,7 +18580,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18758,7 +18611,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -18790,7 +18642,6 @@ echo "QoS Policy Configuration"
                 hs-class-weight 1
                 hs-wred-queue policy "_tmnx_hs_default"
                 no hs-alt-port-class-pool
-                no pool
                 no wred-queue
                 packet-byte-offset add 20
                 no burst-limit
@@ -19980,6 +19831,8 @@ echo "Bfd Configuration"
             no dist-cpu-protection
             bfd 100 receive 100 multiplier 3
             if-attribute
+                no admin-group
+                no srlg-group
             exit
             lag-per-link-hash class 1 weight 1
             no vas-if-type
@@ -20074,6 +19927,8 @@ echo "Bfd Configuration"
             no dist-cpu-protection
             bfd 100 receive 100 multiplier 3
             if-attribute
+                no admin-group
+                no srlg-group
             exit
             lag-per-link-hash class 1 weight 1
             no vas-if-type
@@ -20135,6 +19990,8 @@ echo "Bfd Configuration"
             no dist-cpu-protection
             no bfd
             if-attribute
+                no admin-group
+                no srlg-group
             exit
             no shutdown
         exit
@@ -20418,7 +20275,7 @@ echo "ISIS Configuration"
                 no loopfree-alternate-exclude
                 preference 15
                 psnp-authentication
-                no wide-metrics-only
+                wide-metrics-only
                 default-metric 10
                 default-ipv4-multicast-metric 10
                 default-ipv6-unicast-metric 10
@@ -20452,6 +20309,7 @@ echo "ISIS Configuration"
             exit
             segment-routing
                 adj-sid-hold 15
+                no class-forwarding
                 entropy-label enable
                 no export-tunnel-table
                 no micro-loop-avoidance
@@ -20471,6 +20329,10 @@ echo "ISIS Configuration"
                 exit
                 mapping-server
                     shutdown
+                exit
+                maximum-sid-depth
+                    no override-bmi
+                    no override-erld
                 exit
                 no shutdown
             exit
@@ -20913,6 +20775,7 @@ echo "LDP Configuration"
                 exit
                 interface "To-APIZACO-GA-1" dual-stack
                     bfd-enable ipv4
+                    no load-balancing-weight
                     ipv4
                         no hello
                         no keepalive
@@ -20930,6 +20793,7 @@ echo "LDP Configuration"
                 exit
                 interface "To-PUEGTA-IUSTB00969-WA" dual-stack
                     bfd-enable ipv4
+                    no load-balancing-weight
                     ipv4
                         no hello
                         no keepalive
@@ -21159,6 +21023,7 @@ echo "Subscriber-mgmt Configuration"
             no re-establish-session
             no reject-disabled-ncp
             no session-timeout
+            sid-allocation sequential
             ppp-options
             exit
         exit
@@ -21320,6 +21185,10 @@ echo "ISIS Configuration"
 #--------------------------------------------------
         isis 0
             no shutdown
+        exit
+        dns
+            redirect-vprn
+            exit
         exit
 #--------------------------------------------------
 echo "NAT (Service Side) Configuration"
@@ -22281,7 +22150,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:57 2020 UTC
+# Finished WED MAR 17 02:27:34 2021 UTC
 A:APIZACO-PUE7073-WA# show port 
 
 ===============================================================================
@@ -22356,7 +22225,7 @@ Details
 -------------------------------------------------------------------------------
 Lag-id              : 1                     Mode                 : network
 Adm                 : up                    Opr                  : up
-Thres. Last Cleared : 02/11/2020 02:51:26   Thres. Exceeded Cnt  : 0
+Thres. Last Cleared : 03/06/2021 00:29:26   Thres. Exceeded Cnt  : 0
 Dynamic Cost        : true                  Encap Type           : null
 Configured Address  : 10:e8:78:7f:d8:92     Lag-IfIndex          : 1342177281
 Hardware Address    : 10:e8:78:7f:d8:92

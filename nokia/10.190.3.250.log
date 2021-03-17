@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.250
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.250
 Warning: Permanently added '10.190.3.250' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.250's password: 
+ca168b@10.190.3.250's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
 A:RIOFRIO-MEX253-AA# environment no more 
 A:RIOFRIO-MEX253-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:RIOFRIO-MEX253-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:26:47 2020 UTC
+# Generated WED MAR 17 02:29:20 2021 UTC
 
 exit all
 configure
@@ -115,7 +117,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$/alHGlyvq23rV8FnuJMSw.SLkyqBUhB7ul1spx23nQbYOHCeF9wKq"
+                password "$2y$10$LCBjlNkFcqlXaiagRbHAc.bIP/bVa3FSsd6IP.AW1zSqpenLf73t6"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$HmRudEFn0BP9GmzkanORU.qRZqBVNTQBzJ7T/jodFpirSnyIAeR7S"
+                password "$2y$10$bw50uaxRPKskT94Z2xTJc.uG7NRedEecGiufU3IfR7L.nEJye6VRa"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1189,8 +1241,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$KWGnr2s1pOlRUBkmEu.Kk.3xxkg6jjAZvj33KeKRvjY1aH9sMlMe."
-                no access
+                password "$2y$10$G.BMSvxv7U2tvwTE2Jy0M.GPSqtZN3okHLnQ9xXWoYeABYOjS8s9G"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -7682,7 +7734,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:49 2020 UTC
+# Finished WED MAR 17 02:29:22 2021 UTC
 A:RIOFRIO-MEX253-AA# show port 
 
 ===============================================================================

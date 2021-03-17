@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.40
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.40
 Warning: Permanently added '10.190.3.40' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.40's password: 
+ca168b@10.190.3.40's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 18 Minutes 
 B:SANBAL-CHP8025-AA# environment no more 
 B:SANBAL-CHP8025-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ B:SANBAL-CHP8025-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:30:55 2020 UTC
+# Generated WED MAR 17 02:29:36 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1197,7 +1249,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$.8sc9HxfuEDVpS.ADrnVs..xFmlZ91fI/oap47k8hrGfkoEAwNgbK"
+                password "$2y$10$s1sLAuPe7C/T0sZJ0tbMc.3Yzcb64ZrnlCSb9eaZmusARFe9Ig18K"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1214,7 +1266,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$w38nm9HdGpn7Am42Q2OJk.8u.Eub0fZ88x91r8G.TcpG0iIgOG61K"
+                password "$2y$10$bxEZ0AjB./JMQ6p5Qmu4..gpwibXEx.Dr1mBrAa7.gHY72OyCfw6K"
                 access console ftp 
                 no home-directory
                 no restricted-to-home
@@ -1227,8 +1279,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$fEEgVQRQt5EQW03DGT.Zk.n9l0pCnjC/rRB1U8/9rrHx6VNXwW8lS"
-                no access
+                password "$2y$10$3vsz2TWX0JYCxjkMbWbmw.wZ8O5PbG2FLPptQ35R7Xt3xkQiVjQVK"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -1785,8 +1837,8 @@ echo "System Login Control Configuration"
             exit
             ssh
                 no disable-graceful-shutdown
-                inbound-max-sessions 5
-                outbound-max-sessions 5
+                inbound-max-sessions 7
+                outbound-max-sessions 7
                 ttl-security 20
             exit
             telnet
@@ -6308,7 +6360,7 @@ echo "Port Configuration"
     exit
     port 1/6/5
         shutdown
-        description "10/100/Gig Ethernet SFP"
+        description "Nuevo Enlace Carrier to VIHMTX-TAB8018-CA"
         ethernet
             dot1x
                 port-control force-auth
@@ -8986,13 +9038,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -9828,7 +9880,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:30:57 2020 UTC
+# Finished WED MAR 17 02:29:38 2021 UTC
 B:SANBAL-CHP8025-AA# show port 
 
 ===============================================================================
@@ -9870,7 +9922,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/16        Down  No   Down                                    
 1/1/16.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/5/1         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
-1/5/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+1/5/2         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/5/3         Up    Yes  Up      1514 1514    - accs null xcme   GIGE-T 
 1/5/4         Up    Yes  Up      2102 2102    - hybr dotq xcme   GIGE-T 
 1/5/5         Up    Yes  Up      1518 1518    - accs dotq xcme   GIGE-LX  10KM

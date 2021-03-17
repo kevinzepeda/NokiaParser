@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.106
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.106
 Warning: Permanently added '10.190.3.106' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.106's password: 
+ca168b@10.190.3.106's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 20 Minutes 
 B:NARVAR-MEX9230-GA# environment no more 
 B:NARVAR-MEX9230-GA# show chassis 
 ===============================================================================
@@ -43,7 +45,7 @@ B:NARVAR-MEX9230-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:25:10 2020 UTC
+# Generated WED MAR 17 02:27:42 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402656801"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$2fuYR7xPewWrSj1MbeB3..XGFAdPRZZ/fKMhbpBIglgLCxowx66Vu"
+                password "$2y$10$XwejW3Tf43z/uv.QrTvdA.qoh2I7t7lU3Fu6foywxOTJRMkcWot/C"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -910,7 +912,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$x4g4Ehsh6P8jseU/ZtTEk.ITuNNFKcv9QIv0R.DuPARibbDbfu/0u"
+                password "$2y$10$rNABFzTfzbi.JOXjdl.Sk.mDMpyJTtg.oKMnB2JvcEHXiu7VywS7G"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -925,12 +927,32 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
-                    member "default"
+                    no member "default"
                     member "administrative"
                 exit
                 snmp
                     no authentication
                     no group
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$dOq8RZAjVAW9La20WOy3o.RTbB57QxT/fBa6Xy9iBrYfI4klwsnRS"
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
                 exit
             exit
             snmp
@@ -4284,9 +4306,7 @@ echo "Log Configuration"
         snmp-trap-group 98
             description "5620sam"
             trap-target "10.150.10.203:162" address 10.150.10.203 port 162 snmpv2c notify-community "netviewtrap98"
-            trap-target "10.190.60.162:162" address 10.190.60.162 port 162 snmpv2c notify-community "galateatrap98"
             trap-target "10.32.240.171:162" address 10.32.240.171 port 162 snmpv2c notify-community "netview"
-            trap-target "3CA82A0A7404:main1" address 10.190.60.130 port 162 snmpv2c notify-community "galateatrap98"
         exit
         snmp-trap-group 99
             no description
@@ -4747,6 +4767,18 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+                no description
+                prefix 10.32.2.104/32
+                prefix 10.32.224.132/32
+                prefix 10.32.240.171/32
+                prefix 10.32.241.38/32
+                prefix 10.32.242.132/32
+                prefix 10.32.242.136/32
+                prefix 10.36.231.244/32
+                prefix 10.150.10.71/32
+                prefix 10.150.10.200/32
+            exit
             ip-prefix-list "ntp-host" create
                 no description
                 prefix 196.18.6.12/32
@@ -4817,6 +4849,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4827,6 +4861,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4838,6 +4874,26 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "Deny SNMP"
+                        no log
+                        match protocol none
+                            no dscp
+                            no dst-ip
+                            no dst-port
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip ip-prefix-list "denysnmp"
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -10518,10 +10574,10 @@ echo "Card Configuration"
             exit
             egress
                 wred-queue-control
-                    shutdown
                     buffer-allocation min 25.00 max 25.00
-                    resv-cbs min 25.00 max 25.00
+                    resv-cbs min 30.00 max 30.00
                     slope-policy "default"
+                    no shutdown
                 exit
             exit
         exit
@@ -11263,7 +11319,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-access:Mobile"
             crc-monitor
                 no sd-threshold
                 no sf-threshold
@@ -43527,7 +43583,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -45082,7 +45138,6 @@ echo "Service Configuration"
             exit
         exit
         epipe 519058 name "EPIPE_To-CONDES-VLAN58-BH" customer 2 create
-            shutdown
             description "EPIPE_To-CONDES-VLAN58-BH"
             service-mtu 9178
             no oper-group
@@ -45193,6 +45248,7 @@ echo "Service Configuration"
                 no bfd-enable
                 no shutdown
             exit
+            no shutdown
         exit
         epipe 519059 name "EPIPE_To-CONDES-VLAN59-BH" customer 2 create
             shutdown
@@ -45704,7 +45760,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -45712,7 +45768,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -45831,7 +45887,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -45839,7 +45895,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -46528,7 +46584,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -46536,7 +46592,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -46655,7 +46711,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -46663,7 +46719,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -46782,7 +46838,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -46790,7 +46846,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -47332,7 +47388,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -47340,7 +47396,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -47689,6 +47745,8 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+            exit
             ip-prefix-list "ntp-host" create
             exit
             ip-prefix-list "snmp-list" create
@@ -51343,7 +51401,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:20 2020 UTC
+# Finished WED MAR 17 02:27:50 2021 UTC
 B:NARVAR-MEX9230-GA# show port 
 
 ===============================================================================
@@ -51411,12 +51469,12 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 3/1/2         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 3/1/3         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 3/1/4         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-3/1/5         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-3/1/6         Down  No   Down    9212 9212    - netw null xcme   GIGE-SX 
+3/1/5         Down  No   Down    9212 9212    - netw null xcme   
+3/1/6         Down  No   Down    9212 9212    - netw null xcme   
 3/1/7         Down  No   Down    9212 9212    - accs dotq xcme   GIGE-T 
 3/1/8         Down  No   Down    9212 9212    - accs dotq xcme   GIGE-T 
 3/1/9         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-3/1/10        Down  No   Down    2102 2102    - netw null xcme   GIGE-SX 
+3/1/10        Down  No   Down    2102 2102    - netw null xcme   
 3/2/1         Down  No   Down                                    
 
 ===============================================================================
@@ -51426,8 +51484,8 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 4/1/1         Up    Yes  Up      9212 9212    8 netw null xgige  10GBASE-LR  *
-4/1/2         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
-4/1/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
+4/1/2         Down  No   Down    9212 9212    - netw null xgige  
+4/1/3         Down  No   Down    9212 9212    - netw null xgige  
 4/1/4         Down  No   Down    9212 9212    - netw null xgige  
 4/1/5         Down  No   Down    1518 1518    - accs dotq xgige  
 4/1/6         Down  No   Down    9212 9212    - netw null xgige  
@@ -51444,7 +51502,7 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 6/1/1         Up    Yes  Up      9212 9212    4 netw null xgige  10GBASE-LR  *
-6/1/2         Down  No   Down    9212 9212    4 netw null xgige  10GBASE-LR  *
+6/1/2         Down  No   Down    9212 9212    4 netw null xgige  
 6/1/3         Down  No   Down    9212 9212    - netw null xgige  
 6/1/4         Down  No   Down    9212 9212    - netw null xgige  
 6/1/5         Down  No   Down    1518 1518    - accs dotq xgige  
@@ -51469,9 +51527,9 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 10/1/6        Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 10/1/7        Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 10/1/8        Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-10/1/9        Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-10/1/10       Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
-10/1/11       Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
+10/1/9        Down  No   Down    9212 9212    - netw null xcme   
+10/1/10       Down  No   Down    9212 9212    - netw null xcme   
+10/1/11       Down  No   Down    9212 9212    - netw null xcme   
 10/1/12       Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 10/1/13       Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 10/1/14       Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
@@ -51515,7 +51573,7 @@ Details
 Lag-id              : 4                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/19/2019 00:41:02   Port Thres. Action   : down
+Thres. Last Cleared : 07/28/2020 04:08:55   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:69:45     Lag-IfIndex          : 1342177284
@@ -51569,7 +51627,7 @@ Details
 Lag-id              : 8                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/19/2019 00:41:02   Port Thres. Action   : down
+Thres. Last Cleared : 07/28/2020 04:08:55   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:69:49     Lag-IfIndex          : 1342177288
@@ -51620,7 +51678,7 @@ Details
 Lag-id              : 200                   Mode                 : network
 Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/19/2019 00:41:02   Port Thres. Action   : down
+Thres. Last Cleared : 07/28/2020 04:08:55   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:65:6a:09     Lag-IfIndex          : 1342177480

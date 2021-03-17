@@ -1,11 +1,10 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.130
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.130
 Warning: Permanently added '10.190.0.130' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.130's password: 
-environment no more
+ca168b@10.190.0.130's password: 
 
 
 A:HERMTX-HMO404-AA# environment no more 
@@ -84,7 +83,7 @@ A:HERMTX-HMO404-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Thu Dec 15 12:41:38 EST 2016 by builder in /rel6.2/b1/R8/panos/main
 
-# Generated THU MAY 21 05:30:33 2020 UTC
+# Generated WED MAR 17 02:20:56 2021 UTC
 
 exit all
 configure
@@ -154,11 +153,6 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MST
-                start first sunday april 02:00
-                end last sunday october 02:00
-                offset 60
-            exit
             zone MST -07
         exit
         thresholds
@@ -219,6 +213,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -694,6 +698,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1208,7 +1252,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "ZEJU2YNip1mv/fShQtCR8U" hash2
+                password "ZEJU2YNip1mBXBoJBYHss1l4kcCU58PQ" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1221,7 +1265,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password ".tWKo7o8jc81MK9CLLH7F1VeM/OWSl0RiubfKa1GH/c" hash2
+                password ".tWKo7o8jc7qRmF5TS0uq1Fwq7kWs9T8/.AsNCr80yY" hash2
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1234,8 +1278,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "DXgTpkZ8fx7h6qGQcsZ2fUa8cZcWFoim" hash2
-                no access
+                password "DXgTpkZ8fx7h6qGQcsZ2fY93FdNNt/622Mjv4JWCy/U" hash2
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -2909,6 +2953,13 @@ echo "QoS Policy Configuration"
                 unknown-queue 1
                 no de-1-out-profile
             exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
             fc "nc" create
                 queue 6
                 broadcast-queue 1
@@ -2917,9 +2968,19 @@ echo "QoS Policy Configuration"
                 no de-1-out-profile
             exit
             dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
             dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
             dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
             dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
             default-fc "be"
             default-priority low
         exit
@@ -3009,6 +3070,13 @@ echo "QoS Policy Configuration"
                 unknown-queue 1
                 no de-1-out-profile
             exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
             fc "nc" create
                 queue 6
                 broadcast-queue 1
@@ -3017,9 +3085,19 @@ echo "QoS Policy Configuration"
                 no de-1-out-profile
             exit
             dscp ef fc "ef" priority high
+            dscp cs2 fc "af" priority high
+            dscp cs3 fc "l1" priority high
+            dscp cs4 fc "h2" priority high
             dscp cs5 fc "nc" priority high
+            dscp af21 fc "af" priority high
+            dscp af22 fc "af" priority high
             dscp af23 fc "af" priority low
+            dscp af31 fc "l1" priority high
+            dscp af32 fc "l1" priority high
             dscp af33 fc "l1" priority low
+            dscp af41 fc "h2" priority high
+            dscp af42 fc "h2" priority high
+            dscp af43 fc "h2" priority high
             default-fc "be"
             default-priority low
         exit
@@ -3151,32 +3229,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3233,32 +3316,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3273,9 +3361,22 @@ echo "QoS Policy Configuration"
                 high-prio-only default
                 slope-policy "default"
             exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                slope-policy "default"
+            exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -3867,6 +3968,7 @@ echo "Port Configuration"
         description "To-SW_Culiacan-Hermosillo"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -3881,6 +3983,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -3890,9 +3993,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -4077,6 +4178,7 @@ echo "Port Configuration"
         description "To-SW_Culiacan-Hermosillo"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -4091,6 +4193,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -4100,9 +4203,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -6594,41 +6695,6 @@ echo "Service Configuration"
             no metric
             no shutdown
         exit
-        cpipe 102044 customer 2 vc-type satop-e1 create
-            description "TO-CULMTX-CUL011-AA"
-            service-mtu 1514
-            no service-name
-            sap 1/1/6.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11155:102044 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         cpipe 179587 customer 1 vc-type satop-e1 create
             no description
             service-mtu 1514
@@ -6687,41 +6753,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11156:179589 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179601 customer 1 vc-type satop-e1 create
-            description "To-SW_Culiacan-Hermosillo_EVDO"
-            service-mtu 1514
-            no service-name
-            sap 1/1/12.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111 
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11156:179601 create
                 ingress
                     no vc-label
                 exit
@@ -6934,7 +6965,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:30:44 2020 UTC
+# Finished WED MAR 17 02:21:09 2021 UTC
 A:HERMTX-HMO404-AA# show port 
 
 ==============================================================================
@@ -6953,8 +6984,8 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/4.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/5       Down  No   Down                                                   
 1/1/5.1     Down  No   Down    1514 1514    - accs cem  tdm                   
-1/1/6       Up    Yes  Link Up                                                
-1/1/6.1     Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/1/6       Up    No   Down                                                   
+1/1/6.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/7       Down  No   Down                                                   
 1/1/7.1     Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/8       Down  No   Down                                                   
@@ -6966,7 +6997,7 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/11      Down  No   Down                                                   
 1/1/11.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/12      Up    Yes  Link Up                                                
-1/1/12.1    Up    Yes  Up      1514 1514    - accs cem  tdm                   
+1/1/12.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/13      Down  No   Down                                                   
 1/1/13.1    Down  No   Down    1514 1514    - accs cem  tdm                   
 1/1/14      Up    Yes  Link Up                                                

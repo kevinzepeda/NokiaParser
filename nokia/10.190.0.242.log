@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.242
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.242
 Warning: Permanently added '10.190.0.242' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.242's password: 
+ca168b@10.190.0.242's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 26 Minutes 
 A:CANEST-CHI119-AA# environment no more 
 A:CANEST-CHI119-AA# show chassis 
 ===============================================================================
@@ -34,11 +36,11 @@ Chassis   Role                Status
 1         Standalone          up
 ===============================================================================
 A:CANEST-CHI119-AA# admin display-config detail 
-# TiMOS-B-9.0.R6 both/hops Nokia 7705 SAR Copyright (c) 2000-2019 Nokia.
+# TiMOS-B-20.4.R1 both/hops Nokia 7705 SAR Copyright (c) 2000-2020 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
-# Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
+# Built on Tue Apr 28 11:00:44 EDT 2020 by builder in /builds/F204B/R1/panos/main
 
-# Generated THU MAY 21 05:29:14 2020 UTC
+# Generated WED MAR 17 02:21:54 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone MDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone MST -07
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -668,6 +680,46 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 250
                         description "Permit SNMP from Src IP - ACC"
                         no src-port
@@ -1116,8 +1168,8 @@ echo "System Security Configuration"
                 authorization 
                 timeout 10
                 use-default-template
-                server 1 address 10.32.15.100 secret "bf.utu3DKQ90ma9JkYWI1VIjHe3uLrx98uwJrv7u1/o" hash2 port 49
-                server 2 address 10.32.15.101 secret "bf.utu3DKQ8OAqRKDaO/HV7z9A4oo9ZhXedxJaVA/kY" hash2 port 49
+                server 1 address 10.32.15.100 secret "yhitt1M3Tdumm+i8397ziNmz2rMZA1E07L5BdqoT" hash2 port 49
+                server 2 address 10.32.15.101 secret "yhitt1M3Tdumm+i8397ziO+VadYQJOT6/u1nAxgk" hash2 port 49
                 no shutdown
             exit
             tech-support
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$aknvCO0yPq/s5XuhIAaDA.Ixw2eInQHiyRQz/lhnWZOuumptRvhW."
+                password "$2y$10$SBzKfPeuWeZV.Q3WDZNnI.VMpZSb/CzDfCj8DWLX/LIkSMkM/uc1y"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$cWkOebIoxYNyv25sKFMZM.2C4Dap9ZhfJxEnM4wppJh6OiQa3/qXC"
+                password "$2y$10$oRVBfcsHSKt9nZ9q9rb3E.qJo95yEPkoNlX6xi87DzRVnAIdMvj8."
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1189,8 +1241,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$OHjvD3OKZVG5BycD.xw8Q.DtlZZd4b.a5CnOxkoYbpyWipiBT.Rtu"
-                no access
+                password "$2y$10$VdnjItxfFIfqO3zFPsVZ6.md5zzZrD4APow.A2UtWdSwA8eCPpOSi"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -1684,8 +1736,8 @@ echo "System Security Configuration"
                 access group "snmp-vpls-mgmt" security-model snmpv2c security-level no-auth-no-privacy context "vpls-management" prefix read "mgmt-view" write "mgmt-view" notify "mgmt-view"
                 access group "cli-vprn-readwrite" security-model snmpv2c security-level no-auth-no-privacy context "vprn" exact read "vprn-view" write "vprn-view" notify "iso"
                 attempts 20 time 5 lockout 10
-                community "J9zyNCj5yP3/71r/d3yWaE" hash2 rwa version both
-                community "ss5jXojADabugQVHxBHiRk" hash2 r version both
+                community "jmd4cRfa5MsMrPp0iOxFSIFRzZSQq8w=" hash2 rwa version both
+                community "3d4Xr8tCBErC9yTzSe3IqPcF1C0USwY=" hash2 r version both
             exit
             ssh
                 client-cipher-list protocol-version 1
@@ -1694,6 +1746,9 @@ echo "System Security Configuration"
                     cipher 30 name des
                 exit
                 client-cipher-list protocol-version 2
+                    cipher 2 name aes256-ctr
+                    cipher 4 name aes192-ctr
+                    cipher 6 name aes128-ctr
                     cipher 10 name aes128-cbc
                     cipher 20 name 3des-cbc
                     cipher 30 name blowfish-cbc
@@ -1708,6 +1763,9 @@ echo "System Security Configuration"
                     cipher 20 name blowfish
                 exit
                 server-cipher-list protocol-version 2
+                    cipher 2 name aes256-ctr
+                    cipher 4 name aes192-ctr
+                    cipher 6 name aes128-ctr
                     cipher 10 name aes128-cbc
                     cipher 20 name 3des-cbc
                     cipher 30 name blowfish-cbc
@@ -1716,6 +1774,40 @@ echo "System Security Configuration"
                     cipher 60 name aes192-cbc
                     cipher 70 name aes256-cbc
                     cipher 80 name rijndael-cbc
+                exit
+                client-mac-list
+                    mac 200 name hmac-sha2-512
+                    mac 210 name hmac-sha2-256
+                    mac 215 name hmac-sha1
+                    mac 220 name hmac-sha1-96
+                    mac 225 name hmac-md5
+                    mac 230 name hmac-ripemd160
+                    mac 235 name hmac-ripemd160-openssh-com
+                    mac 240 name hmac-md5-96
+                exit
+                server-mac-list
+                    mac 200 name hmac-sha2-512
+                    mac 210 name hmac-sha2-256
+                    mac 215 name hmac-sha1
+                    mac 220 name hmac-sha1-96
+                    mac 225 name hmac-md5
+                    mac 230 name hmac-ripemd160
+                    mac 235 name hmac-ripemd160-openssh-com
+                    mac 240 name hmac-md5-96
+                exit
+                client-kex-list
+                    kex 200 name diffie-hellman-group16-sha512
+                    kex 210 name diffie-hellman-group14-sha256
+                    kex 215 name diffie-hellman-group14-sha1
+                    kex 220 name diffie-hellman-group-exchange-sha1
+                    kex 225 name diffie-hellman-group1-sha1
+                exit
+                server-kex-list
+                    kex 200 name diffie-hellman-group16-sha512
+                    kex 210 name diffie-hellman-group14-sha256
+                    kex 215 name diffie-hellman-group14-sha1
+                    kex 220 name diffie-hellman-group-exchange-sha1
+                    kex 225 name diffie-hellman-group1-sha1
                 exit
                 preserve-key
                 version 2
@@ -1854,6 +1946,8 @@ echo "Log Configuration"
         event-control "bgp" 2033 generate warning throttle disable-specific-throttle
         event-control "bgp" 2034 generate minor throttle disable-specific-throttle
         event-control "bgp" 2035 generate minor throttle disable-specific-throttle
+        event-control "bgp" 2036 generate minor throttle disable-specific-throttle
+        event-control "bgp" 2037 generate minor throttle disable-specific-throttle
         event-control "bgp" 2038 generate minor throttle disable-specific-throttle
         event-control "bgp" 2039 generate warning throttle disable-specific-throttle
         event-control "cflowd" 2002 generate minor throttle disable-specific-throttle
@@ -2221,20 +2315,6 @@ echo "Log Configuration"
         event-control "mc_redundancy" 2038 generate minor throttle specific-throttle-rate 1 interval 10
         event-control "mc_redundancy" 2043 generate minor throttle disable-specific-throttle
         event-control "mc_redundancy" 2044 generate minor throttle disable-specific-throttle
-        event-control "mc_redundancy" 2045 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2046 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2047 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2048 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2049 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2050 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2051 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2052 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2053 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2054 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2055 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2056 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2057 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2058 generate warning throttle disable-specific-throttle
         event-control "mirror" 2001 generate minor throttle disable-specific-throttle
         event-control "mirror" 2002 generate minor throttle disable-specific-throttle
         event-control "mirror" 2003 generate minor throttle disable-specific-throttle
@@ -2856,6 +2936,10 @@ echo "Log Configuration"
         event-control "rip_ng" 2007 generate minor throttle disable-specific-throttle
         event-control "rip_ng" 2008 generate minor throttle disable-specific-throttle
         event-control "rip_ng" 2009 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2001 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2002 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2003 generate major throttle disable-specific-throttle
+        event-control "pcap" 2004 generate major throttle disable-specific-throttle
         event-control "firewall" 2001 generate major throttle disable-specific-throttle
         event-control "firewall" 2002 generate major throttle disable-specific-throttle
         event-control "firewall" 2003 generate major throttle disable-specific-throttle
@@ -2863,6 +2947,16 @@ echo "Log Configuration"
         event-control "firewall" 2005 generate major throttle disable-specific-throttle
         event-control "firewall" 2006 generate major throttle disable-specific-throttle
         event-control "firewall" 2007 generate major throttle disable-specific-throttle
+        event-control "firewall" 2008 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2009 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2010 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2011 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2012 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2013 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2014 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2015 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2016 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2017 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2001 generate major throttle disable-specific-throttle
         event-control "mwmgr" 2002 generate major throttle disable-specific-throttle
         event-control "mwmgr" 2003 generate major throttle disable-specific-throttle
@@ -2887,6 +2981,12 @@ echo "Log Configuration"
         event-control "mwmgr" 2022 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2023 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2024 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2027 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2028 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2029 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2030 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2031 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2032 generate major throttle disable-specific-throttle
         event-control "scada" 3016 generate warning throttle disable-specific-throttle
         event-control "scada" 3017 generate warning throttle disable-specific-throttle
         event-control "scada" 3023 generate warning throttle disable-specific-throttle
@@ -3752,6 +3852,242 @@ echo "QoS Policy Configuration"
             default-fc "af"
             default-priority low
         exit
+        sap-ingress 200 create
+            policy-name "Mobile:All(LTE&3G):7705:1G"
+            description "Mobile:All(LTE&3G):7705:1G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 75000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 150000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 500000 cir 500000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 50000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 201 create
+            policy-name "Mobile:All(LTE&3G):7705:10G"
+            description "Mobile:All(LTE&3G):7705:10G"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate 10000 cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 750000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 3 priority-mode best-effort create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 4 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 1500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 5 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate 5000000 cir 5000000
+                mbs 12 kilobytes
+                cbs 12
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 6 priority-mode expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 500000
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            fc "ef" create
+                queue 5
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "h2" create
+                queue 4
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l1" create
+                queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "nc" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
         sap-ingress 301 create
             no policy-name
             description "OAM_7705"
@@ -3966,32 +4302,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -4056,32 +4397,37 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
                 queue 6
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -4099,9 +4445,23 @@ echo "QoS Policy Configuration"
                 no packet-byte-offset
                 slope-policy "default"
             exit
+            queue 6 auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                cbs default
+                mbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
+                no dscp
+            exit 
+            fc nc create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
         exit
@@ -4516,6 +4876,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -4606,6 +4967,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode hybrid
             encap-type dot1q
@@ -4705,6 +5067,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4795,6 +5158,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4885,6 +5249,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -4977,6 +5342,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode network
             no encap-type
@@ -5071,6 +5437,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5161,6 +5528,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5251,6 +5619,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5341,6 +5710,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5432,6 +5802,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5523,6 +5894,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode network
             no encap-type
@@ -5617,6 +5989,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5692,7 +6065,6 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/5/2
-        shutdown
         description "10/100/Gig Ethernet SFP"
         ethernet
             dot1x
@@ -5707,9 +6079,10 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
-            no encap-type
+            encap-type dot1q
             no mtu
             no group-encryption
             crc-monitor
@@ -5780,6 +6153,7 @@ echo "Port Configuration"
             no phy-tx-clock
         exit
         ddm-events
+        no shutdown
     exit
     port 1/5/3
         shutdown
@@ -5797,6 +6171,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5887,6 +6262,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5977,6 +6353,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -6067,6 +6444,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -6157,6 +6535,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -6246,6 +6625,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -6556,6 +6936,7 @@ echo "Router (Network Side) Configuration"
             no proxy-arp-policy
             no local-proxy-arp
             no remote-proxy-arp
+            no mac
             no ipv6
             icmp
                 no mask-reply
@@ -6615,6 +6996,7 @@ echo "Router (Network Side) Configuration"
             no proxy-arp-policy
             no local-proxy-arp
             no remote-proxy-arp
+            no mac
             no ipv6
             icmp
                 no mask-reply
@@ -6671,6 +7053,7 @@ echo "Router (Network Side) Configuration"
             no proxy-arp-policy
             no local-proxy-arp
             no remote-proxy-arp
+            no mac
             no ipv6
             icmp
                 mask-reply
@@ -6828,6 +7211,7 @@ echo "ISIS Configuration"
             no ignore-lsp-errors
             lsp-lifetime 65535
             lsp-mtu-size 1492
+            no database-export
             no overload
             no overload-on-boot
             no export
@@ -6842,6 +7226,7 @@ echo "ISIS Configuration"
             no ignore-attached-bit
             no suppress-attached-bit
             no iid-tlv-enable
+            no poi-tlv-enable
             no loopfree-alternate
             no loopfree-alternate-exclude
             ipv4-routing
@@ -6849,6 +7234,9 @@ echo "ISIS Configuration"
             no unicast-import-disable ipv4
             no multicast-import ipv4
             no strict-adjacency-check
+            entropy-label
+                no override-tunnel-elc
+            exit
             timers
                 lsp-wait 5000 lsp-initial-wait 10 lsp-second-wait 1000
                 spf-wait 10000 spf-initial-wait 1000 spf-second-wait 1000
@@ -6859,6 +7247,7 @@ echo "ISIS Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 160
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -6872,6 +7261,7 @@ echo "ISIS Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 165
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -7005,6 +7395,7 @@ echo "ISIS Configuration"
             segment-routing
                 shutdown
                 adj-sid-hold 15
+                entropy-label enable
                 no export-tunnel-table
                 no prefix-sid-range
                 tunnel-table-pref 11
@@ -7023,6 +7414,7 @@ echo "MPLS Configuration"
             frr-object
             no hold-timer
             entropy-label rsvp-te enable
+            entropy-label sr-te enable
             dynamic-bypass enable
             least-fill-reoptim-thd 10
             least-fill-min-thd 5
@@ -7069,6 +7461,7 @@ echo "RSVP Configuration"
             refresh-reduction-over-bypass disable
             no graceful-shutdown
             no entropy-label-capability
+            no implicit-null-label
             node-id-in-rro exclude
             interface "system"
                 no authentication-key
@@ -7078,6 +7471,7 @@ echo "RSVP Configuration"
                 no refresh-reduction
                 no bfd-enable
                 no graceful-shutdown
+                no implicit-null-label
                 no shutdown
             exit
             interface "To-JUVENTUS-GA"
@@ -7088,6 +7482,7 @@ echo "RSVP Configuration"
                 no refresh-reduction
                 bfd-enable
                 no graceful-shutdown
+                no implicit-null-label
                 no shutdown
             exit
             interface "To-JABIL-GA"
@@ -7098,6 +7493,7 @@ echo "RSVP Configuration"
                 no refresh-reduction
                 bfd-enable
                 no graceful-shutdown
+                no implicit-null-label
                 no shutdown
             exit
             no shutdown
@@ -7198,6 +7594,7 @@ echo "LDP Configuration"
             no fast-reroute
             no legacy-ipv4-lsr-interop
             no graceful-restart
+            no implicit-null-label
             no mcast-upstream-frr
             no mp-mbb-time
             no tunnel-down-damp-time
@@ -7342,6 +7739,306 @@ echo "Service Configuration"
                 ad-per-es-route-target evi-rt
             exit
         exit
+        epipe 52300 customer 2 create
+            description "To-CHHCHH0045-_4G_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2398 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 201
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 201
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52300 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52301 customer 2 create
+            description "To-CHHCHH0045_O&M_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2598 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52301 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52302 customer 2 create
+            description "To-CHHCHH0047-_4G_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2395 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52302 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52303 customer 2 create
+            description "To-CHHCHH0047_O&M_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2595 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52303 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52304 customer 2 create
+            description "To-CHHCHH0043-_4G_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2396 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52304 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52305 customer 2 create
+            description "To-CHHCHH0043_O&M_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:2596 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:52305 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
         vpls 223001 customer 1 create
             description "CONEXION_EVDO"
             service-mtu 1514
@@ -7441,6 +8138,7 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
                     qos 1
                     no match-qinq-dot1p
@@ -7634,6 +8332,7 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
                     qos 1
                     no match-qinq-dot1p
@@ -7830,14 +8529,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8026,14 +8726,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8220,14 +8921,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8416,14 +9118,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8610,14 +9313,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8804,14 +9508,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -8998,14 +9703,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -9192,14 +9898,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -9386,14 +10093,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -9582,14 +10290,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 201
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 201
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -9778,14 +10487,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     no agg-rate-limit
                     shaper-group default
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     no agg-rate-limit
@@ -9873,6 +10583,368 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
+        epipe 523045 customer 2 create
+            description "To-CHHCHH0021-3G-AWS"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:1002 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 201
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 201
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523045 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523046 customer 2 create
+            description "To-CHHCHH0021-4G-AWS"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:1202 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 201
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 201
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523046 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523047 customer 2 create
+            description "To-CHHCHH0021-AWS-OYM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:1402 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523047 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523048 customer 2 create
+            description "To-CHHCHH0021-PCS_3G"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:1602 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 201
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 201
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523048 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523049 customer 2 create
+            description "To-CHHCHH0021-PCS_OYM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/1/5:1802 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 301
+                    no match-qinq-dot1p
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                egress
+                    qos 301
+                    no qinq-mark-top-only
+                    no agg-rate-limit
+                    shaper-group default
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523049 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523050 customer 2 create
+            description "To-CHHCHH0033-_4G_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/5/2:2320 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 1
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 1
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523050 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 523051 customer 2 create
+            description "To-CHHCHH0033_O&M_2nd-eNodeB"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            no service-name
+            sap 1/5/2:2520 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                no cflowd
+                ingress
+                    qos 1
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 1
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11205:523051 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 52300 customer 2 create
+        exit
+        epipe 52301 customer 2 create
+        exit
+        epipe 52302 customer 2 create
+        exit
+        epipe 52303 customer 2 create
+        exit
+        epipe 52304 customer 2 create
+        exit
+        epipe 52305 customer 2 create
+        exit
         vpls 223001 customer 1 create
         exit
         vpls 300100 customer 2 create
@@ -9908,6 +10980,20 @@ echo "Service Configuration"
         vpls 310011 customer 1 create
             allow-ip-int-bind
             exit
+        exit
+        epipe 523045 customer 2 create
+        exit
+        epipe 523046 customer 2 create
+        exit
+        epipe 523047 customer 2 create
+        exit
+        epipe 523048 customer 2 create
+        exit
+        epipe 523049 customer 2 create
+        exit
+        epipe 523050 customer 2 create
+        exit
+        epipe 523051 customer 2 create
         exit
     exit
 #--------------------------------------------------
@@ -10051,7 +11137,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:17 2020 UTC
+# Finished WED MAR 17 02:21:57 2021 UTC
 A:CANEST-CHI119-AA# show port 
 
 ===============================================================================
@@ -10072,14 +11158,14 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/4         Down  No   Down    1514 1514    - accs null xcme   
 1/2/5         Down  No   Down    1514 1514    - accs null xgige  
 1/2/6         Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-LR  *
-1/5/1         Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
-1/5/2         Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
-1/5/3         Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
+1/5/1         Down  No   Down    1514 1514    - accs null xcme   
+1/5/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/5/3         Down  No   Down    1514 1514    - accs null xcme   
 1/5/4         Down  No   Down    1514 1514    - accs null xcme   
 1/5/5         Down  No   Down    1514 1514    - accs null xcme   
 1/5/6         Down  No   Down    1514 1514    - accs null xcme   
 1/5/7         Down  No   Down    1514 1514    - accs null xcme   
-1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   GIGE-T 
+1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
 
 ===============================================================================
 Ports on Slot A

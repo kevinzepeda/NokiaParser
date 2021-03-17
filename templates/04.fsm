@@ -1,5 +1,5 @@
 Value Filldown sysname (\S+)
-Value Filldown model (\S+)
+Value Filldown model ([^:\b]+)
 Value address ([\d\.\/]+)
 Value source_ip (\S+)
 Value interface (\S+)
@@ -20,6 +20,7 @@ Value type (\S+)
 Value queue_group (\S+)
 Value bgp_group_name (\S+)
 Value bgp_neighbor (.+)
+Value port_description (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -47,7 +48,7 @@ Base
 Interface
   ^\s{12}address ${address}
   ^\s{12}port ${port}
-  ^\s{12}qos ${qos} egress-port-redirect-group "${queue_group_name}" egress-instance 1
+  ^\s{12}qos ${qos}(.+"${queue_group_name}"|\b)
   ^\s{8}exit -> Record Base
 
 Bgp
@@ -71,6 +72,7 @@ Rsvp
   ^\s{8}exit -> Base
 
 Ports
+  ^\s{8}description "${port_description}"
   ^\s{8}network -> PortNetwork
   ^\s{8}ethernet -> PortEthernet
   ^\s{4}exit -> Record Start

@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.72
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.72
 Warning: Permanently added '10.190.3.72' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.72's password: 
+ca168b@10.190.3.72's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 18 Minutes 
 A:TULANC-HID9009-AA# environment no more 
 A:TULANC-HID9009-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:TULANC-HID9009-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:24:46 2020 UTC
+# Generated WED MAR 17 02:30:03 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$N6G0xZcYhHKP8BrA.8mfA.yxlNQrxlSYLPiqqfQU200OxP8Zf0J5a"
+                password "$2y$10$HBOzxqXwTQVo7az6wG.tA.f5v0cjw.6OYcBGjYF9.olS31Sml96F6"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,20 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$50iFAsSb2AQKi.GGJWHjE.XogCfN6W6/DQ/upC/vvdSc5X/Mg5I9q"
+                password "$2y$10$Vaj6Z6Cmh18e0d7ISaM.Y..bA3OFQ4X3AeGJyvUlhsTAjzeHla.TC"
+                access console 
+                no home-directory
+                no restricted-to-home
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$XpR3eM0mzmc8rThwxxI.Q.cCJxzRWlWNqUQyGSU/nKU9Q/gBK/BIK"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -11666,67 +11731,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        vpls 229315 customer 2 create
-            shutdown
-            description "To-HID-9080-OYM-3G-LTE"
-            service-mtu 1514
-            no disable-learning
-            no disable-aging
-            no discard-unknown
-            load-balancing
-                no per-service-hashing
-                no spi-load-balancing
-                no teid-load-balancing
-                no l4-load-balancing
-            exit
-            allow-ip-int-bind
-            exit
-            fdb-table-size 250
-            fdb-table-high-wmark 95
-            fdb-table-low-wmark 90
-            no send-flush-on-failure
-            mac-subnet-length 48
-            local-age 300
-            remote-age 900
-            no propagate-mac-flush
-            no pppoe-circuit-id
-            stp
-                shutdown
-                priority 32768
-                hello-time 2
-                hold-count 6
-                mode rstp
-            exit
-            igmp-snooping
-                shutdown
-                query-interval 125
-                robust-count 2
-                report-src-ip 0.0.0.0
-                no query-src-ip
-            exit
-            mld-snooping
-                shutdown
-                query-interval 125
-                robust-count 2
-                no report-src-ip
-                no query-src-ip
-            exit
-            service-name "To-HID-9080-OYM-3G-LTE"
-            mac-move
-                primary-ports
-                    cumulative-factor 3
-                exit
-                secondary-ports
-                    cumulative-factor 2
-                exit
-                move-frequency 2
-                retry-timeout 10
-                number-retries 3
-                shutdown
-            exit
-            static-mac
-            exit
-        exit
         vpls 229318 customer 2 create
             description "To-HID-9084_1687_-OYM-3G-LTE"
             service-mtu 1514
@@ -15977,10 +15981,6 @@ echo "Service Configuration"
             allow-ip-int-bind
             exit
         exit
-        vpls 229315 customer 2 create
-            allow-ip-int-bind
-            exit
-        exit
         vpls 229318 customer 2 create
             allow-ip-int-bind
             exit
@@ -16209,7 +16209,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:24:50 2020 UTC
+# Finished WED MAR 17 02:30:07 2021 UTC
 A:TULANC-HID9009-AA# show port 
 
 ===============================================================================
@@ -16242,7 +16242,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/4/2         Up    Yes  Up      1518 1518    - accs dotq xcme   GIGE-T 
 1/4/3         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/4/4         Up    Yes  Up      1518 1518    - accs dotq xcme   GIGE-T 
-1/4/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/4/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/4/6         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/4/7         Up    Yes  Up      1518 1518    - accs dotq xcme   GIGE-T 
 1/4/8         Down  No   Down    1514 1514    - accs null xcme   

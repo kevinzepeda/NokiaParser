@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.182
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.182
 Warning: Permanently added '10.190.2.182' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.182's password: 
+ca168b@10.190.2.182's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 22 Minutes 
 B:ELABUE-VER7027-GA# environment no more 
 B:ELABUE-VER7027-GA# show chassis 
 ===============================================================================
@@ -18,8 +20,8 @@ System Information
   CLLI code                         :           
   Number of slots                   : 12
   Oper number of slots              : 12
-  Num of faceplate ports/connectors : 91
-  Num of physical ports             : 91
+  Num of faceplate ports/connectors : 81
+  Num of physical ports             : 81
   Critical LED state                : Off
   Major LED state                   : Off
   Minor LED state                   : Off
@@ -42,7 +44,7 @@ B:ELABUE-VER7027-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Wed Apr 24 06:59:13 PDT 2019 by builder in /builds/c/160B/R7-1/panos/main
 
-# Generated THU MAY 21 05:27:39 2020 UTC
+# Generated WED MAR 17 02:25:44 2021 UTC
 
 exit all
 configure
@@ -208,7 +210,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f0000a0f3e4823630"
             packet-size 9216
@@ -233,7 +235,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -243,20 +245,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -878,7 +880,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$6xwQKKPlvZTTqWEcD/XBY.t3hOOO8HP0TsIWsVUW0eC25Fy7kJlku"
+                password "$2y$10$FiglQB5xB1.noEnknYaMk./eS.ywdnH8/k/pNDy.zBBBEtb505hVW"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -902,7 +904,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$fNUSJ8amqA/MZSSaKJtsa.mXv.KGLdB/6ef4I.1E4iTU37gbokAFe"
+                password "$2y$10$HRZRpt8ga68G60Mtf5bHY.PMUO8YWzBEy9NSEso26.RMLYlIhrUse"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -926,8 +928,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$LnIGt8vIRAQM11LxB1rT..1eQlf.cXcicRL5SoCJkV/E8Z75R1.OS"
-                no access
+                password "$2y$10$MWDTfoxfE0.lFwTuP0bMg.gK0Q9X12izGCrAEPQBqWZvzxwzUsut."
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4574,6 +4576,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4584,6 +4588,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4595,6 +4601,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -10299,106 +10505,9 @@ echo "Card Configuration"
     exit
     card 5
         no named-pool-mode
-        card-type iom3-xp
+        no card-type
         no fail-on-error
         no reset-on-recoverable-error
-        virtual-scheduler-adjustment
-            no rate-calc-min-int
-            no sched-run-min-int
-            no task-scheduling-int
-            no slow-queue-threshold
-            internal-scheduler-weight-mode default
-        exit
-        mda 1
-            shutdown
-            mda-type m10-1gb-xp-sfp
-            sync-e
-            named-pool-mode
-                ingress
-                    no named-pool-policy
-                exit
-                egress
-                    no named-pool-policy
-                exit
-            exit
-            ingress-xpl
-                threshold 1000
-                window 60
-            exit
-            egress
-                no hsmda-pool-policy
-                hsmda-agg-queue-burst
-                    no low-burst-multiplier
-                    no high-burst-increase
-                exit
-            exit
-            egress-xpl
-                threshold 1000
-                window 60
-            exit
-            no fail-on-error
-            network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
-                egress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                exit
-            exit
-            access
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                exit
-                egress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                exit
-            exit
-        exit
-        fp 1
-            no stable-pool-sizing
-            ingress-buffer-allocation 50.00
-            no hi-bw-mcast-src
-            dist-cpu-protection
-                no dynamic-enforcement-policer-pool
-            exit
-            no policy-accounting
-            init-extract-prio-mode uniform
-            ingress
-                mcast-path-management
-                    shutdown
-                    no bandwidth-policy
-                exit
-            exit
-            egress
-                wred-queue-control
-                    buffer-allocation min 25.00 max 25.00
-                    resv-cbs min 30.00 max 30.00
-                    slope-policy "default"
-                    no shutdown
-                exit
-            exit
-        exit
         no shutdown
     exit
     card 6
@@ -25465,2293 +25574,8 @@ echo "Port Configuration"
         ddm-events
         no shutdown
     exit
-    port 5/1/1
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            egress-scheduler-policy "PS-IPMEAN-access:Mobile"
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/2
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/3
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/4
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/5
-        description "To-Servicioprincipal-CERAGON IP10-30/06/16"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            egress-scheduler-policy "PS-IPMEAN-access:Mobile"
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-        no shutdown
-    exit
-    port 5/1/6
-        shutdown
-        description "To-COLECTOR-CISCO-ELABUELO"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/7
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/8
-        shutdown
-        description "BBU VERPOZ0609 OSE 14/03/16"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode access
-            encap-type dot1q
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            access
-                egress
-                    queue-group "policer-output-queues" instance 1 create
-                        no description
-                        no scheduler-policy
-                        no accounting-policy
-                        no collect-stats
-                        agg-rate
-                            no rate
-                            no queue-frame-based-accounting
-                            no limit-unused-bandwidth
-                        exit
-                    exit
-                exit
-                no bandwidth
-                no booking-factor
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/9
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode network
-            encap-type null
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            network
-                queue-policy "default"
-                no accounting-policy
-                no collect-stats
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
-    port 5/1/10
-        shutdown
-        description "10/100/Gig Ethernet SFP"
-        no monitor-agg-egress-queue-stats
-        modify-buffer-allocation-rate
-            ing-percentage-of-rate 100
-            egr-percentage-of-rate 100
-        exit
-        named-pool-mode
-            ingress
-                no named-pool-policy
-            exit
-            egress
-                no named-pool-policy
-            exit
-        exit
-        access
-            ingress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        network
-            egress
-                pool default
-                    no amber-alarm-threshold
-                    no red-alarm-threshold
-                    resv-cbs default
-                    slope-policy "default"
-                exit
-            exit
-        exit
-        ethernet
-            dot1x
-                port-control force-auth
-                no radius-plcy
-                no re-authentication
-                re-auth-period 3600
-                max-auth-req 2
-                transmit-period 30
-                quiet-period 60
-                supplicant-timeout 30
-                server-timeout 30
-                no tunneling
-            exit
-            mode network
-            encap-type null
-            no mtu
-            no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
-            crc-monitor
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            symbol-monitor
-                shutdown
-                no sd-threshold
-                no sf-threshold
-                no window-size
-            exit
-            down-when-looped
-                shutdown
-                no keep-alive
-                no retry-timeout
-                no use-broadcast-address
-            exit
-            no accounting-policy
-            no collect-stats
-            egress
-            exit
-            network
-                queue-policy "default"
-                no accounting-policy
-                no collect-stats
-            exit
-            lldp
-                dest-mac nearest-bridge
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tunnel-nearest-bridge
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-non-tpmr
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-                dest-mac nearest-customer
-                    admin-status disabled
-                    no notification
-                    no tx-tlvs
-                    no tx-mgmt-address
-                    port-id-subtype tx-local
-                exit
-            exit
-            elmi
-                mode none
-                no n393
-                no t391
-                no t392
-            exit
-            no down-on-internal-error
-            no hold-time
-            eth-cfm
-            exit
-            min-frame-length 64
-            speed 1000
-            duplex full
-            autonegotiate
-            no single-fiber
-            ssm
-                shutdown
-                code-type sdh
-                no tx-dus
-            exit
-            no egress-rate
-            no ingress-rate
-            no dot1q-etype
-            no qinq-etype
-            no pbb-etype
-            no lacp-tunnel
-            efm-oam
-                shutdown
-                mode active
-                no accept-remote-loopback
-                transmit-interval 10 multiplier 5
-                no hold-time
-                no ignore-efm-state
-                grace-tx-enable
-                grace-vendor-oui 00:16:4d
-                dying-gasp-tx-on-reset
-                no trigger-fault
-                discovery
-                    advertise-capabilities
-                        link-monitoring
-                    exit
-                exit
-                peer-rdi-rx
-                    critical-event local-port-action out-of-service
-                    dying-gasp local-port-action out-of-service
-                    event-notification local-port-action log-only
-                    link-fault local-port-action out-of-service
-                exit
-                link-monitoring
-                    shutdown
-                    errored-frame
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-period
-                        shutdown
-                        event-notification
-                        window 1488095
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-frame-seconds
-                        shutdown
-                        event-notification
-                        window 600
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    errored-symbols
-                        shutdown
-                        event-notification
-                        window 10
-                        sf-threshold 1
-                        no sd-threshold
-                    exit
-                    local-sf-action
-                        event-notification-burst 1
-                        info-notification
-                            no critical-event
-                            no dying-gasp
-                        exit
-                        local-port-action out-of-service
-                    exit
-                exit
-                no tunneling
-            exit
-            no sflow
-            no mon-port-sch
-            util-stats-interval 300
-            no ptp-asymmetry
-            no rs-fec-mode
-            dampening
-                shutdown
-                suppress-threshold 2000 reuse-threshold 1000
-                half-life 5 max-suppress-time 20
-            exit
-            no eth-bn-egress-rate-changes
-        exit
-        transceiver
-            no digital-coherent-optics
-        exit
-        ddm-events
-    exit
     port 6/1/1
+        shutdown
         description "10/100/Gig Ethernet SFP"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
@@ -27980,7 +25804,6 @@ echo "Port Configuration"
             no digital-coherent-optics
         exit
         ddm-events
-        no shutdown
     exit
     port 6/1/2
         shutdown
@@ -38567,7 +36390,7 @@ echo "LDP Configuration"
             no graceful-restart
             no implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -66803,324 +64626,6 @@ echo "Service Configuration"
                 no bandwidth
                 no shutdown
             exit
-            sap 5/1/1:4004 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                no track-srrp
-                limit-mac-move blockable
-                no disable-learning
-                no disable-aging
-                no max-nbr-mac-addr
-                no discard-unknown-source
-                no auto-learn-mac-protect
-                no restrict-protected-src
-                no restrict-unprotected-dst
-                no mac-pinning
-                stp
-                    path-cost 10
-                    priority 128
-                    no edge-port
-                    auto-edge
-                    link-type pt-pt
-                    no root-guard
-                    no shutdown
-                exit
-                no arp-reply-agent
-                dhcp
-                    shutdown
-                    no description
-                    no snoop
-                    no lease-populate
-                    proxy-server
-                        shutdown
-                        no emulated-server
-                        no lease-time
-                    exit
-                    no option
-                exit
-                igmp-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    last-member-query-interval 10
-                    no mrouter-port
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 3
-                    no send-queries
-                    no disable-router-alert-check
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no use-lag-port-weight
-                            no shutdown
-                        exit
-                    exit
-                    static
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                mld-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    last-member-query-interval 10
-                    no mrouter-port
-                    no disable-router-alert-check
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 2
-                    no send-queries
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no shutdown
-                        exit
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                no rtr-solicit-user-db
-                no process-cpm-traffic-on-sap-down
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no vmep-filter
-                    no mip
-                exit
-                no authentication-policy
-                no anti-spoof
-                no cflowd
-                no host-shutdown
-                no host-lockout-policy
-                no l2pt-termination
-                no bpdu-translation
-                no host-connectivity-verify
-                no shcv-policy-ipv4
-                no sub-sla-mgmt
-                igmp-host-tracking
-                    no expiry-time
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    no disable-router-alert-check
-                exit
-                arp-host
-                    shutdown
-                    host-limit 1
-                    min-auth-interval 15
-                exit
-                no calling-station-id
-                no lag-link-map-profile
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no qinq-mark-top-only
-                    no dest-mac-rewrite
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no shutdown
-            exit
-            sap 5/1/5:4004 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                no track-srrp
-                limit-mac-move blockable
-                no disable-learning
-                no disable-aging
-                no max-nbr-mac-addr
-                no discard-unknown-source
-                no auto-learn-mac-protect
-                no restrict-protected-src
-                no restrict-unprotected-dst
-                no mac-pinning
-                stp
-                    path-cost 10
-                    priority 128
-                    no edge-port
-                    auto-edge
-                    link-type pt-pt
-                    no root-guard
-                    no shutdown
-                exit
-                no arp-reply-agent
-                dhcp
-                    shutdown
-                    no description
-                    no snoop
-                    no lease-populate
-                    proxy-server
-                        shutdown
-                        no emulated-server
-                        no lease-time
-                    exit
-                    no option
-                exit
-                igmp-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    last-member-query-interval 10
-                    no mrouter-port
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 3
-                    no send-queries
-                    no disable-router-alert-check
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no use-lag-port-weight
-                            no shutdown
-                        exit
-                    exit
-                    static
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                mld-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    last-member-query-interval 10
-                    no mrouter-port
-                    no disable-router-alert-check
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 2
-                    no send-queries
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no shutdown
-                        exit
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                no rtr-solicit-user-db
-                no process-cpm-traffic-on-sap-down
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no vmep-filter
-                    no mip
-                exit
-                no authentication-policy
-                no anti-spoof
-                no cflowd
-                no host-shutdown
-                no host-lockout-policy
-                no l2pt-termination
-                no bpdu-translation
-                no host-connectivity-verify
-                no shcv-policy-ipv4
-                no sub-sla-mgmt
-                igmp-host-tracking
-                    no expiry-time
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    no disable-router-alert-check
-                exit
-                arp-host
-                    shutdown
-                    host-limit 1
-                    min-auth-interval 15
-                exit
-                no calling-station-id
-                no lag-link-map-profile
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no qinq-mark-top-only
-                    no dest-mac-rewrite
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no shutdown
-            exit
             mac-move
                 primary-ports
                     cumulative-factor 3
@@ -67702,324 +65207,6 @@ echo "Service Configuration"
                 no bandwidth
                 no shutdown
             exit
-            sap 5/1/1:4003 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                no track-srrp
-                limit-mac-move blockable
-                no disable-learning
-                no disable-aging
-                no max-nbr-mac-addr
-                no discard-unknown-source
-                no auto-learn-mac-protect
-                no restrict-protected-src
-                no restrict-unprotected-dst
-                no mac-pinning
-                stp
-                    path-cost 10
-                    priority 128
-                    no edge-port
-                    auto-edge
-                    link-type pt-pt
-                    no root-guard
-                    no shutdown
-                exit
-                no arp-reply-agent
-                dhcp
-                    shutdown
-                    no description
-                    no snoop
-                    no lease-populate
-                    proxy-server
-                        shutdown
-                        no emulated-server
-                        no lease-time
-                    exit
-                    no option
-                exit
-                igmp-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    last-member-query-interval 10
-                    no mrouter-port
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 3
-                    no send-queries
-                    no disable-router-alert-check
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no use-lag-port-weight
-                            no shutdown
-                        exit
-                    exit
-                    static
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                mld-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    last-member-query-interval 10
-                    no mrouter-port
-                    no disable-router-alert-check
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 2
-                    no send-queries
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no shutdown
-                        exit
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                no rtr-solicit-user-db
-                no process-cpm-traffic-on-sap-down
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no vmep-filter
-                    no mip
-                exit
-                no authentication-policy
-                no anti-spoof
-                no cflowd
-                no host-shutdown
-                no host-lockout-policy
-                no l2pt-termination
-                no bpdu-translation
-                no host-connectivity-verify
-                no shcv-policy-ipv4
-                no sub-sla-mgmt
-                igmp-host-tracking
-                    no expiry-time
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    no disable-router-alert-check
-                exit
-                arp-host
-                    shutdown
-                    host-limit 1
-                    min-auth-interval 15
-                exit
-                no calling-station-id
-                no lag-link-map-profile
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no qinq-mark-top-only
-                    no dest-mac-rewrite
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no shutdown
-            exit
-            sap 5/1/5:4003 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                no track-srrp
-                limit-mac-move blockable
-                no disable-learning
-                no disable-aging
-                no max-nbr-mac-addr
-                no discard-unknown-source
-                no auto-learn-mac-protect
-                no restrict-protected-src
-                no restrict-unprotected-dst
-                no mac-pinning
-                stp
-                    path-cost 10
-                    priority 128
-                    no edge-port
-                    auto-edge
-                    link-type pt-pt
-                    no root-guard
-                    no shutdown
-                exit
-                no arp-reply-agent
-                dhcp
-                    shutdown
-                    no description
-                    no snoop
-                    no lease-populate
-                    proxy-server
-                        shutdown
-                        no emulated-server
-                        no lease-time
-                    exit
-                    no option
-                exit
-                igmp-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    last-member-query-interval 10
-                    no mrouter-port
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 3
-                    no send-queries
-                    no disable-router-alert-check
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no use-lag-port-weight
-                            no shutdown
-                        exit
-                    exit
-                    static
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                mld-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    last-member-query-interval 10
-                    no mrouter-port
-                    no disable-router-alert-check
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 2
-                    no send-queries
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no shutdown
-                        exit
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                no rtr-solicit-user-db
-                no process-cpm-traffic-on-sap-down
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no vmep-filter
-                    no mip
-                exit
-                no authentication-policy
-                no anti-spoof
-                no cflowd
-                no host-shutdown
-                no host-lockout-policy
-                no l2pt-termination
-                no bpdu-translation
-                no host-connectivity-verify
-                no shcv-policy-ipv4
-                no sub-sla-mgmt
-                igmp-host-tracking
-                    no expiry-time
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    no disable-router-alert-check
-                exit
-                arp-host
-                    shutdown
-                    host-limit 1
-                    min-auth-interval 15
-                exit
-                no calling-station-id
-                no lag-link-map-profile
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no qinq-mark-top-only
-                    no dest-mac-rewrite
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no shutdown
-            exit
             mac-move
                 primary-ports
                     cumulative-factor 3
@@ -68443,165 +65630,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             sap 3/1/4:4001 create
-                no description
-                no multi-service-site
-                cpu-protection 254
-                no track-srrp
-                limit-mac-move blockable
-                no disable-learning
-                no disable-aging
-                no max-nbr-mac-addr
-                no discard-unknown-source
-                no auto-learn-mac-protect
-                no restrict-protected-src
-                no restrict-unprotected-dst
-                no mac-pinning
-                stp
-                    path-cost 10
-                    priority 128
-                    no edge-port
-                    auto-edge
-                    link-type pt-pt
-                    no root-guard
-                    no shutdown
-                exit
-                no arp-reply-agent
-                dhcp
-                    shutdown
-                    no description
-                    no snoop
-                    no lease-populate
-                    proxy-server
-                        shutdown
-                        no emulated-server
-                        no lease-time
-                    exit
-                    no option
-                exit
-                igmp-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    last-member-query-interval 10
-                    no mrouter-port
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 3
-                    no send-queries
-                    no disable-router-alert-check
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no use-lag-port-weight
-                            no shutdown
-                        exit
-                    exit
-                    static
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                mld-snooping
-                    no fast-leave
-                    no import
-                    no max-num-groups
-                    last-member-query-interval 10
-                    no mrouter-port
-                    no disable-router-alert-check
-                    query-interval 125
-                    query-response-interval 10
-                    robust-count 2
-                    version 2
-                    no send-queries
-                    mcac
-                        no policy
-                        no if-policy
-                        no unconstrained-bw
-                        mc-constraints
-                            no shutdown
-                        exit
-                    exit
-                    mvr
-                        no from-vpls
-                        no to-sap
-                    exit
-                exit
-                no rtr-solicit-user-db
-                no process-cpm-traffic-on-sap-down
-                eth-cfm
-                    no collect-lmm-stats
-                    collect-lmm-fc-stats
-                        no fc
-                        no fc-in-profile
-                    exit
-                    no squelch-ingress-levels
-                    no vmep-filter
-                    no mip
-                exit
-                no authentication-policy
-                no anti-spoof
-                no cflowd
-                no host-shutdown
-                no host-lockout-policy
-                no l2pt-termination
-                no bpdu-translation
-                no host-connectivity-verify
-                no shcv-policy-ipv4
-                no sub-sla-mgmt
-                igmp-host-tracking
-                    no expiry-time
-                    no import
-                    no max-num-groups
-                    no max-num-sources
-                    no max-num-grp-sources
-                    no disable-router-alert-check
-                exit
-                arp-host
-                    shutdown
-                    host-limit 1
-                    min-auth-interval 15
-                exit
-                no calling-station-id
-                no lag-link-map-profile
-                ingress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no match-qinq-dot1p
-                    no filter
-                    no vlan-translation
-                exit
-                egress
-                    no scheduler-policy
-                    no policer-control-policy
-                    qos 3000
-                    no qinq-mark-top-only
-                    no dest-mac-rewrite
-                    no filter
-                    agg-rate
-                        no rate
-                        no queue-frame-based-accounting
-                        no limit-unused-bandwidth
-                    exit
-                exit
-                no collect-stats
-                no accounting-policy
-                no dist-cpu-protection
-                no oper-group
-                no monitor-oper-group
-                no transit-policy
-                no app-profile
-                no bandwidth
-                no shutdown
-            exit
-            sap 5/1/5:4001 create
                 no description
                 no multi-service-site
                 cpu-protection 254
@@ -73305,7 +70333,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:27:59 2020 UTC
+# Finished WED MAR 17 02:26:00 2021 UTC
 B:ELABUE-VER7027-GA# show port 
 
 ===============================================================================
@@ -73329,9 +70357,9 @@ Ports on Slot 3
 Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
-3/1/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+3/1/1         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 3/1/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-3/1/3         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
+3/1/3         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
 3/1/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 3/1/5         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 3/1/6         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
@@ -73396,31 +70424,14 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 4/1/10        Up    Yes  Up      2102 2102    - netw null xcme   GIGE-SX 
 
 ===============================================================================
-Ports on Slot 5
-===============================================================================
-Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
-Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
--------------------------------------------------------------------------------
-5/1/1         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/2         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/3         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/4         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/5         Up    No   Ghost   1518 1518    - accs dotq xcme   
-5/1/6         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/7         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/8         Down  No   Ghost   1518 1518    - accs dotq xcme   
-5/1/9         Down  No   Ghost   9212 9212    - netw null xcme   
-5/1/10        Down  No   Ghost   9212 9212    - netw null xcme   
-
-===============================================================================
 Ports on Slot 6
 ===============================================================================
 Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
-6/1/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+6/1/1         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 6/1/2         Down  No   Down    9212 9212    - netw null xcme   
-6/1/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+6/1/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 6/1/4         Down  No   Down    1518 1518    - accs dotq xcme   
 6/1/5         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 6/1/6         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
@@ -73472,7 +70483,7 @@ Details
 Lag-id              : 1                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 09/04/2019 01:21:32   Port Thres. Action   : down
+Thres. Last Cleared : 01/13/2021 02:49:25   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : a0:f3:e4:82:37:71     Lag-IfIndex          : 1342177281
@@ -73529,7 +70540,7 @@ Details
 Lag-id              : 2                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 09/04/2019 01:21:32   Port Thres. Action   : down
+Thres. Last Cleared : 01/13/2021 02:49:25   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : a0:f3:e4:82:37:72     Lag-IfIndex          : 1342177282

@@ -1,5 +1,5 @@
 Value Filldown sysname (\S+)
-Value Filldown model (\S+)
+Value Filldown model ([^:\b]+)
 Value source_ip (\S+)
 Value l3vpn (\S+)
 Value service_id (\d+)
@@ -23,6 +23,7 @@ Value buffer_max (\S+)
 Value shutdown (\S+)
 Value resv_min (\S+)
 Value resv_max (\S+)
+Value port_description (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -72,6 +73,7 @@ Egress
   ^\s{16}exit -> Sap
 
 Port
+  ^\s{8}description "${port_description}"
   ^\s{8}ethernet -> Ethernet
   ^\s{4}exit -> Record Start
 

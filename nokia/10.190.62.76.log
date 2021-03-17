@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.62.76
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.62.76
 Warning: Permanently added '10.190.62.76' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.62.76's password: 
+ca168b@10.190.62.76's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
 A:MXLEOM02RTAGG01# environment no more 
 A:MXLEOM02RTAGG01# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:MXLEOM02RTAGG01# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:28:12 2020 UTC
+# Generated WED MAR 17 02:31:11 2021 UTC
 
 exit all
 configure
@@ -115,7 +117,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -160,6 +162,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -640,6 +652,46 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 250
                         description "Permit SNMP from Src IP - ACC"
                         no src-port
@@ -1110,7 +1162,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$51.njEJP4ZbW5hvGs0FKM.iIOAAOMwRHALAPdkN2qdIa69pDCxwbm"
+                password "$2y$10$recuU.De.ZH94sXCSfZEI.0WE0iXkwKC0MADhmb6Qz.ergATzs8aK"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1127,7 +1179,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$4lT/IJixQ3lmtLZwgUoxs.yC00Uy.kl1QtaLzLh3Saaw20wxkn9qy"
+                password "$2y$10$v4w.buxqkoEKodVq2xbeo.oVshHX32fks50/nODJAqWDUh/1.Yqeu"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1140,8 +1192,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$j5D4Z6zVlmzp84sFXbKQ6.xQ7Z0UMqExIdl08E7ee1hAySoDOOSeS"
-                no access
+                password "$2y$10$Iusxuy3XF2sBbj4wfILCY.wOySH94ebXk.meI5MhLzp5q0j8v3O3W"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -7240,8 +7292,6 @@ echo "Service Configuration"
         exit
         vprn 1000070 customer 2 create
             no type
-            interface "To-GUALEO0340_CFE" create
-            exit
             dhcp
             exit
             dhcp6
@@ -11408,65 +11458,6 @@ echo "Service Configuration"
             exit
             no enable-bgp-vpn-backup
             vrf-target target:65000:1070000
-            interface "To-GUALEO0340_CFE" create
-                description "GUALEO0340_CFE"
-                no tcp-mss
-                address 10.237.14.74/31 broadcast host-ones 
-                no mac
-                arp-timeout 14400
-                arp-retry-timer 50
-                no allow-directed-broadcasts
-                icmp
-                    mask-reply
-                    unreachables 100 10
-                    ttl-expired 100 10
-                    param-problem 100 10
-                exit
-                dhcp
-                    shutdown
-                    no description
-                    no option
-                    no server
-                    no trusted
-                    no gi-address
-                exit
-                no ip-mtu
-                cflowd-parameters
-                exit
-                no bfd
-                no ipv6
-                no local-dhcp-server
-                no proxy-arp-policy
-                no local-proxy-arp
-                no remote-proxy-arp
-                sap 1/3/1:5 create
-                    no description
-                    ingress
-                        qos 3000
-                        no match-qinq-dot1p
-                        scheduler-mode 4-priority
-                        no agg-rate-limit
-                    exit
-                    egress
-                        qos 3000
-                        no qinq-mark-top-only
-                        no filter
-                        scheduler-mode 4-priority
-                        no agg-rate-limit
-                    exit
-                    no collect-stats
-                    no accounting-policy
-                    no shutdown
-                exit
-                if-attribute
-                exit
-                load-balancing
-                    no l4-load-balancing
-                    no teid-load-balancing
-                    no spi-load-balancing
-                exit
-                no shutdown
-            exit
             sgt-qos
                 application bgp dscp none
                 application dhcp dscp none
@@ -12105,6 +12096,7 @@ echo "Policy Configuration"
             community "EDGE-R7" members "65000:17000"
             community "EDGE-R8" members "65000:18000"
             community "EDGE-R9" members "65000:19000"
+            community "TEF_LTE" members "target:7438:1228501"
             community "OYM-EDGE" members "target:65000:1000001"
             community "BH-IUB-R6" members "target:65000:1001610"
             community "BH-LTE-R6" members "target:65000:1002610"
@@ -12245,7 +12237,7 @@ echo "Policy Configuration"
                     action accept
                         no as-path
                         no as-path-prepend
-                        community add "BH-LTE-R6" "LTE-ATT-R6"
+                        community add "BH-LTE-R6" "LTE-ATT-R6" "TEF_LTE"
                         no origin
                         no local-preference
                         no preference
@@ -12290,6 +12282,42 @@ echo "Policy Configuration"
                         no prefix-list
                         no as-path
                         community expression "[LTE-ATT-R6] OR [LTE-ATT-CORE]"
+                        no origin
+                        no type
+                        no area
+                        no level
+                        no external
+                        no host-ip
+                        no group-address
+                        no source-address
+                        no interface
+                        no tag
+                        no family
+                    exit
+                    action accept
+                        no as-path
+                        no as-path-prepend
+                        no community
+                        no origin
+                        no local-preference
+                        no preference
+                        no metric
+                        no damping
+                        no next-hop-self
+                        no next-hop
+                        no tag
+                        no type
+                        no aigp-metric
+                    exit
+                exit
+                entry 27020
+                    no description
+                    from
+                        no protocol
+                        no neighbor
+                        no prefix-list
+                        no as-path
+                        community "TEF_LTE"
                         no origin
                         no type
                         no area
@@ -12661,7 +12689,7 @@ echo "BGP Configuration"
 #--------------------------------------------------
         bgp
             no description
-            family ipv4 vpn-ipv4
+            family ipv4 vpn-ipv4 label-ipv4
             no vpn-apply-import
             no vpn-apply-export
             no route-target-list
@@ -12674,7 +12702,7 @@ echo "BGP Configuration"
             no local-preference
             loop-detect discard-route
             min-route-advertisement 5
-            no multipath
+            multipath 4
             no aggregator-id-zero
             no preference
             no label-preference
@@ -12695,7 +12723,7 @@ echo "BGP Configuration"
             advertise-inactive
             enable-peer-tracking
             no auth-keychain
-            no rapid-withdrawal
+            rapid-withdrawal
             no bfd-enable
             no split-horizon
             no rapid-update
@@ -12800,6 +12828,58 @@ echo "BGP Configuration"
                 no default-route-target
                 no aigp
                 no def-recv-evpn-encap
+                neighbor 10.190.2.0
+                    no shutdown
+                    description "LEOMTX-GUJ6030-CA"
+                    no family
+                    no authentication-key
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit evpn
+                    no prefix-limit label-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no auth-keychain
+                    no bfd-enable
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no def-recv-evpn-encap
+                exit
                 neighbor 10.190.2.1
                     no shutdown
                     description "LEOMTX-GUJ6030-CB"
@@ -13005,7 +13085,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:28:15 2020 UTC
+# Finished WED MAR 17 02:31:14 2021 UTC
 A:MXLEOM02RTAGG01# show port 
 
 ===============================================================================

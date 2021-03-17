@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.4.87
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.4.87
 Warning: Permanently added '10.190.4.87' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.4.87's password: 
+ca168b@10.190.4.87's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 30 Minutes 
 A:MXJALARS0563BHCSRMOB01# environment no more 
 A:MXJALARS0563BHCSRMOB01# show chassis 
 ===============================================================================
@@ -34,11 +36,11 @@ Chassis   Role                Status
 1         Standalone          up
 ===============================================================================
 A:MXJALARS0563BHCSRMOB01# admin display-config detail 
-# TiMOS-B-9.0.R6 both/hops Nokia 7705 SAR Copyright (c) 2000-2019 Nokia.
+# TiMOS-B-20.4.R1 both/hops Nokia 7705 SAR Copyright (c) 2000-2020 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
-# Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
+# Built on Tue Apr 28 11:00:44 EDT 2020 by builder in /builds/F204B/R1/panos/main
 
-# Generated THU MAY 21 05:26:52 2020 UTC
+# Generated WED MAR 17 02:17:39 2021 UTC
 
 exit all
 configure
@@ -115,7 +117,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -159,7 +161,57 @@ echo "System Security Configuration"
             management-access-filter
                 ip-filter
                     shutdown
-                    default-action deny
+                    default-action permit
+                    entry 90
+                        description "SEDONA"
+                        no src-port
+                        src-ip 10.32.224.132/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
+                    entry 91
+                        no description
+                        no src-port
+                        src-ip 10.32.2.104/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
+                    entry 92
+                        no description
+                        no src-port
+                        src-ip 10.150.10.200/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
+                    entry 93
+                        no description
+                        no src-port
+                        src-ip 10.150.10.71/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
+                    entry 94
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -640,6 +692,46 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 250
                         description "Permit SNMP from Src IP - ACC"
                         no src-port
@@ -880,6 +972,106 @@ echo "System Security Configuration"
                         no router
                         action permit
                     exit
+                    entry 274
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.138.130/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 275
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.138.146/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 276
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.38.22.135/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 277
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.123.26/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 278
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.141.130/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 279
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.141.142/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 280
+                        description "Accept TCP from TACACS Servers"
+                        no src-port
+                        src-ip 10.150.123.10/32
+                        protocol tcp
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 288
+                        description "Accept IP from SYSLOG-SIEM"
+                        no src-port
+                        src-ip 10.38.22.137/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 290
+                        description "Permit IP - SNMP SSH from OSS manager servers"
+                        no src-port
+                        src-ip 10.32.242.132/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 291
+                        description "Permit IP - SNMP SSH from OSS manager servers"
+                        no src-port
+                        src-ip 10.32.242.136/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action permit
+                    exit
                     entry 330
                         description "Deny NTP"
                         no src-port
@@ -1088,8 +1280,8 @@ echo "System Security Configuration"
                 authorization 
                 timeout 10
                 use-default-template
-                server 1 address 10.32.15.100 secret "bf.utu3DKQ90ma9JkYWI1VIjHe3uLrx98uwJrv7u1/o" hash2 port 49
-                server 2 address 10.32.15.101 secret "bf.utu3DKQ8OAqRKDaO/HV7z9A4oo9ZhXedxJaVA/kY" hash2 port 49
+                server 1 address 10.32.15.100 secret "yhitt1M3Tdumm+i8397ziNmz2rMZA1E07L5BdqoT" hash2 port 49
+                server 2 address 10.32.15.101 secret "yhitt1M3Tdumm+i8397ziO+VadYQJOT6/u1nAxgk" hash2 port 49
                 no shutdown
             exit
             tech-support
@@ -1114,7 +1306,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$zUU96JZlw8gCR9Lz7WJzY.cHkzHTPhvO.nGsjcjCL9C1eLbfV6QTO"
+                password "$2y$10$M/IauNkpVNFPD3sg5uchU.MpcLTpP9/opOe95pRiqaCVVozNS2IAW"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1126,7 +1318,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$amwwuEHjn64D6zrtiTL6w.i78f8l1VqA7MJn0Z.KTZDH/d6JsALmm"
+                password "$2y$10$65Js5OD12PAqMEf0JCftE.eXT4q6gRc.as4yaiOeXCKtP7d8XEGxW"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1139,8 +1331,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$ktC4MghWZCbrIRLnQ6cuQ.iOGZdr5OMjd7BDGfaCwOg27SFTuOMK."
-                no access
+                password "$2y$10$Bo0XYUOMXNUAVK2Ttvt3M.R28/1PvL9JWwCzQhOkIokG57k6AhUE6"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -1634,10 +1826,10 @@ echo "System Security Configuration"
                 access group "snmp-vpls-mgmt" security-model snmpv2c security-level no-auth-no-privacy context "vpls-management" prefix read "mgmt-view" write "mgmt-view" notify "mgmt-view"
                 access group "cli-vprn-readwrite" security-model snmpv2c security-level no-auth-no-privacy context "vprn" exact read "vprn-view" write "vprn-view" notify "iso"
                 attempts 20 time 5 lockout 10
-                community "A0OEmzcY7GdXA31flgpWqU" hash2 r version both
-                community "bX3QMpcrg46zuCqQvlvxyE" hash2 r version both
-                community "J9zyNCj5yP3/71r/d3yWaE" hash2 rwa version both
-                community "ss5jXojADabugQVHxBHiRk" hash2 r version both
+                community "wKlHQ8+6SqlDN44pfudLP+IlIAwFs3kFLUs=" hash2 r version both
+                community "mG/1OFOVXJt913bUGnbxcO+U06WzOxlysxg=" hash2 r version both
+                community "jmd4cRfa5MsMrPp0iOxFSIFRzZSQq8w=" hash2 rwa version both
+                community "3d4Xr8tCBErC9yTzSe3IqPcF1C0USwY=" hash2 r version both
             exit
             ssh
                 client-cipher-list protocol-version 1
@@ -1646,28 +1838,68 @@ echo "System Security Configuration"
                     cipher 30 name des
                 exit
                 client-cipher-list protocol-version 2
-                    cipher 10 name aes128-cbc
-                    cipher 20 name 3des-cbc
-                    cipher 30 name blowfish-cbc
-                    cipher 40 name cast128-cbc
-                    cipher 50 name arcfour
-                    cipher 60 name aes192-cbc
-                    cipher 70 name aes256-cbc
-                    cipher 80 name rijndael-cbc
+                    no cipher 10
+                    no cipher 20
+                    no cipher 30
+                    no cipher 40
+                    no cipher 50
+                    no cipher 60
+                    no cipher 70
+                    no cipher 80
+                    cipher 2 name aes256-ctr
+                    cipher 4 name aes192-ctr
+                    cipher 6 name aes128-ctr
                 exit
                 server-cipher-list protocol-version 1
                     cipher 10 name 3des
                     cipher 20 name blowfish
                 exit
                 server-cipher-list protocol-version 2
-                    cipher 10 name aes128-cbc
-                    cipher 20 name 3des-cbc
-                    cipher 30 name blowfish-cbc
-                    cipher 40 name cast128-cbc
-                    cipher 50 name arcfour
-                    cipher 60 name aes192-cbc
-                    cipher 70 name aes256-cbc
-                    cipher 80 name rijndael-cbc
+                    no cipher 10
+                    no cipher 20
+                    no cipher 30
+                    no cipher 40
+                    no cipher 50
+                    no cipher 60
+                    no cipher 70
+                    no cipher 80
+                    cipher 2 name aes256-ctr
+                    cipher 4 name aes192-ctr
+                    cipher 6 name aes128-ctr
+                exit
+                client-mac-list
+                    no mac 220
+                    no mac 225
+                    no mac 240
+                    mac 200 name hmac-sha2-512
+                    mac 210 name hmac-sha2-256
+                    mac 215 name hmac-sha1
+                    mac 230 name hmac-ripemd160
+                    mac 235 name hmac-ripemd160-openssh-com
+                exit
+                server-mac-list
+                    no mac 220
+                    no mac 225
+                    no mac 240
+                    mac 200 name hmac-sha2-512
+                    mac 210 name hmac-sha2-256
+                    mac 215 name hmac-sha1
+                    mac 230 name hmac-ripemd160
+                    mac 235 name hmac-ripemd160-openssh-com
+                exit
+                client-kex-list
+                    kex 200 name diffie-hellman-group16-sha512
+                    kex 210 name diffie-hellman-group14-sha256
+                    kex 215 name diffie-hellman-group14-sha1
+                    kex 220 name diffie-hellman-group-exchange-sha1
+                    kex 225 name diffie-hellman-group1-sha1
+                exit
+                server-kex-list
+                    kex 200 name diffie-hellman-group16-sha512
+                    kex 210 name diffie-hellman-group14-sha256
+                    kex 215 name diffie-hellman-group14-sha1
+                    kex 220 name diffie-hellman-group-exchange-sha1
+                    kex 225 name diffie-hellman-group1-sha1
                 exit
                 preserve-key
                 version 2
@@ -1822,6 +2054,8 @@ echo "Log Configuration"
         event-control "bgp" 2033 generate warning throttle disable-specific-throttle
         event-control "bgp" 2034 generate minor throttle disable-specific-throttle
         event-control "bgp" 2035 generate minor throttle disable-specific-throttle
+        event-control "bgp" 2036 generate minor throttle disable-specific-throttle
+        event-control "bgp" 2037 generate minor throttle disable-specific-throttle
         event-control "bgp" 2038 generate minor throttle disable-specific-throttle
         event-control "bgp" 2039 generate warning throttle disable-specific-throttle
         event-control "cflowd" 2002 generate minor throttle disable-specific-throttle
@@ -2189,20 +2423,6 @@ echo "Log Configuration"
         event-control "mc_redundancy" 2038 generate minor throttle specific-throttle-rate 1 interval 10
         event-control "mc_redundancy" 2043 generate minor throttle disable-specific-throttle
         event-control "mc_redundancy" 2044 generate minor throttle disable-specific-throttle
-        event-control "mc_redundancy" 2045 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2046 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2047 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2048 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2049 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2050 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2051 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2052 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2053 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2054 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2055 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2056 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2057 generate warning throttle disable-specific-throttle
-        event-control "mc_redundancy" 2058 generate warning throttle disable-specific-throttle
         event-control "mirror" 2001 generate minor throttle disable-specific-throttle
         event-control "mirror" 2002 generate minor throttle disable-specific-throttle
         event-control "mirror" 2003 generate minor throttle disable-specific-throttle
@@ -2824,6 +3044,10 @@ echo "Log Configuration"
         event-control "rip_ng" 2007 generate minor throttle disable-specific-throttle
         event-control "rip_ng" 2008 generate minor throttle disable-specific-throttle
         event-control "rip_ng" 2009 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2001 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2002 generate minor throttle disable-specific-throttle
+        event-control "pcap" 2003 generate major throttle disable-specific-throttle
+        event-control "pcap" 2004 generate major throttle disable-specific-throttle
         event-control "firewall" 2001 generate major throttle disable-specific-throttle
         event-control "firewall" 2002 generate major throttle disable-specific-throttle
         event-control "firewall" 2003 generate major throttle disable-specific-throttle
@@ -2831,6 +3055,16 @@ echo "Log Configuration"
         event-control "firewall" 2005 generate major throttle disable-specific-throttle
         event-control "firewall" 2006 generate major throttle disable-specific-throttle
         event-control "firewall" 2007 generate major throttle disable-specific-throttle
+        event-control "firewall" 2008 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2009 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2010 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2011 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2012 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2013 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2014 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2015 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2016 generate minor throttle disable-specific-throttle
+        event-control "firewall" 2017 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2001 generate major throttle disable-specific-throttle
         event-control "mwmgr" 2002 generate major throttle disable-specific-throttle
         event-control "mwmgr" 2003 generate major throttle disable-specific-throttle
@@ -2855,6 +3089,12 @@ echo "Log Configuration"
         event-control "mwmgr" 2022 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2023 generate minor throttle disable-specific-throttle
         event-control "mwmgr" 2024 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2027 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2028 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2029 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2030 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2031 generate major throttle disable-specific-throttle
+        event-control "mwmgr" 2032 generate major throttle disable-specific-throttle
         event-control "scada" 3016 generate warning throttle disable-specific-throttle
         event-control "scada" 3017 generate warning throttle disable-specific-throttle
         event-control "scada" 3023 generate warning throttle disable-specific-throttle
@@ -3387,6 +3627,39 @@ echo "QoS Policy Configuration"
             dscp af23 fc "l1"
             dscp nc2 fc "nc"
             default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 111 create
+            no policy-name
+            description "CPIPES_VLL:TDM"
+            scope template
+            no packet-byte-offset
+            queue 1 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            queue 2 priority-mode auto-expedite create
+                adaptation-rule pir closest cir closest
+                rate max cir 0
+                mbs default
+                cbs default
+                high-prio-only default
+                no packet-byte-offset
+                slope-policy "default"
+            exit
+            fc "af" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no de-1-out-profile
+            exit
+            default-fc "af"
             default-priority low
         exit
         sap-ingress 200 create
@@ -4355,6 +4628,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode hybrid
             encap-type dot1q
@@ -4455,6 +4729,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -4546,6 +4821,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4636,6 +4912,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4726,6 +5003,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4816,6 +5094,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4906,6 +5185,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -4995,6 +5275,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5085,6 +5366,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -5176,6 +5458,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5265,6 +5548,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -5356,6 +5640,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5446,6 +5731,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             no encap-type
@@ -5535,6 +5821,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -5625,6 +5912,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -5715,6 +6003,7 @@ echo "Port Configuration"
                 server-timeout 30
                 no mac-auth
                 no mac-auth-wait
+                no tunneling
             exit
             mode access
             encap-type dot1q
@@ -6021,6 +6310,7 @@ echo "Router (Network Side) Configuration"
             no proxy-arp-policy
             no local-proxy-arp
             no remote-proxy-arp
+            no mac
             no ipv6
             icmp
                 mask-reply
@@ -6077,6 +6367,7 @@ echo "Router (Network Side) Configuration"
             no proxy-arp-policy
             no local-proxy-arp
             no remote-proxy-arp
+            no mac
             no ipv6
             icmp
                 mask-reply
@@ -6233,6 +6524,7 @@ echo "ISIS Configuration"
             no ignore-lsp-errors
             lsp-lifetime 1200
             lsp-mtu-size 1492
+            no database-export
             no overload
             no overload-on-boot
             no export
@@ -6247,6 +6539,7 @@ echo "ISIS Configuration"
             no ignore-attached-bit
             no suppress-attached-bit
             no iid-tlv-enable
+            no poi-tlv-enable
             no loopfree-alternate
             no loopfree-alternate-exclude
             ipv4-routing
@@ -6254,6 +6547,9 @@ echo "ISIS Configuration"
             no unicast-import-disable ipv4
             no multicast-import ipv4
             no strict-adjacency-check
+            entropy-label
+                no override-tunnel-elc
+            exit
             timers
                 lsp-wait 5000 lsp-initial-wait 10 lsp-second-wait 1000
                 spf-wait 10000 spf-initial-wait 1000 spf-second-wait 1000
@@ -6264,6 +6560,7 @@ echo "ISIS Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 160
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -6277,6 +6574,7 @@ echo "ISIS Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 165
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -6287,6 +6585,7 @@ echo "ISIS Configuration"
             segment-routing
                 shutdown
                 adj-sid-hold 15
+                entropy-label enable
                 no export-tunnel-table
                 no prefix-sid-range
                 tunnel-table-pref 11
@@ -6312,6 +6611,7 @@ echo "ISIS (Inst: 3) Configuration"
             no ignore-lsp-errors
             lsp-lifetime 65535
             lsp-mtu-size 1492
+            no database-export
             no overload
             no overload-on-boot
             no export
@@ -6326,6 +6626,7 @@ echo "ISIS (Inst: 3) Configuration"
             no ignore-attached-bit
             no suppress-attached-bit
             no iid-tlv-enable
+            no poi-tlv-enable
             loopfree-alternate
             no loopfree-alternate-exclude
             ipv4-routing
@@ -6333,6 +6634,9 @@ echo "ISIS (Inst: 3) Configuration"
             no unicast-import-disable ipv4
             no multicast-import ipv4
             no strict-adjacency-check
+            entropy-label
+                no override-tunnel-elc
+            exit
             timers
                 lsp-wait 5000 lsp-initial-wait 10 lsp-second-wait 1000
                 spf-wait 10000 spf-initial-wait 1000 spf-second-wait 1000
@@ -6343,6 +6647,7 @@ echo "ISIS (Inst: 3) Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 160
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -6356,6 +6661,7 @@ echo "ISIS (Inst: 3) Configuration"
                 no authentication-key
                 no authentication-type
                 csnp-authentication
+                no database-export-exclude
                 external-preference 165
                 hello-authentication
                 no loopfree-alternate-exclude
@@ -6448,6 +6754,7 @@ echo "ISIS (Inst: 3) Configuration"
             segment-routing
                 shutdown
                 adj-sid-hold 15
+                entropy-label enable
                 no export-tunnel-table
                 no prefix-sid-range
                 tunnel-table-pref 11
@@ -6466,6 +6773,7 @@ echo "MPLS Configuration"
             frr-object
             no hold-timer
             entropy-label rsvp-te enable
+            entropy-label sr-te enable
             dynamic-bypass enable
             least-fill-reoptim-thd 10
             least-fill-min-thd 5
@@ -6502,6 +6810,7 @@ echo "RSVP Configuration"
             refresh-reduction-over-bypass disable
             no graceful-shutdown
             no entropy-label-capability
+            no implicit-null-label
             node-id-in-rro exclude
             interface "system"
                 no authentication-key
@@ -6511,6 +6820,7 @@ echo "RSVP Configuration"
                 no refresh-reduction
                 no bfd-enable
                 no graceful-shutdown
+                no implicit-null-label
                 no shutdown
             exit
             interface "To-MXJALICG0756BHCSRMOB01"
@@ -6521,6 +6831,7 @@ echo "RSVP Configuration"
                 no refresh-reduction
                 bfd-enable
                 no graceful-shutdown
+                no implicit-null-label
                 no shutdown
             exit
             no shutdown
@@ -6856,6 +7167,19 @@ echo "Service Configuration"
             interface "To-LGDL8004" create
             exit
             interface "To-MLJALARS2802Y" create
+            exit
+            dhcp
+            exit
+            dhcp6
+            exit
+        exit
+        vprn 1000070 customer 2 create
+            no type
+            interface "To-JALARS0564_CFE" create
+            exit
+            interface "To-JALARS0565_CFE" create
+            exit
+            interface "To-JALARS0566_CFE" create
             exit
             dhcp
             exit
@@ -8739,6 +9063,7 @@ echo "Service Configuration"
                 no local-proxy-arp
                 no remote-proxy-arp
                 vpls "To-JALARS0563-GestionMW"
+                    no evpn-tunnel
                     ingress
                         no v6-routed-override-filter
                         no v4-routed-override-filter
@@ -9255,7 +9580,7 @@ echo "Service Configuration"
                     allow-local-management
                 exit
                 export-grt "vpn-to-grt"
-                export-limit 5
+                export-limit 40
                 export-v6-limit 5
             exit
             mvpn
@@ -13021,6 +13346,325 @@ echo "Service Configuration"
             service-name "VPRN-LTE-AT&T"
             no shutdown
         exit
+        vprn 1000070 customer 2 create
+            description "ENERGIAS_LIMPIAS_CFE"
+            ipv6
+                reachable-time 30
+                stale-time 14400
+            exit
+            ipsec
+            exit
+            no ecmp
+            no router-id
+            no maximum-routes
+            no maximum-ipv6-routes
+            snmp
+            exit
+            no mc-maximum-routes
+            autonomous-system 65000
+            route-distinguisher 65000:1070000000
+            no type
+            auto-bind-tunnel
+                resolution-filter
+                    no gre
+                    ldp
+                    rsvp
+                    no sr-isis
+                    no sr-ospf
+                    no sr-te
+                exit
+                resolution filter
+            exit
+            no enable-bgp-vpn-backup
+            vrf-target target:65000:1070000
+            interface "To-JALARS0564_CFE" create
+                description "JALARS0564_CFE"
+                no tcp-mss
+                address 10.237.18.180/31 broadcast host-ones 
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no allow-directed-broadcasts
+                icmp
+                    mask-reply
+                    unreachables 100 10
+                    ttl-expired 100 10
+                    param-problem 100 10
+                exit
+                dhcp
+                    shutdown
+                    no description
+                    no option
+                    no server
+                    no trusted
+                    no gi-address
+                exit
+                no ip-mtu
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/6/1:5 create
+                    no description
+                    ingress
+                        qos 301
+                        no match-qinq-dot1p
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    egress
+                        qos 301
+                        no qinq-mark-top-only
+                        no filter
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    no collect-stats
+                    no accounting-policy
+                    no shutdown
+                exit
+                if-attribute
+                exit
+                load-balancing
+                    no l4-load-balancing
+                    no teid-load-balancing
+                    no spi-load-balancing
+                exit
+                no shutdown
+            exit
+            interface "To-JALARS0565_CFE" create
+                description "JALARS0565_CFE"
+                no tcp-mss
+                address 10.237.18.182/31 broadcast host-ones 
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no allow-directed-broadcasts
+                icmp
+                    mask-reply
+                    unreachables 100 10
+                    ttl-expired 100 10
+                    param-problem 100 10
+                exit
+                dhcp
+                    shutdown
+                    no description
+                    no option
+                    no server
+                    no trusted
+                    no gi-address
+                exit
+                no ip-mtu
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/6/1:6 create
+                    no description
+                    ingress
+                        qos 301
+                        no match-qinq-dot1p
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    egress
+                        qos 301
+                        no qinq-mark-top-only
+                        no filter
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    no collect-stats
+                    no accounting-policy
+                    no shutdown
+                exit
+                if-attribute
+                exit
+                load-balancing
+                    no l4-load-balancing
+                    no teid-load-balancing
+                    no spi-load-balancing
+                exit
+                no shutdown
+            exit
+            interface "To-JALARS0566_CFE" create
+                description "JALARS0566_CFE"
+                no tcp-mss
+                address 10.237.18.204/31 broadcast host-ones 
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no allow-directed-broadcasts
+                icmp
+                    mask-reply
+                    unreachables 100 10
+                    ttl-expired 100 10
+                    param-problem 100 10
+                exit
+                dhcp
+                    shutdown
+                    no description
+                    no option
+                    no server
+                    no trusted
+                    no gi-address
+                exit
+                no ip-mtu
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/5/2:7 create
+                    no description
+                    ingress
+                        qos 301
+                        no match-qinq-dot1p
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    egress
+                        qos 301
+                        no qinq-mark-top-only
+                        no filter
+                        scheduler-mode 4-priority
+                        no agg-rate-limit
+                    exit
+                    no collect-stats
+                    no accounting-policy
+                    no shutdown
+                exit
+                if-attribute
+                exit
+                load-balancing
+                    no l4-load-balancing
+                    no teid-load-balancing
+                    no spi-load-balancing
+                exit
+                no shutdown
+            exit
+            sgt-qos
+                application bgp dscp none
+                application dhcp dscp none
+                application dns dscp none
+                application ftp dscp none
+                application icmp dscp none
+                application igmp dscp none
+                application ldp dscp none
+                application msdp dscp none
+                application ndis dscp none
+                application ntp dscp none
+                application ospf dscp none
+                application pim dscp none
+                application radius dscp none
+                application rsvp dscp none
+                application snmp dscp none
+                application snmp-notification dscp none
+                application ssh dscp none
+                application syslog dscp none
+                application tacplus dscp none
+                application telnet dscp none
+                application tftp dscp none
+                application traceroute dscp none
+                application vrrp dscp none
+                application ptp dscp none
+                application pcep dscp none
+                application arp dot1p none
+                application isis dot1p none
+                dscp be fc nc
+                dscp cp1 fc be
+                dscp cp2 fc be
+                dscp cp3 fc be
+                dscp cp4 fc be
+                dscp cp5 fc be
+                dscp cp6 fc be
+                dscp cp7 fc be
+                dscp cs1 fc be
+                dscp cp9 fc be
+                dscp af11 fc af
+                dscp cp11 fc be
+                dscp af12 fc af
+                dscp cp13 fc be
+                dscp af13 fc af
+                dscp cp15 fc be
+                dscp cs2 fc be
+                dscp cp17 fc be
+                dscp af21 fc l1
+                dscp cp19 fc be
+                dscp af22 fc l1
+                dscp cp21 fc be
+                dscp af23 fc l1
+                dscp cp23 fc be
+                dscp cs3 fc be
+                dscp cp25 fc be
+                dscp af31 fc l1
+                dscp cp27 fc be
+                dscp af32 fc l1
+                dscp cp29 fc be
+                dscp af33 fc l1
+                dscp cp31 fc be
+                dscp cs4 fc be
+                dscp cp33 fc be
+                dscp af41 fc nc
+                dscp cp35 fc be
+                dscp af42 fc h2
+                dscp cp37 fc be
+                dscp af43 fc h2
+                dscp cp39 fc be
+                dscp cs5 fc be
+                dscp cp41 fc be
+                dscp cp42 fc be
+                dscp cp43 fc be
+                dscp cp44 fc be
+                dscp cp45 fc be
+                dscp ef fc ef
+                dscp cp47 fc be
+                dscp nc1 fc nc
+                dscp cp49 fc be
+                dscp cp50 fc h2
+                dscp cp51 fc be
+                dscp cp52 fc be
+                dscp cp53 fc be
+                dscp cp54 fc be
+                dscp cp55 fc be
+                dscp nc2 fc nc
+                dscp cp57 fc be
+                dscp cp58 fc be
+                dscp cp59 fc be
+                dscp cp60 fc be
+                dscp cp61 fc be
+                dscp cp62 fc be
+                dscp cp63 fc be
+            exit
+            grt-lookup
+                no enable-grt
+                export-limit 5
+                export-v6-limit 5
+            exit
+            mvpn
+                provider-tunnel
+                exit
+                no vrf-target
+            exit
+            no entropy-label
+            twamp-light
+            exit
+            no encryption-keygroup direction inbound
+            no encryption-keygroup direction outbound
+            no service-name
+            no shutdown
+        exit
         vpls 90004000 customer 2 create
             no description
             service-mtu 1514
@@ -13122,14 +13766,15 @@ echo "Service Configuration"
                 exit
                 eth-cfm
                 exit
+                no cflowd
                 ingress
-                    qos 1
+                    qos 301
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 1
+                    qos 301
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -13629,6 +14274,8 @@ echo "BGP Configuration"
             no rapid-withdrawal
             no bfd-enable
             no split-horizon
+            no link-state-export-enable
+            no link-state-import-enable
             no rapid-update
             no mvpn-vrf-import-subtype-new
             add-paths
@@ -13645,6 +14292,7 @@ echo "BGP Configuration"
                 no as-path-ignore
             exit
             next-hop-resolution
+                no policy
                 label-route-transport-tunnel
                     family vpn
                         resolution-filter
@@ -13668,6 +14316,7 @@ echo "BGP Configuration"
                     exit
                 exit
             exit
+            no peer-tracking-policy
             no enable-rr-vpn-forwarding
             rib-management
                 ipv4
@@ -13680,6 +14329,7 @@ echo "BGP Configuration"
                     no route-table-import
                 exit
             exit
+            no dynamic-neighbor-limit
             group "ANILLO ARANDAS"
                 no shutdown
                 no description
@@ -13730,7 +14380,10 @@ echo "BGP Configuration"
                 no add-paths
                 no default-route-target
                 no aigp
+                no dynamic-neighbor-limit
                 no def-recv-evpn-encap
+                dynamic-neighbor
+                exit
                 neighbor 10.190.2.85
                     no shutdown
                     description "SNJUALA-JAL5031S-GA"
@@ -13896,6 +14549,12 @@ echo "Local DHCP Server (Services) Configuration"
             dhcp6
             exit
         exit
+        vprn 1000070 customer 2 create
+            dhcp
+            exit
+            dhcp6
+            exit
+        exit
     exit
 #--------------------------------------------------
 echo "System IEEE 1588 PTP Configuration"
@@ -13988,7 +14647,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:55 2020 UTC
+# Finished WED MAR 17 02:17:43 2021 UTC
 A:MXJALARS0563BHCSRMOB01# show port 
 
 ===============================================================================
@@ -13997,20 +14656,20 @@ Ports on Slot 1
 Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
-1/5/1         Up    Yes  Up      9728 9728    - hybr dotq xcme   MDI GIGE-T 
-1/5/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/5/1         Up    Yes  Up      9728 9728    - hybr dotq xcme   MDX GIGE-T 
+1/5/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/3         Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
 1/5/4         Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
 1/5/5         Down  No   Down    1514 1514    - accs null xcme   
 1/5/6         Down  No   Down    1514 1514    - accs null xcme   
 1/5/7         Down  No   Down    1514 1514    - accs null xcme   GIGE-LX  10KM
-1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
+1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
 1/6/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/6/2         Down  No   Down    1514 1514    - accs null xcme   GIGE-LX  10KM
 1/6/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 1/6/4         Down  No   Down    1514 1514    - accs null xcme   
 1/6/5         Down  No   Down    1514 1514    - accs null xcme   
-1/6/6         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/6/6         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/6/7         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/6/8         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 

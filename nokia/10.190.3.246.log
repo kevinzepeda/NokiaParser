@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.246
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.246
 Warning: Permanently added '10.190.3.246' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.246's password: 
+ca168b@10.190.3.246's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 19 Minutes 
 A:MEX-M1-CA# environment no more 
 A:MEX-M1-CA# show chassis 
 ===============================================================================
@@ -39,11 +41,11 @@ Chassis   Role                Status
 1         Standalone          up
 ===============================================================================
 A:MEX-M1-CA# admin display-config detail 
-# TiMOS-C-16.0.R5-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
+# TiMOS-C-19.10.R2 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
-# Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
+# Built on Mon Dec 16 15:37:51 PST 2019 by builder in /builds/c/1910B/R2/panos/main
 
-# Generated THU MAY 21 05:26:45 2020 UTC
+# Generated WED MAR 17 02:29:16 2021 UTC
 
 exit all
 configure
@@ -89,6 +91,8 @@ echo "System Configuration"
         ip
             no allow-qinq-network-interface
             no enforce-unique-if-index
+            no forward-6in4
+            no forward-ip-over-gre
         exit
         load-balancing
             no l2tp-load-balancing
@@ -106,6 +110,7 @@ echo "System Configuration"
                 exit
                 md-cli
                     no auto-config-save
+                    command-accounting-during-load
                     environment
                         more
                         time-display local
@@ -136,7 +141,7 @@ echo "System Configuration"
                 exit
             exit
             yang-modules
-                base-r13-modules
+                no base-r13-modules
                 no nokia-combined-modules
                 nokia-modules
             exit
@@ -169,8 +174,9 @@ echo "System Configuration"
             no auto-config-save
             capabilities
                 candidate
-                writable-running
+                no writable-running
             exit
+            port 830
         exit
         persistence
             subscriber-mgmt
@@ -209,7 +215,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f0000e4818434240f"
             packet-size 9216
@@ -234,7 +240,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -244,20 +250,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -345,6 +351,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard2-TXT" owner "TiMOS CLI"
@@ -353,6 +360,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard3-TXT" owner "TiMOS CLI"
@@ -361,6 +369,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard4-TXT" owner "TiMOS CLI"
@@ -369,6 +378,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard5-TXT" owner "TiMOS CLI"
@@ -377,6 +387,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard6-TXT" owner "TiMOS CLI"
@@ -385,6 +396,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard7-TXT" owner "TiMOS CLI"
@@ -393,6 +405,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard8-TXT" owner "TiMOS CLI"
@@ -401,6 +414,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard9-TXT" owner "TiMOS CLI"
@@ -409,6 +423,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
             script-policy "ehsvcard10-TXT" owner "TiMOS CLI"
@@ -417,6 +432,7 @@ echo "System Configuration"
                 max-completed 4
                 expire-time 3600
                 lifetime forever
+                no lock-override
                 no shutdown
             exit
         exit
@@ -424,6 +440,9 @@ echo "System Configuration"
 echo "Cron Configuration"
 #--------------------------------------------------
         cron
+        exit
+        network-element-discovery
+            no generate-traps
         exit
     exit
 #--------------------------------------------------
@@ -472,6 +491,10 @@ echo "System Security Configuration"
                 default-action none
                 grpc
                     rpc-authorization
+                        gnoi-cert-mgmt-rotate deny
+                        gnoi-cert-mgmt-install deny
+                        gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
                         gnmi-set permit
@@ -556,6 +579,10 @@ echo "System Security Configuration"
                 default-action none
                 grpc
                     rpc-authorization
+                        gnoi-cert-mgmt-rotate deny
+                        gnoi-cert-mgmt-install deny
+                        gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
                         gnmi-set permit
@@ -665,6 +692,10 @@ echo "System Security Configuration"
                 default-action permit-all
                 grpc
                     rpc-authorization
+                        gnoi-cert-mgmt-rotate deny
+                        gnoi-cert-mgmt-install deny
+                        gnoi-cert-mgmt-getcert deny
+                        gnoi-cert-mgmt-cangenerate deny
                         gnmi-capabilities permit
                         gnmi-get permit
                         gnmi-set permit
@@ -702,6 +733,11 @@ echo "System Security Configuration"
                 entry 40
                     no description
                     match "tools dump security"
+                    action permit
+                exit
+                entry 50
+                    no description
+                    match "admin system security"
                     action permit
                 exit
                 entry 100
@@ -827,7 +863,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$wbzBvLkgDvBqeAENv37uo.vCvjXptbut7dIKO/bnhJ/2U8wM9Mk5a"
+                password "$2y$10$3atThB4SID/Jkt8vniZuo.d/pOR6I.gjPaTzPEXeDOvhDf2edPvTu"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -851,7 +887,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$rT2dKRL/1fUip4zFVHkwI.yrSp0vNZgZRMCyd6zR4.S9Xvni1vfIW"
+                password "$2y$10$AYp0oqU/3ttCCHVmJKDvY.M7Ekorf/1z9MQaIUI12gAXIVJJel9ey"
                 access console ftp
                 no home-directory
                 no restricted-to-home
@@ -866,7 +902,27 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
-                    member "default"
+                    no member "default"
+                    member "administrative"
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$QGkxCtnnHOmEHZ61KlJmM.XO4UtdMOcqufqSSnBW.RucNZTstjZOC"
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
                     member "administrative"
                 exit
             exit
@@ -1654,6 +1710,7 @@ echo "Log Configuration"
             no default
             to file 17
             no include-system-info
+            no align
             custom-record
                 aa-specific
                     aa-sub-attributes
@@ -1695,6 +1752,7 @@ echo "Log Configuration"
                     exit
                 exit
                 significant-change 0
+                no ref-policer
                 no ref-queue
                 no ref-override-counter
                 no ref-aa-specific-counter
@@ -1708,6 +1766,7 @@ echo "Log Configuration"
             no default
             to file 25
             no include-system-info
+            no align
             custom-record
                 aa-specific
                     aa-sub-attributes
@@ -1749,6 +1808,7 @@ echo "Log Configuration"
                     exit
                 exit
                 significant-change 0
+                no ref-policer
                 no ref-queue
                 no ref-override-counter
                 no ref-aa-specific-counter
@@ -2839,6 +2899,7 @@ echo "Log Configuration"
         event-control "application_assurance" 4461 generate minor throttle disable-specific-throttle
         event-control "application_assurance" 4463 generate minor throttle disable-specific-throttle
         event-control "application_assurance" 4464 generate minor throttle disable-specific-throttle
+        event-control "application_assurance" 4465 generate minor throttle disable-specific-throttle
         event-control "aps" 2001 generate minor throttle disable-specific-throttle
         event-control "aps" 2002 generate minor throttle disable-specific-throttle
         event-control "aps" 2003 generate minor disable-specific-throttle
@@ -2902,6 +2963,7 @@ echo "Log Configuration"
         event-control "bgp" 2039 generate warning throttle disable-specific-throttle
         event-control "bgp" 2040 generate warning throttle disable-specific-throttle
         event-control "bgp" 2041 generate minor throttle disable-specific-throttle
+        event-control "bgp" 2042 generate minor throttle disable-specific-throttle
         event-control "cflowd" 2002 generate minor throttle disable-specific-throttle
         event-control "cflowd" 2004 generate minor throttle disable-specific-throttle
         event-control "cflowd" 2006 generate minor throttle disable-specific-throttle
@@ -3029,6 +3091,21 @@ echo "Log Configuration"
         event-control "chassis" 2185 generate critical throttle disable-specific-throttle
         event-control "chassis" 2186 generate cleared throttle disable-specific-throttle
         event-control "chassis" 2200 generate minor disable-specific-throttle
+        event-control "chassis" 2201 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2202 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2203 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2204 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2205 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2206 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2207 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2275 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2276 generate cleared throttle disable-specific-throttle
+        event-control "chassis" 2277 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2278 generate cleared throttle disable-specific-throttle
+        event-control "chassis" 2279 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2280 generate cleared throttle disable-specific-throttle
+        event-control "chassis" 2281 generate minor throttle disable-specific-throttle
+        event-control "chassis" 2282 generate cleared throttle disable-specific-throttle
         event-control "chassis" 5163 generate minor throttle disable-specific-throttle
         event-control "chassis" 5164 generate minor throttle disable-specific-throttle
         event-control "debug" 2001 generate minor throttle disable-specific-throttle
@@ -3205,6 +3282,7 @@ echo "Log Configuration"
         event-control "ipsec" 2011 generate minor throttle specific-throttle-rate 25 interval 1
         event-control "ipsec" 2012 generate minor throttle specific-throttle-rate 25 interval 1
         event-control "ipsec" 2013 generate minor throttle disable-specific-throttle
+        event-control "ipsec" 2014 generate minor throttle disable-specific-throttle
         event-control "isis" 2025 generate warning throttle disable-specific-throttle
         event-control "isis" 2026 generate warning throttle disable-specific-throttle
         event-control "isis" 2027 generate warning throttle disable-specific-throttle
@@ -3242,6 +3320,8 @@ echo "Log Configuration"
         event-control "isis" 2063 generate warning throttle disable-specific-throttle
         event-control "isis" 2064 generate warning throttle disable-specific-throttle
         event-control "isis" 2065 generate warning throttle disable-specific-throttle
+        event-control "isis" 2066 generate warning throttle disable-specific-throttle
+        event-control "isis" 2067 generate warning throttle disable-specific-throttle
         event-control "l2tp" 2001 generate warning throttle specific-throttle-rate 10 interval 1
         event-control "l2tp" 2002 generate minor throttle specific-throttle-rate 10 interval 1
         event-control "l2tp" 2003 generate warning throttle specific-throttle-rate 10 interval 10
@@ -3321,9 +3401,14 @@ echo "Log Configuration"
         event-control "li" 2207 generate warning throttle disable-specific-throttle
         event-control "li" 2208 generate warning throttle disable-specific-throttle
         event-control "li" 2209 generate warning throttle disable-specific-throttle
+        event-control "li" 2210 suppress
         event-control "li" 2212 generate warning throttle disable-specific-throttle
         event-control "li" 2213 generate major throttle disable-specific-throttle
         event-control "li" 2300 generate indeterminate throttle disable-specific-throttle
+        event-control "li" 2401 generate minor throttle disable-specific-throttle
+        event-control "li" 2402 generate minor throttle disable-specific-throttle
+        event-control "li" 2403 generate minor throttle disable-specific-throttle
+        event-control "li" 2404 generate minor throttle disable-specific-throttle
         event-control "lldp" 2001 generate minor throttle disable-specific-throttle
         event-control "lldp" 2101 generate minor throttle disable-specific-throttle
         event-control "lldp" 2102 generate minor throttle disable-specific-throttle
@@ -3346,10 +3431,10 @@ echo "Log Configuration"
         event-control "logger" 2016 generate major throttle disable-specific-throttle
         event-control "logger" 2017 generate major throttle disable-specific-throttle
         event-control "logger" 2018 generate major throttle disable-specific-throttle
-        event-control "mcpath" 2001 generate minor throttle specific-throttle-rate 10 interval 10
-        event-control "mcpath" 2002 generate minor throttle specific-throttle-rate 10 interval 10
-        event-control "mcpath" 2003 generate minor throttle specific-throttle-rate 10 interval 10
-        event-control "mcpath" 2004 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "mcpath" 2005 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "mcpath" 2006 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "mcpath" 2007 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "mcpath" 2008 generate minor throttle specific-throttle-rate 10 interval 10
         event-control "mc_redundancy" 2001 generate warning throttle disable-specific-throttle
         event-control "mc_redundancy" 2002 generate warning throttle disable-specific-throttle
         event-control "mc_redundancy" 2003 generate warning throttle disable-specific-throttle
@@ -3451,6 +3536,9 @@ echo "Log Configuration"
         event-control "mpls" 2027 generate minor throttle disable-specific-throttle
         event-control "mpls" 2028 generate minor throttle disable-specific-throttle
         event-control "mpls" 2030 generate minor throttle disable-specific-throttle
+        event-control "mpls" 2031 generate minor throttle disable-specific-throttle
+        event-control "mpls" 2032 generate minor throttle disable-specific-throttle
+        event-control "mpls" 2033 generate minor throttle disable-specific-throttle
         event-control "msdp" 2001 generate minor throttle disable-specific-throttle
         event-control "msdp" 2002 generate minor throttle disable-specific-throttle
         event-control "msdp" 2008 generate minor throttle disable-specific-throttle
@@ -3566,6 +3654,7 @@ echo "Log Configuration"
         event-control "ospf" 2057 generate warning throttle disable-specific-throttle
         event-control "ospf" 2058 generate warning throttle disable-specific-throttle
         event-control "ospf" 2059 generate warning throttle disable-specific-throttle
+        event-control "ospf" 2060 generate warning throttle disable-specific-throttle
         event-control "pim" 2001 generate minor throttle disable-specific-throttle
         event-control "pim" 2002 generate minor throttle disable-specific-throttle
         event-control "pim" 2003 generate warning throttle disable-specific-throttle
@@ -3581,6 +3670,8 @@ echo "Log Configuration"
         event-control "pim" 2013 generate warning throttle disable-specific-throttle
         event-control "pim" 2014 generate warning throttle disable-specific-throttle
         event-control "pim" 2015 generate minor throttle disable-specific-throttle
+        event-control "pim" 2016 generate minor throttle disable-specific-throttle
+        event-control "pim" 2017 generate minor throttle disable-specific-throttle
         event-control "pim_snooping" 2001 generate minor throttle disable-specific-throttle
         event-control "pim_snooping" 2002 generate minor throttle disable-specific-throttle
         event-control "pim_snooping" 2003 generate warning throttle disable-specific-throttle
@@ -3818,8 +3909,14 @@ echo "Log Configuration"
         event-control "security" 2220 generate minor throttle disable-specific-throttle
         event-control "security" 2221 generate major throttle disable-specific-throttle
         event-control "security" 2222 generate warning throttle disable-specific-throttle
-        event-control "security" 2223 generate minor throttle disable-specific-throttle
-        event-control "security" 2224 generate minor throttle disable-specific-throttle
+        event-control "security" 2223 suppress
+        event-control "security" 2224 suppress
+        event-control "security" 2225 generate major throttle disable-specific-throttle
+        event-control "security" 2226 generate major throttle disable-specific-throttle
+        event-control "security" 2227 generate minor throttle disable-specific-throttle
+        event-control "security" 2228 generate minor throttle disable-specific-throttle
+        event-control "security" 2229 generate minor throttle disable-specific-throttle
+        event-control "security" 2230 generate minor throttle disable-specific-throttle
         event-control "snmp" 2001 generate major throttle disable-specific-throttle
         event-control "snmp" 2002 generate major throttle disable-specific-throttle
         event-control "snmp" 2003 generate minor disable-specific-throttle
@@ -3881,6 +3978,10 @@ echo "Log Configuration"
         event-control "svcmgr" 2110 generate warning throttle disable-specific-throttle
         event-control "svcmgr" 2112 generate minor throttle disable-specific-throttle
         event-control "svcmgr" 2113 generate minor throttle disable-specific-throttle
+        event-control "svcmgr" 2114 generate minor throttle disable-specific-throttle
+        event-control "svcmgr" 2115 generate minor throttle disable-specific-throttle
+        event-control "svcmgr" 2116 generate minor throttle disable-specific-throttle
+        event-control "svcmgr" 2117 generate minor throttle disable-specific-throttle
         event-control "svcmgr" 2120 generate minor throttle disable-specific-throttle
         event-control "svcmgr" 2125 generate minor throttle disable-specific-throttle
         event-control "svcmgr" 2126 generate minor throttle disable-specific-throttle
@@ -4035,6 +4136,7 @@ echo "Log Configuration"
         event-control "svcmgr" 2577 generate warning throttle specific-throttle-rate 4 interval 4
         event-control "svcmgr" 2600 generate minor throttle disable-specific-throttle
         event-control "svcmgr" 2601 generate minor throttle disable-specific-throttle
+        event-control "svcmgr" 2605 generate warning throttle specific-throttle-rate 10 interval 1
         event-control "system" 2001 generate warning throttle disable-specific-throttle
         event-control "system" 2002 generate major throttle disable-specific-throttle
         event-control "system" 2003 generate critical throttle disable-specific-throttle
@@ -4096,6 +4198,8 @@ echo "Log Configuration"
         event-control "system" 2076 generate minor throttle disable-specific-throttle
         event-control "system" 2077 generate minor throttle disable-specific-throttle
         event-control "system" 2078 generate minor throttle disable-specific-throttle
+        event-control "system" 2079 generate minor throttle disable-specific-throttle
+        event-control "system" 2080 generate minor throttle disable-specific-throttle
         event-control "system" 2101 generate major throttle disable-specific-throttle
         event-control "system" 2102 generate major throttle disable-specific-throttle
         event-control "system" 2103 generate minor disable-specific-throttle
@@ -4213,6 +4317,15 @@ echo "Log Configuration"
         event-control "vrtr" 2081 generate minor throttle disable-specific-throttle
         event-control "vrtr" 2084 generate minor throttle disable-specific-throttle
         event-control "vrtr" 2085 generate minor throttle disable-specific-throttle
+        event-control "vrtr" 2086 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "vrtr" 2087 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "vrtr" 2088 generate warning throttle disable-specific-throttle
+        event-control "vrtr" 2089 generate warning throttle disable-specific-throttle
+        event-control "vrtr" 2090 generate warning throttle disable-specific-throttle
+        event-control "vrtr" 2091 generate minor throttle specific-throttle-rate 100 interval 10
+        event-control "vrtr" 2092 generate minor throttle specific-throttle-rate 10 interval 10
+        event-control "vrtr" 2093 generate minor throttle specific-throttle-rate 100 interval 10
+        event-control "vrtr" 2094 generate minor throttle specific-throttle-rate 10 interval 10
         event-control "radius" 2001 generate minor throttle disable-specific-throttle
         event-control "radius" 2002 generate minor throttle disable-specific-throttle
         event-control "radius" 2003 generate minor throttle disable-specific-throttle
@@ -4311,6 +4424,8 @@ echo "Log Configuration"
         event-control "macsec" 2006 generate minor throttle disable-specific-throttle
         event-control "macsec" 2007 generate minor throttle disable-specific-throttle
         event-control "macsec" 2008 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2009 generate minor throttle disable-specific-throttle
+        event-control "macsec" 2010 generate minor throttle disable-specific-throttle
         event-control "pcap" 2001 generate minor throttle disable-specific-throttle
         event-control "pcap" 2002 generate minor throttle disable-specific-throttle
         event-control "pcap" 2003 generate major throttle disable-specific-throttle
@@ -4885,6 +5000,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4895,6 +5012,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4906,6 +5025,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -6020,6 +6339,7 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
                 certificate-display-format ascii
                 no certificate-expiration-warning
                 no crl-expiration-warning
+                imported-format any
             exit
             tls
             exit
@@ -6031,9 +6351,12 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
                 no shutdown
             exit
             management
+                allow-ftp
                 allow-ssh
+                allow-netconf
                 allow-telnet
                 allow-telnet6
+                allow-grpc
             exit
         exit
     exit
@@ -6064,6 +6387,11 @@ echo "System gRPC Configuration"
             gnmi
                 no auto-config-save
                 no shutdown
+            exit
+            gnoi
+                cert-mgmt
+                    shutdown
+                exit
             exit
             rib-api
                 shutdown
@@ -7592,6 +7920,7 @@ echo "QoS Policy Configuration"
             level 8 percent-rate 100.00 percent-cir 5.00
             orphan-override level 5 cir-level 5
             no monitor-threshold
+            hqos-algorithm default
         exit
         port-scheduler-policy "PS-IPMEAN-network:unshaped" create
             description "standard_network_PS:no_rate_limit"
@@ -7607,6 +7936,7 @@ echo "QoS Policy Configuration"
             no level 8
             no orphan-override
             no monitor-threshold
+            hqos-algorithm default
         exit
         hsmda-scheduler-policy "default" create
             description "Default hsmda scheduler QoS policy"
@@ -9228,6 +9558,26 @@ echo "AAA (Declarations) Configuration"
         exit
     exit
 #--------------------------------------------------
+echo "Cflowd Configuration"
+#--------------------------------------------------
+    cflowd
+        active-timeout 3
+        cache-size 65536
+        inactive-timeout 15
+        export-mode automatic
+        overflow 1
+        template-retransmit 120
+        no use-vrtr-if-index
+        no inband-collector-export-only
+        no analyze-gre-payload
+        no analyze-l2tp-traffic
+        no analyze-v4overv6-traffic
+        sample-profile 1 create
+            sample-rate 1000
+        exit
+        no shutdown
+    exit
+#--------------------------------------------------
 echo "sFlow Configuration"
 #--------------------------------------------------
     sflow
@@ -9342,6 +9692,7 @@ echo "Card Configuration"
             no slow-queue-threshold
             internal-scheduler-weight-mode default
         exit
+        no power-save
         mda 1
             mda-type me1-100gb-cfp2
             sync-e
@@ -9370,15 +9721,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9410,7 +9752,7 @@ echo "Card Configuration"
         exit
         mda 2
             mda-type me1-100gb-cfp2
-            no sync-e
+            sync-e
             named-pool-mode
                 ingress
                     no named-pool-policy
@@ -9436,15 +9778,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9488,6 +9821,15 @@ echo "Card Configuration"
                     shutdown
                     no bandwidth-policy
                 exit
+                network
+                    pool "default"
+                        no amber-alarm-threshold
+                        no red-alarm-threshold
+                        resv-cbs default
+                        slope-policy "default"
+                    exit
+                    queue-policy "default"
+                exit
             exit
             egress
                 wred-queue-control
@@ -9512,6 +9854,7 @@ echo "Card Configuration"
             no slow-queue-threshold
             internal-scheduler-weight-mode default
         exit
+        no power-save
         mda 1
             mda-type p6-10g-sfp
             no sync-e
@@ -9540,15 +9883,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9606,15 +9940,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9658,6 +9983,15 @@ echo "Card Configuration"
                     shutdown
                     no bandwidth-policy
                 exit
+                network
+                    pool "default"
+                        no amber-alarm-threshold
+                        no red-alarm-threshold
+                        resv-cbs default
+                        slope-policy "default"
+                    exit
+                    queue-policy "default"
+                exit
             exit
             egress
                 wred-queue-control
@@ -9682,6 +10016,7 @@ echo "Card Configuration"
             no slow-queue-threshold
             internal-scheduler-weight-mode default
         exit
+        no power-save
         mda 1
             mda-type me10-10gb-sfp+
             no sync-e
@@ -9710,15 +10045,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9776,15 +10102,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9827,6 +10144,15 @@ echo "Card Configuration"
                 mcast-path-management
                     shutdown
                     no bandwidth-policy
+                exit
+                network
+                    pool "default"
+                        no amber-alarm-threshold
+                        no red-alarm-threshold
+                        resv-cbs default
+                        slope-policy "default"
+                    exit
+                    queue-policy "default"
                 exit
             exit
             egress
@@ -9852,6 +10178,7 @@ echo "Card Configuration"
             no slow-queue-threshold
             internal-scheduler-weight-mode default
         exit
+        no power-save
         mda 1
             mda-type me1-100gb-cfp2
             sync-e
@@ -9880,15 +10207,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9946,15 +10264,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -9998,6 +10307,15 @@ echo "Card Configuration"
                     shutdown
                     no bandwidth-policy
                 exit
+                network
+                    pool "default"
+                        no amber-alarm-threshold
+                        no red-alarm-threshold
+                        resv-cbs default
+                        slope-policy "default"
+                    exit
+                    queue-policy "default"
+                exit
             exit
             egress
                 wred-queue-control
@@ -10022,6 +10340,7 @@ echo "Card Configuration"
             no slow-queue-threshold
             internal-scheduler-weight-mode default
         exit
+        no power-save
         mda 1
             mda-type me1-100gb-cfp2
             sync-e
@@ -10050,15 +10369,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -10116,15 +10426,6 @@ echo "Card Configuration"
             exit
             no fail-on-error
             network
-                ingress
-                    pool default
-                        no amber-alarm-threshold
-                        no red-alarm-threshold
-                        resv-cbs default
-                        slope-policy "default"
-                    exit
-                    queue-policy "default"
-                exit
                 egress
                     pool default
                         no amber-alarm-threshold
@@ -10167,6 +10468,15 @@ echo "Card Configuration"
                 mcast-path-management
                     shutdown
                     no bandwidth-policy
+                exit
+                network
+                    pool "default"
+                        no amber-alarm-threshold
+                        no red-alarm-threshold
+                        resv-cbs default
+                        slope-policy "default"
+                    exit
+                    queue-policy "default"
                 exit
             exit
             egress
@@ -10438,7 +10748,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/2/1
-        description "100-Gig Ethernet"
+        description "To-MEX-M1-EA_3/2/1"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -10476,7 +10786,7 @@ echo "Port Configuration"
                     no amber-alarm-threshold
                     no red-alarm-threshold
                     resv-cbs default
-                    slope-policy "default"
+                    slope-policy "7x50-IPMEAN_ntw_wred"
                 exit
             exit
         exit
@@ -10497,11 +10807,11 @@ echo "Port Configuration"
             encap-type null
             no mtu
             no mac
-            no load-balancing-algorithm
-            no egress-scheduler-policy
+            load-balancing-algorithm include-l4
+            egress-scheduler-policy "PS-IPMEAN-network:unshaped"
             crc-monitor
-                no sd-threshold
-                no sf-threshold
+                sd-threshold 9 multiplier 1
+                sf-threshold 6 multiplier 1
                 no window-size
             exit
             symbol-monitor
@@ -10521,9 +10831,23 @@ echo "Port Configuration"
             egress
             exit
             network
-                queue-policy "default"
+                queue-policy "7x50-IPMEAN:standard"
                 no accounting-policy
                 no collect-stats
+                egress
+                    queue-group "IPMEAN-QG:100G" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no policer-control-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
             exit
             lldp
                 dest-mac nearest-bridge
@@ -10556,17 +10880,16 @@ echo "Port Configuration"
                 no t392
             exit
             no down-on-internal-error
-            no hold-time
+            hold-time up 120 seconds
             eth-cfm
             exit
             min-frame-length 64
-            report-alarm remote local
-            no report-alarm signal-fail no-frame-lock high-ber no-block-lock no-am-lock duplicate-lane
+            report-alarm signal-fail remote local no-frame-lock high-ber no-block-lock no-am-lock duplicate-lane
             no single-fiber
             ssm
-                shutdown
                 code-type sdh
                 no tx-dus
+                no shutdown
             exit
             no egress-rate
             no ingress-rate
@@ -15611,7 +15934,7 @@ echo "Port Configuration"
                     no amber-alarm-threshold
                     no red-alarm-threshold
                     resv-cbs default
-                    slope-policy "default"
+                    slope-policy "7x50-IPMEAN_ntw_wred"
                 exit
             exit
         exit
@@ -15633,7 +15956,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-network:unshaped"
             crc-monitor
                 sd-threshold 9 multiplier 1
                 no sf-threshold
@@ -15656,9 +15979,23 @@ echo "Port Configuration"
             egress
             exit
             network
-                queue-policy "default"
+                queue-policy "7x50-IPMEAN:standard"
                 no accounting-policy
                 no collect-stats
+                egress
+                    queue-group "IPMEAN-QG:100G" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no policer-control-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
             exit
             lldp
                 dest-mac nearest-bridge
@@ -16314,7 +16651,7 @@ echo "Port Configuration"
             encap-type null
             no mtu
             no mac
-            no load-balancing-algorithm
+            load-balancing-algorithm include-l4
             egress-scheduler-policy "PS-IPMEAN-network:unshaped"
             crc-monitor
                 sd-threshold 9 multiplier 1
@@ -16525,7 +16862,7 @@ echo "Port Configuration"
                     no amber-alarm-threshold
                     no red-alarm-threshold
                     resv-cbs default
-                    slope-policy "default"
+                    slope-policy "7x50-IPMEAN_ntw_wred"
                 exit
             exit
         exit
@@ -16547,7 +16884,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-network:unshaped"
             crc-monitor
                 sd-threshold 9 multiplier 1
                 no sf-threshold
@@ -16570,9 +16907,23 @@ echo "Port Configuration"
             egress
             exit
             network
-                queue-policy "default"
+                queue-policy "7x50-IPMEAN:standard"
                 no accounting-policy
                 no collect-stats
+                egress
+                    queue-group "IPMEAN-QG:100G" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no policer-control-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
             exit
             lldp
                 dest-mac nearest-bridge
@@ -16715,7 +17066,7 @@ echo "System Sync-If-Timing Configuration"
             begin
             no ql-minimum
             no ql-selection
-            ref-order ref2 ptp bits ref1
+            ref-order ref2 ptp bits ref1 synce
             ref1
                 shutdown
                 no source-port
@@ -16744,6 +17095,10 @@ echo "System Sync-If-Timing Configuration"
                 no ql-override
                 no shutdown
             exit
+            synce
+                shutdown
+                no ql-override
+            exit
             revert
             no wait-to-restore
             commit
@@ -16760,8 +17115,10 @@ echo "LAG Configuration"
         eth-cfm
         exit
         port-type standard
+        no monitor-oper-group
         no port-weight-speed
         no weight-threshold
+        no hash-weight-threshold
         port 5/2/1 priority 32768 sub-group 1
         no dynamic-cost
         lacp active administrative-key 32768
@@ -16776,7 +17133,7 @@ echo "LAG Configuration"
         bfd
             no disable-soft-reset-extension
             family ipv4
-                no bfd-on-distributing-only
+                bfd-on-distributing-only
                 local-ip-address 10.190.119.83
                 max-admin-down-time 0
                 max-setup-time infinite
@@ -16808,8 +17165,10 @@ echo "LAG Configuration"
         eth-cfm
         exit
         port-type standard
+        no monitor-oper-group
         no port-weight-speed
         no weight-threshold
+        no hash-weight-threshold
         port 3/2/1 priority 32768 sub-group 1
         no dynamic-cost
         lacp active administrative-key 32769
@@ -16824,7 +17183,7 @@ echo "LAG Configuration"
         bfd
             no disable-soft-reset-extension
             family ipv4
-                no bfd-on-distributing-only
+                bfd-on-distributing-only
                 local-ip-address 10.190.119.87
                 max-admin-down-time 0
                 max-setup-time infinite
@@ -16848,6 +17207,57 @@ echo "LAG Configuration"
         exit
         no shutdown
     exit
+    lag 20
+        description "To-MEX-M1-EA"
+        no mac
+        mode network
+        encap-type null
+        eth-cfm
+        exit
+        port-type standard
+        no monitor-oper-group
+        no port-weight-speed
+        no weight-threshold
+        no hash-weight-threshold
+        port 1/2/1 priority 32768 sub-group 1
+        port 5/1/1 priority 32768 sub-group 1
+        no dynamic-cost
+        lacp active administrative-key 32771
+        no port-threshold
+        lacp-mux-control coupled
+        lacp-xmit-interval fast
+        lacp-xmit-stdby
+        no selection-criteria
+        no hold-time
+        standby-signaling lacp
+        no per-link-hash
+        bfd
+            no disable-soft-reset-extension
+            family ipv4
+                shutdown
+                no bfd-on-distributing-only
+                no local-ip-address
+                max-admin-down-time 0
+                max-setup-time infinite
+                multiplier 3
+                receive-interval 100
+                no remote-ip-address
+                transmit-interval 100
+            exit
+            family ipv6
+                shutdown
+                no bfd-on-distributing-only
+                no local-ip-address
+                max-admin-down-time 0
+                max-setup-time infinite
+                multiplier 3
+                receive-interval 100
+                no remote-ip-address
+                transmit-interval 100
+            exit
+        exit
+        no shutdown
+    exit
     lag 100
         description "To-TLALNE-MEX9226-CB"
         no mac
@@ -16856,8 +17266,10 @@ echo "LAG Configuration"
         eth-cfm
         exit
         port-type standard
+        no monitor-oper-group
         no port-weight-speed
         no weight-threshold
+        no hash-weight-threshold
         port 1/1/1 priority 32768 sub-group 1
         port 4/1/1 priority 32768 sub-group 1
         no dynamic-cost
@@ -18782,10 +19194,22 @@ echo "PYTHON Configuration"
     python
     exit
 #--------------------------------------------------
+echo "BFD Configuration"
+#--------------------------------------------------
+    bfd
+        seamless-bfd
+        exit
+    exit
+#--------------------------------------------------
+echo "Group Encryption Configuration"
+#--------------------------------------------------
+    group-encryption
+        no group-encryption-label
+    exit
+#--------------------------------------------------
 echo "Management Router Configuration"
 #--------------------------------------------------
     router management
-        fib-priority standard
         no allow-icmp-redirect
         no allow-icmp6-redirect
         sgt-qos
@@ -18827,6 +19251,13 @@ echo "Router (Network Side) Configuration"
         dhcp
         exit
         dhcp6
+        exit
+#--------------------------------------------------
+echo "Bfd Configuration"
+#--------------------------------------------------
+        bfd
+            seamless-bfd
+            exit
         exit
         network-domains
             network-domain "default"
@@ -18886,7 +19317,7 @@ echo "Router (Network Side) Configuration"
                 ttl-expired 100 10
                 unreachables 100 10
             exit
-            qos 1
+            qos 1000 egress-port-redirect-group "IPMEAN-QG:100G" egress-instance 1
             ingress
                 no filter
             exit
@@ -18980,7 +19411,7 @@ echo "Router (Network Side) Configuration"
                 ttl-expired 100 10
                 unreachables 100 10
             exit
-            qos 1
+            qos 1000 egress-port-redirect-group "IPMEAN-QG:100G" egress-instance 1
             ingress
                 no filter
             exit
@@ -19140,7 +19571,7 @@ echo "Router (Network Side) Configuration"
             no tcp-mss
             no ldp-sync-timer
             cpu-protection 255
-            port 5/1/1
+            port lag-20
             no unnumbered
             no ptp-hw-assist
             no urpf-check
@@ -19176,7 +19607,7 @@ echo "Router (Network Side) Configuration"
                 no filter
             exit
             cflowd-parameters
-                sampling unicast type interface direction ingress-only
+                sampling unicast type interface direction ingress-only sample-profile 1
             exit
             no local-dhcp-server
             dhcp
@@ -19202,7 +19633,7 @@ echo "Router (Network Side) Configuration"
                 exit
             exit
             load-balancing
-                no lsr-load-balancing
+                lsr-load-balancing lbl-ip
                 no teid-load-balancing
                 no egr-ip-load-balancing
                 no spi-load-balancing
@@ -19386,6 +19817,7 @@ echo "Router (Network Side) Configuration"
         no multicast-info-policy
         no policy-reference-checks
         no router-id
+        ipv6-te-router-id interface "system"
         no triggered-policy
         no ldp-shortcut
         lsp-bfd
@@ -19446,6 +19878,7 @@ echo "SGT Mapping Configuration"
             application grpc dscp none
             application mtrace2 dscp none
             application http dscp none
+            application mpls-udp-return dscp none
             application arp dot1p none
             application isis dot1p none
             application pppoe dot1p none
@@ -19541,6 +19974,7 @@ echo "ISIS Configuration"
             no ignore-lsp-errors
             no ignore-narrow-metric
             lsp-lifetime 65535
+            no lsp-minimum-remaining-lifetime
             lsp-mtu-size 1492
             lsp-refresh-interval 32767 half-lifetime enable
             no database-export
@@ -19554,6 +19988,10 @@ echo "ISIS Configuration"
             hello-authentication
             psnp-authentication
             traffic-engineering
+            traffic-engineering-options
+                no ipv6
+                no application-link-attributes
+            exit
             reference-bandwidth 100000000
             no default-route-tag
             no disable-ldp-sync
@@ -19572,6 +20010,7 @@ echo "ISIS Configuration"
                 exclude
                     no prefix-policy
                 exit
+                no augment-route-table
                 remote-lfa max-pq-cost 4261412864
                     no node-protect
                 exit
@@ -19678,10 +20117,21 @@ echo "ISIS Configuration"
                 adj-sid-hold 15
                 entropy-label enable
                 no export-tunnel-table
+                no micro-loop-avoidance
                 prefix-sid-range start-label 16000 max-index 15999
                 no srlb
                 tunnel-table-pref 11
                 no tunnel-mtu
+                egress-statistics
+                    no adj-set
+                    no adj-sid
+                    no node-sid
+                exit
+                ingress-statistics
+                    no adj-set
+                    no adj-sid
+                    no node-sid
+                exit
                 mapping-server
                     shutdown
                 exit
@@ -20149,6 +20599,7 @@ echo "MPLS Configuration"
             auto-bandwidth-multipliers sample-multiplier 1 adjust-multiplier 288
             cspf-on-loose-hop
             max-bypass-associations 1000
+            max-bypass-plr-associations 16
             bypass-resignal-timer 60
             no p2p-active-path-fast-retry
             no p2mp-s2l-fast-retry
@@ -20158,6 +20609,15 @@ echo "MPLS Configuration"
             no mbb-prefer-current-hops
             pce-report sr-te disable
             pce-report rsvp-te disable
+            lsp-self-ping
+                interval 1
+                timeout 300
+                rsvp-te disable
+            exit
+            sr-te-resignal
+                no resignal-timer
+                no resignal-on-igp-event
+            exit
             no mpls-tp
             interface "system"
                 no admin-group
@@ -20281,11 +20741,13 @@ echo "MPLS LSP Configuration"
 echo "LDP Configuration"
 #--------------------------------------------------
         ldp
+            no max-ecmp-routes
             no aggregate-prefix-match
             no export
             no export-tunnel-table
             no import
             no import-tunnel-table
+            no import-mcast-policy
             fast-reroute
             no legacy-ipv4-lsr-interop
             no graceful-restart
@@ -20304,6 +20766,10 @@ echo "LDP Configuration"
             resolve-root-using ucast-rtm
             no weighted-ecmp
             no consider-system-ip-in-gep
+            import-pmsi-routes
+                no mvpn
+                no mvpn-no-export-community
+            exit
             interface-parameters
                 ipv4
                     no hello
@@ -20502,6 +20968,9 @@ echo "Application-assurance Configuration"
         packet-rate-low-wmark 0
         datapath-cpu-low-wmark 90
         datapath-cpu-high-wmark 95
+        protocol "kuaishou"
+            shutdown
+        exit
     exit
 #--------------------------------------------------
 echo "NAT (Declarations) and UPnP Configuration"
@@ -20704,19 +21173,12 @@ echo "ISA Administrative State Configuration"
     isa
     exit
 #--------------------------------------------------
+echo "LAG (service side) Configuration"
+#--------------------------------------------------
+#--------------------------------------------------
 echo "Cflowd Configuration"
 #--------------------------------------------------
     cflowd
-        active-timeout 3
-        cache-size 65536
-        inactive-timeout 15
-        export-mode automatic
-        overflow 1
-        rate 1000
-        template-retransmit 120
-        no use-vrtr-if-index
-        no inband-collector-export-only
-        no analyze-gre-payload
         collector 10.150.10.232:9995 version 5
             description "NFA-Harverster"
             autonomous-system-type origin
@@ -20739,7 +21201,6 @@ echo "Cflowd Configuration"
             exit
             no shutdown
         exit
-        no shutdown
     exit
     eth-cfm
         default-domain
@@ -20899,6 +21360,7 @@ echo "Policy Configuration"
                         no advertise-label
                         no bgp-leak
                         no create-udp-tunnel
+                        no disable-route-table-install
                         no install-backup-path
                         no as-path
                         no as-path-prepend
@@ -20906,6 +21368,7 @@ echo "Policy Configuration"
                         no origin
                         no local-preference
                         no preference
+                        no bgp-med
                         no metric
                         no multicast-redirection
                         no damping
@@ -20919,6 +21382,7 @@ echo "Policy Configuration"
                         no source-class
                         no origin-validation-state
                         no resolve-static
+                        no sr-label-index
                         no sticky-ecmp
                     exit
                 exit
@@ -20943,8 +21407,11 @@ echo "BGP Configuration"
             no damping
             no local-preference
             loop-detect discard-route
+            no loop-detect-threshold
             min-route-advertisement 5
-            multipath 4
+            multi-path
+                maximum-paths 4
+            exit
             no aggregator-id-zero
             no preference
             no label-preference
@@ -20976,6 +21443,11 @@ echo "BGP Configuration"
             no override-tunnel-elc
             no link-state-export-enable
             no link-state-import-enable
+            no send-default
+            no selective-label-ipv4-install
+            no default-preference
+            no default-label-preference
+            no ebgp-default-reject-policy
             no rapid-update
             no advertise-external
             no mvpn-vrf-import-subtype-new
@@ -20999,6 +21471,8 @@ echo "BGP Configuration"
             no advertise-ipv6-next-hops
             no neighbor-trust
             no sr-policy-import
+            no block-prefix-sid
+            no segment-routing
             best-path-selection
                 no always-compare-med
                 no deterministic-med
@@ -21013,6 +21487,7 @@ echo "BGP Configuration"
                 no use-bgp-routes
                 no policy
                 no weighted-ecmp
+                no allow-unresolved-leaking
                 shortcut-tunnel
                     family ipv4
                         resolution-filter
@@ -21024,6 +21499,7 @@ echo "BGP Configuration"
                             no rsvp
                             no bgp
                             no sr-ospf
+                            no sr-ospf3
                             no sr-te
                         exit
                         no disallow-igp
@@ -21040,6 +21516,7 @@ echo "BGP Configuration"
                             no rsvp
                             no bgp
                             no sr-ospf
+                            no sr-ospf3
                             no sr-te
                         exit
                         no disallow-igp
@@ -21057,6 +21534,7 @@ echo "BGP Configuration"
                                 rsvp
                                 no sr-isis
                                 no sr-ospf
+                                no sr-ospf3
                                 bgp
                                 no sr-te
                                 no udp
@@ -21073,6 +21551,7 @@ echo "BGP Configuration"
                                 rsvp
                                 no sr-isis
                                 no sr-ospf
+                                no sr-ospf3
                                 no bgp
                                 no sr-te
                                 no udp
@@ -21089,6 +21568,7 @@ echo "BGP Configuration"
                                 no rsvp
                                 no sr-isis
                                 no sr-ospf
+                                no sr-ospf3
                                 no bgp
                                 no sr-te
                                 no udp
@@ -21135,6 +21615,15 @@ echo "BGP Configuration"
                 no spf-wait
             exit
             no initial-send-delay-zero
+            convergence
+                no min-wait-to-advertise
+                family ipv4
+                    no max-wait-to-advertise
+                exit
+                family ipv6
+                    no max-wait-to-advertise
+                exit
+            exit
             group "RR-REGIONAL"
                 no shutdown
                 description "Sesiones iBGP hacia RR Regionales"
@@ -21146,6 +21635,7 @@ echo "BGP Configuration"
                 no damping
                 no local-preference
                 no loop-detect
+                no loop-detect-threshold
                 no min-route-advertisement
                 no prefix-limit ipv4
                 no prefix-limit ipv6
@@ -21168,15 +21658,18 @@ echo "BGP Configuration"
                 no prefix-limit bgp-ls
                 no prefix-limit mcast-vpn-ipv6
                 no prefix-limit sr-policy-ipv4
+                no prefix-limit sr-policy-ipv6
                 no med-out
                 next-hop-self
                 no aggregator-id-zero
                 no passive
+                no as-override
                 type internal
                 no multihop
                 no preference
                 no label-preference
                 no remove-private
+                no block-prefix-sid
                 no cluster
                 no disable-client-reflect
                 no disable-4byte-asn
@@ -21200,6 +21693,11 @@ echo "BGP Configuration"
                 no auth-keychain
                 no split-horizon
                 no third-party-nexthop
+                no send-default
+                no selective-label-ipv4-install
+                no default-preference
+                no default-label-preference
+                no ebgp-default-reject-policy
                 no add-paths
                 no default-route-target
                 no aigp
@@ -21221,8 +21719,11 @@ echo "BGP Configuration"
                 no initial-send-delay-zero
                 no extended-nh-encoding
                 no advertise-ipv6-next-hops
+                no multipath-eligible
                 no monitor
                 dynamic-neighbor
+                    match
+                    exit
                 exit
                 neighbor 10.190.3.60
                     no shutdown
@@ -21236,6 +21737,7 @@ echo "BGP Configuration"
                     no local-address
                     no local-preference
                     no loop-detect
+                    no loop-detect-threshold
                     no min-route-advertisement
                     no prefix-limit ipv4
                     no prefix-limit ipv6
@@ -21258,15 +21760,18 @@ echo "BGP Configuration"
                     no prefix-limit bgp-ls
                     no prefix-limit mcast-vpn-ipv6
                     no prefix-limit sr-policy-ipv4
+                    no prefix-limit sr-policy-ipv6
                     no med-out
                     no multihop
                     no next-hop-self
                     no aggregator-id-zero
                     no passive
+                    no as-override
                     no type
                     no preference
                     no label-preference
                     no remove-private
+                    no block-prefix-sid
                     no cluster
                     no disable-client-reflect
                     no disable-4byte-asn
@@ -21285,6 +21790,9 @@ echo "BGP Configuration"
                     no ttl-security
                     no advertise-inactive
                     no enable-peer-tracking
+                    no default-preference
+                    no default-label-preference
+                    no ebgp-default-reject-policy
                     no advertise-ldp-prefix
                     no auth-keychain
                     no bfd-enable
@@ -21294,6 +21802,7 @@ echo "BGP Configuration"
                     no aigp
                     no split-horizon
                     no third-party-nexthop
+                    no send-default
                     error-handling
                         no update-fault-tolerance
                     exit
@@ -21311,6 +21820,8 @@ echo "BGP Configuration"
                     no initial-send-delay-zero
                     no extended-nh-encoding
                     no advertise-ipv6-next-hops
+                    no multipath-eligible
+                    no selective-label-ipv4-install
                     no monitor
                 exit
                 neighbor 10.190.3.81
@@ -21325,6 +21836,7 @@ echo "BGP Configuration"
                     no local-address
                     no local-preference
                     no loop-detect
+                    no loop-detect-threshold
                     no min-route-advertisement
                     no prefix-limit ipv4
                     no prefix-limit ipv6
@@ -21347,15 +21859,18 @@ echo "BGP Configuration"
                     no prefix-limit bgp-ls
                     no prefix-limit mcast-vpn-ipv6
                     no prefix-limit sr-policy-ipv4
+                    no prefix-limit sr-policy-ipv6
                     no med-out
                     no multihop
                     no next-hop-self
                     no aggregator-id-zero
                     no passive
+                    no as-override
                     no type
                     no preference
                     no label-preference
                     no remove-private
+                    no block-prefix-sid
                     no cluster
                     no disable-client-reflect
                     no disable-4byte-asn
@@ -21374,6 +21889,9 @@ echo "BGP Configuration"
                     no ttl-security
                     no advertise-inactive
                     no enable-peer-tracking
+                    no default-preference
+                    no default-label-preference
+                    no ebgp-default-reject-policy
                     no advertise-ldp-prefix
                     no auth-keychain
                     no bfd-enable
@@ -21383,6 +21901,7 @@ echo "BGP Configuration"
                     no aigp
                     no split-horizon
                     no third-party-nexthop
+                    no send-default
                     error-handling
                         no update-fault-tolerance
                     exit
@@ -21400,6 +21919,8 @@ echo "BGP Configuration"
                     no initial-send-delay-zero
                     no extended-nh-encoding
                     no advertise-ipv6-next-hops
+                    no multipath-eligible
+                    no selective-label-ipv4-install
                     no monitor
                 exit
             exit
@@ -21441,6 +21962,8 @@ echo "Subscriber-mgmt (Service Side) Configuration"
         isa-service-chaining
             no mac-prefix
         exit
+        wlan-gw
+        exit
     exit
 #--------------------------------------------------
 echo "Local DHCP Server (Base Router) Configuration"
@@ -21455,6 +21978,13 @@ echo "Local DHCP Server (Base Router) Configuration"
 echo "Local DHCP Server (Services) Configuration"
 #--------------------------------------------------
     service
+    exit
+#--------------------------------------------------
+echo "Log all events for service vprn Configuration"
+#--------------------------------------------------
+    log
+        services-all-events
+        exit
     exit
 #--------------------------------------------------
 echo "Filter Configuration"
@@ -21539,6 +22069,9 @@ echo "OAM Tests Configuration"
     test-oam
         build-packet
         exit
+        mpls-dm
+            shutdown
+        exit
         mpls-echo-request-downstream-map dsmap
         mpls-time-stamp-format unix
         twamp
@@ -21578,6 +22111,8 @@ echo "OAM Performance Monitoring Configuration"
                 exit
             exit
             no shutdown
+        exit
+        streaming
         exit
     exit
 #--------------------------------------------------
@@ -21638,7 +22173,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:48 2020 UTC
+# Finished WED MAR 17 02:29:19 2021 UTC
 A:MEX-M1-CA# show port 
 
 ===============================================================================
@@ -21648,7 +22183,7 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 1/1/1         Up    Yes  Up      9212 9212  100 netw null cgige  100GBASE-LR4*
-1/2/1         Up    No   Down    9212 9212    - netw null cgige  100GBASE-LR4*
+1/2/1         Up    Yes  Up      9212 9212   20 netw null cgige  100GBASE-LR4*
 
 ===============================================================================
 Ports on Slot 2
@@ -21660,8 +22195,8 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 2/1/2         Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 
 2/1/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 
 2/1/4         Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 
-2/1/5         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
-2/1/6         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
+2/1/5         Down  No   Down    9212 9212    - netw null xgige  
+2/1/6         Down  No   Down    9212 9212    - netw null xgige  
 2/2/1         Down  No   Down    9212 9212    - netw null xgige  
 2/2/2         Down  No   Down    9212 9212    - netw null xgige  
 2/2/3         Down  No   Down    9212 9212    - netw null xgige  
@@ -21702,7 +22237,7 @@ Ports on Slot 5
 Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
-5/1/1         Up    Yes  Up      9212 9212    - netw null cgige  100GBASE-SR1*
+5/1/1         Up    Yes  Up      9212 9212   20 netw null cgige  100GBASE-SR1*
 5/2/1         Up    Yes  Up      9212 9212   11 netw null cgige  100GBASE-LR4*
 
 ===============================================================================
@@ -21712,6 +22247,7 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 A/1           Up    No   Down    1514 1514    - netw null faste  
+A/3           Down  No   Down    1514 1514    - netw null faste  
 A/4           Up    No   Down    1514 1514    - netw null faste  
 
 ===============================================================================
@@ -21721,6 +22257,7 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 B/1           Up    No   Down    1514 1514    - netw null faste  
+B/3           Down  No   Down    1514 1514    - netw null faste  
 B/4           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
 A:MEX-M1-CA# show lag detail 
@@ -21737,10 +22274,8 @@ Details
 -------------------------------------------------------------------------------
 Lag-id              : 11                    Mode                 : network
 Adm                 : up                    Opr                  : up
-Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 04/08/2019 01:35:48   Port Thres. Action   : down
-Dynamic Cost        : false                 Port Static Cost     : N/A
-Encap Type          : null                  
+Thres. Last Cleared : 10/17/2020 02:15:04   Thres. Exceeded Cnt  : 0
+Dynamic Cost        : false                 Encap Type           : null
 Configured Address  : e4:81:84:34:25:5a     Lag-IfIndex          : 1342177291
 Hardware Address    : e4:81:84:34:25:5a
 Hold-time Down      : 0.0 sec               Port Type            : standard
@@ -21763,10 +22298,10 @@ Admin Key           : 32768                 Oper Key             : 32768
 Prtr System Id      : 00:8a:96:61:54:86     Prtr System Priority : 32768
 Prtr Oper Key       : 11                    
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 1
-Weight Threshold    : 0                     
-Weight Thres. Action: down                  
-Weight Static Cost  : N/A                   
+Port hashing        : port-speed            Port weight speed    : 0 gbps
+Ports Up            : 1                     
+Weights Up          : 1                     Hash-Weights Up      : 100
+Monitor oper group  : N/A
 
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
@@ -21788,10 +22323,8 @@ Details
 -------------------------------------------------------------------------------
 Lag-id              : 12                    Mode                 : network
 Adm                 : up                    Opr                  : up
-Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 04/08/2019 01:35:48   Port Thres. Action   : down
-Dynamic Cost        : false                 Port Static Cost     : N/A
-Encap Type          : null                  
+Thres. Last Cleared : 10/17/2020 02:15:04   Thres. Exceeded Cnt  : 0
+Dynamic Cost        : false                 Encap Type           : null
 Configured Address  : e4:81:84:34:25:5b     Lag-IfIndex          : 1342177292
 Hardware Address    : e4:81:84:34:25:5b
 Hold-time Down      : 0.0 sec               Port Type            : standard
@@ -21814,10 +22347,10 @@ Admin Key           : 32769                 Oper Key             : 32769
 Prtr System Id      : 00:8a:96:63:44:86     Prtr System Priority : 32768
 Prtr Oper Key       : 12                    
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 1
-Weight Threshold    : 0                     
-Weight Thres. Action: down                  
-Weight Static Cost  : N/A                   
+Port hashing        : port-speed            Port weight speed    : 0 gbps
+Ports Up            : 1                     
+Weights Up          : 1                     Hash-Weights Up      : 100
+Monitor oper group  : N/A
 
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
@@ -21831,6 +22364,58 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 3/2/1          partner   No    No    Yes   Yes   Yes   Yes   No       Yes
 
 -------------------------------------------------------------------------------
+LAG 20
+-------------------------------------------------------------------------------
+Description        : To-MEX-M1-EA
+-------------------------------------------------------------------------------
+Details
+-------------------------------------------------------------------------------
+Lag-id              : 20                    Mode                 : network
+Adm                 : up                    Opr                  : up
+Thres. Last Cleared : 10/17/2020 02:15:04   Thres. Exceeded Cnt  : 0
+Dynamic Cost        : false                 Encap Type           : null
+Configured Address  : e4:81:84:34:25:63     Lag-IfIndex          : 1342177300
+Hardware Address    : e4:81:84:34:25:63
+Hold-time Down      : 0.0 sec               Port Type            : standard
+Per-Link-Hash       : disabled              
+Include-Egr-Hash-Cfg: disabled              Forced               : -
+Per FP Ing Queuing  : disabled              Per FP Egr Queuing   : disabled
+Per FP SAP Instance : disabled              
+Access Bandwidth    : N/A                   Access Booking Factor: 100
+Access Available BW : 0                     
+Access Booked BW    : 0                     
+LACP                : enabled               Mode                 : active
+LACP Transmit Intvl : fast                  LACP xmit stdby      : enabled
+Selection Criteria  : highest-count         Slave-to-partner     : disabled
+MUX control         : coupled               
+Subgrp hold time    : 0.0 sec               Remaining time       : 0.0 sec
+Subgrp selected     : 1                     Subgrp candidate     : -
+Subgrp count        : 1                     
+System Id           : e4:81:84:34:24:0f     System Priority      : 32768
+Admin Key           : 32771                 Oper Key             : 32771
+Prtr System Id      : 84:26:2b:e1:db:8b     Prtr System Priority : 32768
+Prtr Oper Key       : 32768                 
+Standby Signaling   : lacp                  
+Port hashing        : port-speed            Port weight speed    : 0 gbps
+Ports Up            : 2                     
+Weights Up          : 2                     Hash-Weights Up      : 200
+Monitor oper group  : N/A
+
+-------------------------------------------------------------------------------
+Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
+-------------------------------------------------------------------------------
+1/2/1          up      active    up      yes       1             -       32768
+5/1/1          up      active    up                1             -       32768
+
+-------------------------------------------------------------------------------
+Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
+-------------------------------------------------------------------------------
+1/2/1          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
+1/2/1          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
+5/1/1          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
+5/1/1          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
+
+-------------------------------------------------------------------------------
 LAG 100
 -------------------------------------------------------------------------------
 Description        : To-TLALNE-MEX9226-CB
@@ -21839,10 +22424,8 @@ Details
 -------------------------------------------------------------------------------
 Lag-id              : 100                   Mode                 : network
 Adm                 : up                    Opr                  : up
-Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 04/08/2019 01:35:48   Port Thres. Action   : down
-Dynamic Cost        : false                 Port Static Cost     : N/A
-Encap Type          : null                  
+Thres. Last Cleared : 10/17/2020 02:15:04   Thres. Exceeded Cnt  : 0
+Dynamic Cost        : false                 Encap Type           : null
 Configured Address  : e4:81:84:34:25:b3     Lag-IfIndex          : 1342177380
 Hardware Address    : e4:81:84:34:25:b3
 Hold-time Down      : 0.0 sec               Port Type            : standard
@@ -21865,10 +22448,10 @@ Admin Key           : 32770                 Oper Key             : 32770
 Prtr System Id      : 0c:a4:02:64:90:01     Prtr System Priority : 32768
 Prtr Oper Key       : 32774                 
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 2
-Weight Threshold    : 0                     
-Weight Thres. Action: down                  
-Weight Static Cost  : N/A                   
+Port hashing        : port-speed            Port weight speed    : 0 gbps
+Ports Up            : 2                     
+Weights Up          : 2                     Hash-Weights Up      : 200
+Monitor oper group  : N/A
 
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 

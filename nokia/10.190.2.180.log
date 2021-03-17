@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.180
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.180
 Warning: Permanently added '10.190.2.180' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.180's password: 
+ca168b@10.190.2.180's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 22 Minutes 
 A:TEHUAC-PUE7026-GA# environment no more 
 A:TEHUAC-PUE7026-GA# show chassis 
 ===============================================================================
@@ -42,7 +44,7 @@ A:TEHUAC-PUE7026-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Wed Apr 24 06:59:13 PDT 2019 by builder in /builds/c/160B/R7-1/panos/main
 
-# Generated THU MAY 21 05:27:44 2020 UTC
+# Generated WED MAR 17 02:25:43 2021 UTC
 
 exit all
 configure
@@ -208,7 +210,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402d50d5b"
             packet-size 9216
@@ -233,7 +235,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -243,20 +245,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -878,7 +880,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$ELKK3zeTYSW/8WMMknri..Kd8jE2JeYZtEjX.DFVuPriSRQ5vKew."
+                password "$2y$10$MaKxwzKseG87G9PA8BavQ.YL2zVkUE97iuyH9cekMSI.KiXbBckj."
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -902,7 +904,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$R94Qv3YKyw/GpZK2ZxTzY.ZWYRMrxGZPul2F4FtaR1V8w4.mblI4O"
+                password "$2y$10$Rme1Xe1nJbiO8eDuV.zaY.hermlh1xks9pwJZG9clqSFvuUzr2jGe"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -917,12 +919,32 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
+                    no member "default"
                     member "administrative"
-                    member "default"
                 exit
                 snmp
                     no authentication
                     no group
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$rYWVmAz/dbQ2WPbRDfh9A./NgVwxowdNXKGNPBgsl.ensBU.nY2FS"
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
                 exit
             exit
             snmp
@@ -4554,6 +4576,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4564,6 +4588,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4575,6 +4601,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -11469,8 +11695,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/2/2
-        shutdown
-        description "10-Gig Ethernet"
+        description "TO-MXPUETEH0381RTBHCSRMOB02 | 1/0/0 | IMPLEMENTACION"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -11526,8 +11751,8 @@ echo "Port Configuration"
                 server-timeout 30
                 no tunneling
             exit
-            mode network
-            encap-type null
+            mode hybrid
+            encap-type dot1q
             no mtu
             no mac
             no load-balancing-algorithm
@@ -11557,6 +11782,23 @@ echo "Port Configuration"
                 queue-policy "default"
                 no accounting-policy
                 no collect-stats
+            exit
+            access
+                egress
+                    queue-group "policer-output-queues" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
+                no bandwidth
+                no booking-factor
             exit
             lldp
                 dest-mac nearest-bridge
@@ -11682,6 +11924,10 @@ echo "Port Configuration"
             exit
             no eth-bn-egress-rate-changes
         exit
+        hybrid-buffer-allocation
+            ing-weight access 50 network 50
+            egr-weight access 50 network 50
+        exit
         transceiver
             no digital-coherent-optics
         exit
@@ -11690,6 +11936,7 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
+        no shutdown
     exit
     port 1/2/3
         shutdown
@@ -31857,6 +32104,71 @@ echo "MPLS LSP Configuration"
                 exit
                 no shutdown
             exit
+            lsp "To-PUE-R4-EA"
+                to 10.190.2.191
+                rsvp-resv-style se
+                adaptive
+                no auto-bandwidth
+                egress-statistics
+                    no shutdown
+                    collect-stats
+                    no accounting-policy
+                exit
+                cspf
+                no include
+                no exclude
+                no propagate-admin-group
+                no adspec
+                entropy-label inherit
+                fast-reroute facility
+                    no hop-limit
+                    node-protect
+                    no propagate-admin-group
+                exit
+                hop-limit 255
+                retry-limit 0
+                retry-timer 30
+                no least-fill
+                no metric
+                no pce-computation
+                pce-report inherit
+                no pce-control
+                ldp-over-rsvp include
+                vprn-auto-bind include
+                igp-shortcut
+                bgp-shortcut
+                bgp-transport-tunnel include
+                class-type 0
+                main-ct-retry-limit 0
+                no revert-timer
+                no load-balancing-weight
+                no class-forwarding
+                bfd
+                    no bfd-template
+                    lsp-ping-interval 60
+                    no bfd-enable
+                    no failure-action
+                exit
+                primary "primary"
+                    no hop-limit
+                    no adaptive
+                    no include
+                    no exclude
+                    record
+                    record-label
+                    no bandwidth
+                    priority 7 0
+                    no class-type
+                    no backup-class-type
+                    bfd
+                        no bfd-template
+                        lsp-ping-interval 60
+                        no bfd-enable
+                    exit
+                    no shutdown
+                exit
+                no shutdown
+            exit
             no shutdown
         exit
 #--------------------------------------------------
@@ -31876,7 +32188,7 @@ echo "LDP Configuration"
             no graceful-restart
             no implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -32217,6 +32529,40 @@ echo "Service Configuration"
             gre-eth-bridged
             exit
             no vpn-gre-source-ip
+        exit
+        sdp 2191 mpls create
+            no description
+            network-domain "default"
+            signaling tldp
+            far-end 10.190.2.191
+            no mixed-lsp-mode
+            no ldp
+            no sr-isis
+            no sr-ospf
+            no bgp-tunnel
+            lsp "To-PUE-R4-EA"
+            no vlan-vc-etype
+            no pbb-etype
+            path-mtu 9000
+            no adv-mtu-override
+            keep-alive
+                shutdown
+                hello-time 10
+                hold-down-time 10
+                max-drop-count 3
+                timeout 5
+                no message-length
+            exit
+            no weighted-ecmp
+            no metric
+            no booking-factor
+            no collect-stats
+            no accounting-policy
+            no source-bmac-lsb
+            binding
+                no port
+            exit
+            no shutdown
         exit
         sdp 11028 mpls create
             no description
@@ -33393,9 +33739,9 @@ echo "Service Configuration"
             no vsd-domain
             no shutdown
         exit
-        vpls 227100 name "Gestion-Redundancia-QW" customer 1 create
-            no description
-            service-mtu 1514
+        vpls 229293 name "Pseudowire MW" customer 2 create
+            description "PUE-R4-EA"
+            service-mtu 9000
             mcr-default-gtw
                 no ip
                 no mac
@@ -33408,9 +33754,6 @@ echo "Service Configuration"
                 no per-service-hashing
                 no spi-load-balancing
                 no teid-load-balancing
-            exit
-            allow-ip-int-bind
-                no vxlan-ipv4-tep-ecmp
             exit
             fdb-table-size 250
             fdb-table-high-wmark 95
@@ -33480,7 +33823,7 @@ echo "Service Configuration"
                 no description
                 no sap-template
             exit
-            sap 3/1/13:4020 create
+            sap 1/2/2:4062 create
                 no description
                 no multi-service-site
                 cpu-protection 254
@@ -33611,7 +33954,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 3001
+                    qos 1
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -33619,7 +33962,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 3000
+                    qos 1
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -33637,6 +33980,118 @@ echo "Service Configuration"
                 no transit-policy
                 no app-profile
                 no bandwidth
+                no shutdown
+            exit
+            spoke-sdp 2191:229293 vc-type ether create
+                no description
+                no vlan-vc-tag
+                cpu-protection 255
+                ingress
+                    no vc-label
+                    no filter
+                    no qos
+                exit
+                egress
+                    no vc-label
+                    no filter
+                    mfib-allowed-mda-destinations
+                    exit
+                    no qos
+                exit
+                pw-status-signaling
+                no hash-label
+                no entropy-label
+                limit-mac-move blockable
+                no disable-learning
+                no disable-aging
+                no max-nbr-mac-addr
+                no discard-unknown-source
+                no auto-learn-mac-protect
+                no restrict-protected-src
+                no l2pt-termination
+                no ignore-standby-signaling
+                no bpdu-translation
+                stp
+                    path-cost 10
+                    priority 128
+                    no edge-port
+                    auto-edge
+                    link-type pt-pt
+                    no root-guard
+                    no shutdown
+                exit
+                no block-on-mesh-failure
+                igmp-snooping
+                    no fast-leave
+                    no import
+                    no max-num-groups
+                    no max-num-sources
+                    no max-num-grp-sources
+                    last-member-query-interval 10
+                    no mrouter-port
+                    no disable-router-alert-check
+                    query-interval 125
+                    query-response-interval 10
+                    robust-count 2
+                    version 3
+                    no send-queries
+                    mcac
+                        no policy
+                        no if-policy
+                        no unconstrained-bw
+                    exit
+                exit
+                mld-snooping
+                    no fast-leave
+                    no import
+                    no max-num-groups
+                    last-member-query-interval 10
+                    no mrouter-port
+                    no disable-router-alert-check
+                    query-interval 125
+                    query-response-interval 10
+                    robust-count 2
+                    version 2
+                    no send-queries
+                    mcac
+                        no policy
+                        no if-policy
+                        no unconstrained-bw
+                    exit
+                exit
+                no mac-pinning
+                dhcp
+                    no description
+                    no snoop
+                exit
+                no control-word
+                control-channel-status
+                    shutdown
+                    no refresh-timer
+                    no acknowledgment
+                    no request-timer
+                exit
+                no force-vlan-vc-forwarding
+                no force-qinq-vc-forwarding
+                eth-cfm
+                    no collect-lmm-stats
+                    collect-lmm-fc-stats
+                        no fc
+                        no fc-in-profile
+                    exit
+                    no squelch-ingress-levels
+                    no vmep-filter
+                    no mip
+                exit
+                no collect-stats
+                no accounting-policy
+                no precedence
+                no transit-policy
+                no app-profile
+                no oper-group
+                no monitor-oper-group
+                no bfd-template
+                no bfd-enable
                 no shutdown
             exit
             mac-move
@@ -37931,7 +38386,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:1405 create
+                sap 1/2/4:1405 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -37975,7 +38430,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -38059,7 +38513,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:1805 create
+                sap 1/2/4:1805 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -38103,7 +38557,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -41756,7 +42209,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:1005 create
+                sap 1/2/4:1005 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -41800,7 +42253,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -41884,7 +42336,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:1605 create
+                sap 1/2/4:1605 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -41928,7 +42380,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -42012,7 +42463,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:2105 create
+                sap 1/2/4:2105 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -42020,7 +42471,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 2000
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -42028,7 +42479,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 2000
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -42056,7 +42507,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -44221,7 +44671,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap lag-10:1205 create
+                sap 1/2/4:1205 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -44265,7 +44715,6 @@ echo "Service Configuration"
                     no app-profile
                     no lag-link-map-profile
                     no dist-cpu-protection
-                    lag-per-link-hash class 1 weight 1
                     no bandwidth
                     no shutdown
                 exit
@@ -45651,11 +46100,7 @@ echo "Service Configuration"
         exit
         vpls 227021 name "QW-HTEH0009" customer 2 create
         exit
-        vpls 227100 name "Gestion-Redundancia-QW" customer 1 create
-            allow-ip-int-bind
-                no forward-ipv4-multicast-to-ip-int
-                no forward-ipv6-multicast-to-ip-int
-            exit
+        vpls 229293 name "Pseudowire MW" customer 2 create
         exit
         vpls 90004019 name "To-PUE-7026-01_1-GestionMW" customer 2 create
             allow-ip-int-bind
@@ -47630,7 +48075,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:27:53 2020 UTC
+# Finished WED MAR 17 02:25:53 2021 UTC
 A:TEHUAC-PUE7026-GA# show port 
 
 ===============================================================================
@@ -47644,9 +48089,9 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
 1/1/4         Up    Yes  Up      9212 9212    - hybr dotq xgige  10GBASE-LR  *
 1/2/1         Down  No   Down    9212 9212    - netw null xgige  
-1/2/2         Down  No   Down    9212 9212    - netw null xgige  
+1/2/2         Up    No   Down    9212 9212    - hybr dotq xgige  10GBASE-LR  *
 1/2/3         Down  No   Down    9212 9212    - netw null xgige  
-1/2/4         Up    No   Down    1518 1518    - accs dotq xgige  
+1/2/4         Up    Yes  Up      1518 1518    - accs dotq xgige  10GBASE-LR  *
 
 ===============================================================================
 Ports on Slot 2
@@ -47657,7 +48102,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 2/1/1         Up    Yes  Up      9212 9212    - netw null xcme   GIGE-LX  10KM
 2/1/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 2/1/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-2/1/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+2/1/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 2/1/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 2/1/6         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 2/1/7         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
@@ -47677,7 +48122,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 3/1/4         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 3/1/5         Up    Yes  Up      9212 9212   10 hybr dotq xcme   MDX GIGE-T 
 3/1/6         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
-3/1/7         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
+3/1/7         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
 3/1/8         Down  No   Down    9212 9212    - netw null xcme   GIGE-T 
 3/1/9         Down  No   Down    9212 9212    - netw null xcme   
 3/1/10        Down  No   Down    9212 9212    - netw null xcme   
@@ -47751,7 +48196,7 @@ Details
 Lag-id              : 10                    Mode                 : hybrid
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 08/28/2019 01:30:45   Port Thres. Action   : down
+Thres. Last Cleared : 01/06/2021 02:58:38   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : dot1q                 
 Configured Address  : 0c:a4:02:d5:0e:a5     Lag-IfIndex          : 1342177290

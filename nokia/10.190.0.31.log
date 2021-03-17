@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.0.31
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.0.31
 Warning: Permanently added '10.190.0.31' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.0.31's password: 
+ca168b@10.190.0.31's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 26 Minutes 
 B:LCAMTX-BCS1003-CB# environment no more 
 B:LCAMTX-BCS1003-CB# show chassis 
 ===============================================================================
@@ -42,7 +44,7 @@ B:LCAMTX-BCS1003-CB# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Wed Apr 24 06:59:13 PDT 2019 by builder in /builds/c/160B/R7-1/panos/main
 
-# Generated THU MAY 21 05:29:42 2020 UTC
+# Generated WED MAR 17 02:22:01 2021 UTC
 
 exit all
 configure
@@ -200,7 +202,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f0000a0f3e417fc01"
             packet-size 9216
@@ -225,7 +227,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone MDT
+            dst-zone MDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -235,20 +237,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -870,7 +872,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$oXpFj2BmCZKo74nZWxwGo.RCaCdKX/JLSwPWAR9KMoDm1wq9IMn1O"
+                password "$2y$10$O0mir9rPs.kLGHWrnLOpw.SkdbrRaNPYmEh2K1ggTw4HVyvwo2lZq"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -894,7 +896,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$ITeivZouHCxEQ.bM3aj7c.dbCxuH8dV296uKeElbeEy1TkKVGCYxO"
+                password "$2y$10$BrFuLNURbgeCvLD.b2Zns.RTuNON7NWXk739PY9WI2gWI965pWQxS"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -918,8 +920,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$hz5LHroex5DyYjHaod0do.m9M3ID3mbJtvvvh62tErukBQnpHWXw6"
-                no access
+                password "$2y$10$wko57BJFdEC9tfsuhZBWk.i7FMrGpscH0jXJ95av7hmxuvMcHAFyq"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4924,6 +4926,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4934,6 +4938,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4945,6 +4951,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -6267,6 +6473,62 @@ echo "QoS Policy Configuration"
                 start-avg 50
                 max-avg 75
                 max-prob 80
+                no shutdown
+            exit
+            exceed-slope
+                shutdown
+                start-avg 30
+                max-avg 55
+                max-prob 80
+            exit
+            time-average-factor 7
+        exit
+        slope-policy "COS2_queue_wred_policy1" create
+            description "wred_policy_COS2_hi_28_40_15_lo_24_40_15"
+            highplus-slope
+                shutdown
+                start-avg 85
+                max-avg 100
+                max-prob 80
+            exit
+            high-slope
+                start-avg 28
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            exceed-slope
+                shutdown
+                start-avg 30
+                max-avg 55
+                max-prob 80
+            exit
+            time-average-factor 7
+        exit
+        slope-policy "COS3_queue_wred_policy1" create
+            description "wred_policy_COS3_hi_24_40_15_lo_20_40_15"
+            highplus-slope
+                shutdown
+                start-avg 85
+                max-avg 100
+                max-prob 80
+            exit
+            high-slope
+                start-avg 24
+                max-avg 40
+                max-prob 15
+                no shutdown
+            exit
+            low-slope
+                start-avg 20
+                max-avg 40
+                max-prob 15
                 no shutdown
             exit
             exceed-slope
@@ -16214,6 +16476,1317 @@ echo "QoS Policy Configuration"
             default-fc "be"
             default-priority low
         exit
+        sap-ingress 50 name "50" create
+            description "PTP:sync"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 2.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate max cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "ef" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                in-remark dscp ef
+                out-remark dscp ef
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "ef"
+            default-priority low
+        exit
+        sap-ingress 111 name "111" create
+            description "CPIPES_VLL:TDM"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate max cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate max cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate max cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "af" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "af"
+            default-priority low
+        exit
+        sap-ingress 2000 name "2000" create
+            description "Mobile:All_Traffic"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 7.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 7.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 15.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 15.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 5 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 50.00 cir 50.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs 12 kilobytes
+                cbs 12
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 6 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "af" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "ef" create
+                queue 5
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "h2" create
+                queue 4
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "l1" create
+                queue 3
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "l2" create
+                queue 6
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "nc" create
+                queue 6
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs1 af11 af12 af13 fc "l2"
+            dscp cs5 nc1 nc2 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 2010 name "2010" create
+            description "Mobile:Voice+Signaling"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 0.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 50.00 cir 50.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs 12 kilobytes
+                cbs 12
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "ef" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "nc" create
+                queue 3
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            dscp ef fc "ef" priority high
+            dscp cs5 nc1 nc2 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 2020 name "2020" create
+            description "Mobile:Data+Signaling"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 0.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 7.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 15.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "af" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "l1" create
+                queue 3
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "nc" create
+                queue 4
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs5 nc1 nc2 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 2021 name "2021" create
+            description "Mobile:Data:default_fc:dscp_mark"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 7.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "af" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                in-remark dscp af23
+                out-remark dscp af23
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "af"
+            default-priority low
+        exit
+        sap-ingress 2030 name "2030" create
+            description "Mobile:Signaling"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 0.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "nc" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            dscp cs5 nc1 nc2 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
+        sap-ingress 2031 name "2031" create
+            description "Mobile:Signaling:def_fc:dscp_marking"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "nc" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                in-remark dscp cs5
+                out-remark dscp cs5
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "nc"
+            default-priority high
+        exit
+        sap-ingress 3000 name "3000" create
+            description "OAM"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 2.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "l2" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "l2"
+            default-priority low
+        exit
+        sap-ingress 3001 name "3001" create
+            description "OAM:dscp_marking"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 2.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "l2" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                in-remark dscp cs1
+                out-remark dscp cs1
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            default-fc "l2"
+            default-priority low
+        exit
+        sap-ingress 10001 name "10001" create
+            description "Ethernet_VLL:10G:Cisco_IPBH"
+            scope template
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            queue 1 priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 2.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 7.50 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 priority-mode best-effort create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 15.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 5 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 15.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs 3663 kilobytes
+                cbs 3663
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 6 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 50.00 cir 50.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs 3052 kilobytes
+                cbs 3052
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 8 priority-mode expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                percent-rate 100.00 cir 5.00 fir 0.00 local-limit
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 11 multipoint priority-mode auto-expedite create
+                no parent
+                adaptation-rule pir closest cir closest fir closest
+                rate 2000 cir 0 fir 0
+                no cir-non-profiling
+                mbs default
+                cbs default
+                no pool
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            fc "af" create
+                queue 3
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "be" create
+                queue 1
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "ef" create
+                queue 6
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "h2" create
+                queue 5
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "l1" create
+                queue 4
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "l2" create
+                queue 2
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            fc "nc" create
+                queue 8
+                no broadcast-queue
+                no multicast-queue
+                no unknown-queue
+                no policer
+                no multicast-policer
+                no broadcast-policer
+                no unknown-policer
+                no in-remark
+                no out-remark
+                no profile
+                no de-1-out-profile
+                no egress-fc
+            exit
+            dot1p 0 fc "be" priority low
+            dot1p 1 fc "l2" priority high
+            dot1p 2 fc "af" priority high
+            dot1p 3 fc "l1" priority high
+            dot1p 4 fc "h2" priority high
+            dot1p 5 fc "ef" priority high
+            dot1p 6 fc "nc" priority high
+            dscp af23 fc "af" priority low
+            dscp cs2 af21 af22 fc "af" priority high
+            dscp ef fc "ef" priority high
+            dscp cs4 af41 af42 af43 fc "h2" priority high
+            dscp af33 fc "l1" priority low
+            dscp cs3 af31 af32 fc "l1" priority high
+            dscp cs1 af11 af12 af13 fc "l2" priority high
+            dscp cs5 nc1 nc2 fc "nc" priority high
+            default-fc "be"
+            default-priority low
+        exit
         sap-egress 1 name "default" create
             description "Default SAP egress QoS policy."
             scope template
@@ -16701,6 +18274,1819 @@ echo "QoS Policy Configuration"
                 no dscp
                 no prec
             exit
+        exit
+        sap-egress 50 name "50" create
+            description "OAM:sync"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                no port-parent
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 2.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                no packet-byte-offset
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc ef create
+                queue 1
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+        exit
+        sap-egress 2000 name "2000" create
+            description "Mobile:All_Traffic:standard_access_with_dot1p_marking"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 1 weight 1 cir-level 1 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 7.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs 0
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 best-effort create
+                no parent
+                port-parent level 3 weight 1 cir-level 3 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 7.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 best-effort create
+                no parent
+                port-parent level 4 weight 1 cir-level 4 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 15.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 expedite create
+                no parent
+                port-parent level 5 weight 1 cir-level 5 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 15.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 5 expedite create
+                no parent
+                port-parent level 6 weight 1 cir-level 6 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 50.00 cir 50.00 local-limit
+                cbs 12
+                mbs 12 kilobytes
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 6 expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc af create
+                queue 2
+                hsmda
+                    no queue
+                exit
+                dot1p 2
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc be create
+                queue 1
+                hsmda
+                    no queue
+                exit
+                dot1p 0
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc ef create
+                queue 5
+                hsmda
+                    no queue
+                exit
+                dot1p 5
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc h2 create
+                queue 4
+                hsmda
+                    no queue
+                exit
+                dot1p 4
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc l1 create
+                queue 3
+                hsmda
+                    no queue
+                exit
+                dot1p 3
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc l2 create
+                queue 6
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc nc create
+                queue 6
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            dscp af22 profile in fc "af"
+            dscp af23 profile out fc "af"
+            dscp af32 profile in fc "l1"
+            dscp af33 profile out fc "l1"
+        exit
+        sap-egress 2010 name "2010" create
+            description "Mobile:Voice+Signaling_standard_access_with_dot1p_marking"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 1 weight 1 cir-level 1 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 0.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 expedite create
+                no parent
+                port-parent level 6 weight 1 cir-level 6 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 50.00 cir 50.00 local-limit
+                cbs 12
+                mbs 12 kilobytes
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc ef create
+                queue 2
+                hsmda
+                    no queue
+                exit
+                dot1p 5
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc nc create
+                queue 3
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+        exit
+        sap-egress 2020 name "2020" create
+            description "Mobile:Data(LTE&3G)+Signaling:standard_access _with_dotp1_marking"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 1 weight 1 cir-level 1 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 0.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs 0
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 best-effort create
+                no parent
+                port-parent level 3 weight 1 cir-level 3 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 7.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 best-effort create
+                no parent
+                port-parent level 4 weight 1 cir-level 4 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 15.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc af create
+                queue 2
+                hsmda
+                    no queue
+                exit
+                dot1p 2
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc l1 create
+                queue 3
+                hsmda
+                    no queue
+                exit
+                dot1p 3
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc nc create
+                queue 4
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            dscp af22 profile in fc "af"
+            dscp af23 profile out fc "af"
+            dscp af32 profile in fc "l1"
+            dscp af33 profile out fc "l1"
+        exit
+        sap-egress 2030 name "2030" create
+            description "Mobile:Signaling:standard_access_with_dot1p_marking"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 1 weight 1 cir-level 1 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 0.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 auto-expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc nc create
+                queue 2
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+        exit
+        sap-egress 3000 name "3000" create
+            description "OAM:standard_access_with_dot1p_marking"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 2 weight 1 cir-level 2 cir-weight 0
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 2.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 6 expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc l2 create
+                queue 1
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc nc create
+                queue 6
+                hsmda
+                    no queue
+                exit
+                dot1p 6
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+        exit
+        sap-egress 10001 name "10001" create
+            description "Ethernet_VLL:10G:Cisco_IPBH"
+            scope template
+            no ethernet-ctag
+            parent-location default
+            no policers-hqos-manageable
+            no sub-insert-shared-pccrule
+            dynamic-policer
+                no range
+                no packet-byte-offset
+                no mbs
+                no cbs
+                no parent
+                stat-mode minimal
+            exit
+            no post-policer-mapping
+            hs-attachment-policy "default"
+            queue 1 auto-expedite create
+                no parent
+                port-parent level 1 weight 1 cir-level 1 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs 0
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 2 best-effort create
+                no parent
+                port-parent level 2 weight 1 cir-level 2 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 2.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 3 best-effort create
+                no parent
+                port-parent level 3 weight 1 cir-level 3 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 7.50 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS3_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 4 best-effort create
+                no parent
+                port-parent level 4 weight 1 cir-level 4 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 15.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                wred-queue policy "COS2_queue_wred_policy1" mode pool-per-queue slope-usage default
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 5 expedite create
+                no parent
+                port-parent level 5 weight 1 cir-level 5 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 15.00 local-limit
+                cbs 3663
+                mbs 3663 kilobytes
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 6 expedite create
+                no parent
+                port-parent level 6 weight 1 cir-level 6 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 50.00 cir 50.00 local-limit
+                cbs 3052
+                mbs 3052 kilobytes
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            queue 8 expedite create
+                no parent
+                port-parent level 8 weight 1 cir-level 8 cir-weight 1
+                no avg-frame-overhead
+                adaptation-rule pir closest cir closest
+                percent-rate 100.00 cir 5.00 local-limit
+                cbs default
+                mbs default
+                hs-wrr-weight 1
+                hs-class-weight 1
+                hs-wred-queue policy "_tmnx_hs_default"
+                no hs-alt-port-class-pool
+                no pool
+                no wred-queue
+                packet-byte-offset add 20
+                no burst-limit
+                no adv-config-policy
+                drop-tail
+                    highplus
+                        percent-reduction-from-mbs default
+                    exit
+                    high
+                        percent-reduction-from-mbs default
+                    exit
+                    low
+                        percent-reduction-from-mbs default
+                    exit
+                    exceed
+                        percent-reduction-from-mbs default
+                    exit
+                exit
+            exit
+            hsmda-queues
+                no wrr-policy
+                low-burst-max-class 8
+                no packet-byte-offset
+                queue 1
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 2
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 3
+                    adaptation-rule pir closest
+                    rate max
+                    wrr-weight 1
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 4
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 5
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 6
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 7
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+                queue 8
+                    adaptation-rule pir closest
+                    rate max
+                    no wrr-weight
+                    mbs default
+                    no burst-limit
+                    slope-policy "default"
+                exit
+            exit
+            hs-wrr-group 1
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            hs-wrr-group 2
+                rate max
+                adaptation-rule pir closest
+                hs-class-weight 1
+            exit
+            fc af create
+                queue 3
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc be create
+                queue 1
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc ef create
+                queue 6
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc h2 create
+                queue 5
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc l1 create
+                queue 4
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc l2 create
+                queue 2
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            fc nc create
+                queue 8
+                hsmda
+                    no queue
+                exit
+                no dot1p
+                no dot1p-inner
+                no dot1p-outer
+                no de-mark
+                no de-mark-inner
+                no de-mark-outer
+                no dscp
+                no prec
+            exit
+            dscp af22 profile in fc "af"
+            dscp af23 profile out fc "af"
+            dscp af32 profile in fc "l1"
+            dscp af33 profile out fc "l1"
         exit
         network 1 name "default" create
             description "Default network QoS policy."
@@ -17351,6 +20737,153 @@ echo "Filter Configuration"
         md-auto-id
             no filter-id-range
         exit
+        ip-filter 2021 name "2021" create
+            no chain-to-system-filter
+            default-action drop
+            description "Data:dscp_marking"
+            scope template
+            no sub-insert-credit-control
+            no sub-insert-radius
+            no sub-insert-shared-radius
+            sub-insert-wmark low 90 high 95
+            no sub-insert-shared-pccrule
+            no shared-radius-filter-wmark
+            entry 100 create
+                no description
+                no filter-sample
+                no interface-disable-sample
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-route-option
+                    no src-ip
+                    no src-port
+                    no tcp-fin
+                    no tcp-syn
+                    no tcp-rst
+                    no tcp-psh
+                    no tcp-ack
+                    no tcp-urg
+                    no tcp-ece
+                    no tcp-cwr
+                    no tcp-ns
+                    no icmp-type
+                    no icmp-code
+                exit
+                no log
+                action
+                    remark dscp "af23"
+                    no fc
+                    no extended-action
+                exit
+                no egress-pbr
+                no pbr-down-action-override
+                no sticky-dest
+            exit
+        exit
+        ip-filter 2031 name "2031" create
+            no chain-to-system-filter
+            default-action drop
+            description "Signaling:dscp_marking"
+            scope template
+            no sub-insert-credit-control
+            no sub-insert-radius
+            no sub-insert-shared-radius
+            sub-insert-wmark low 90 high 95
+            no sub-insert-shared-pccrule
+            no shared-radius-filter-wmark
+            entry 100 create
+                no description
+                no filter-sample
+                no interface-disable-sample
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-route-option
+                    no src-ip
+                    no src-port
+                    no tcp-fin
+                    no tcp-syn
+                    no tcp-rst
+                    no tcp-psh
+                    no tcp-ack
+                    no tcp-urg
+                    no tcp-ece
+                    no tcp-cwr
+                    no tcp-ns
+                    no icmp-type
+                    no icmp-code
+                exit
+                no log
+                action
+                    remark dscp "cs5"
+                    no fc
+                    no extended-action
+                exit
+                no egress-pbr
+                no pbr-down-action-override
+                no sticky-dest
+            exit
+        exit
+        ip-filter 3001 name "3001" create
+            no chain-to-system-filter
+            default-action drop
+            description "OAM:dscp_marking"
+            scope template
+            no sub-insert-credit-control
+            no sub-insert-radius
+            no sub-insert-shared-radius
+            sub-insert-wmark low 90 high 95
+            no sub-insert-shared-pccrule
+            no shared-radius-filter-wmark
+            entry 100 create
+                no description
+                no filter-sample
+                no interface-disable-sample
+                match protocol none
+                    no dscp
+                    no dst-ip
+                    no dst-port
+                    no fragment
+                    no ip-option
+                    no multiple-option
+                    no option-present
+                    no src-route-option
+                    no src-ip
+                    no src-port
+                    no tcp-fin
+                    no tcp-syn
+                    no tcp-rst
+                    no tcp-psh
+                    no tcp-ack
+                    no tcp-urg
+                    no tcp-ece
+                    no tcp-cwr
+                    no tcp-ns
+                    no icmp-type
+                    no icmp-code
+                exit
+                no log
+                action
+                    remark dscp "cs1"
+                    no fc
+                    no extended-action
+                exit
+                no egress-pbr
+                no pbr-down-action-override
+                no sticky-dest
+            exit
+        exit
         system-filter
         exit
     exit
@@ -17514,7 +21047,7 @@ echo "Router (Network Side) Configuration"
             no qos-route-lookup
             no lag-link-map-profile
             no dist-cpu-protection
-            bfd 100 receive 100 multiplier 5
+            bfd 15 receive 15 multiplier 5 type cpm-np
             if-attribute
             exit
             lag-per-link-hash class 1 weight 1
@@ -19097,7 +22630,7 @@ echo "LDP Configuration"
             no graceful-restart
             no implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -20222,6 +23755,96 @@ echo "BGP Configuration"
                     description "NvRR-Toluca"
                     family ipv4 ipv6 vpn-ipv4 vpn-ipv6 evpn label-ipv4
                     authentication-key "2HXn0N3D7LlU0lnJZgNf0zsHE1E1dA314sqZMd4bs9l0" hash2
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
+                neighbor 10.240.60.85
+                    no shutdown
+                    description "NvRR-MTY"
+                    family ipv4 ipv6 vpn-ipv4 vpn-ipv6 evpn label-ipv4
+                    authentication-key "2HXn0N3D7LlU0lnJZgNf0xCrRjri5fU8vT7uaGF1qRWM" hash2
                     no connect-retry
                     no keepalive
                     no hold-time
@@ -22928,6 +26551,96 @@ echo "BGP Configuration"
                     no advertise-ipv6-next-hops
                     no monitor
                 exit
+                neighbor 10.190.0.80
+                    no shutdown
+                    description "MXBCSPAZ0417RTLD01"
+                    no family
+                    no authentication-key
+                    no connect-retry
+                    no keepalive
+                    no hold-time
+                    no damping
+                    no local-address
+                    no local-preference
+                    no loop-detect
+                    no loop-detect-threshold
+                    no min-route-advertisement
+                    no prefix-limit ipv4
+                    no prefix-limit ipv6
+                    no prefix-limit vpn-ipv4
+                    no prefix-limit mcast-ipv4
+                    no prefix-limit vpn-ipv6
+                    no prefix-limit l2-vpn
+                    no prefix-limit mvpn-ipv4
+                    no prefix-limit mdt-safi
+                    no prefix-limit ms-pw
+                    no prefix-limit flow-ipv4
+                    no prefix-limit route-target
+                    no prefix-limit mcast-vpn-ipv4
+                    no prefix-limit mvpn-ipv6
+                    no prefix-limit flow-ipv6
+                    no prefix-limit evpn
+                    no prefix-limit mcast-ipv6
+                    no prefix-limit label-ipv4
+                    no prefix-limit label-ipv6
+                    no prefix-limit bgp-ls
+                    no prefix-limit mcast-vpn-ipv6
+                    no prefix-limit sr-policy-ipv4
+                    no med-out
+                    no multihop
+                    no next-hop-self
+                    no aggregator-id-zero
+                    no passive
+                    no type
+                    no preference
+                    no label-preference
+                    no remove-private
+                    no cluster
+                    no disable-client-reflect
+                    no disable-4byte-asn
+                    no l2vpn-cisco-interop
+                    no outbound-route-filtering
+                    no vpn-apply-import
+                    no vpn-apply-export
+                    no import
+                    no export
+                    no graceful-restart
+                    no local-as
+                    no peer-as
+                    no disable-capability-negotiation
+                    no disable-fast-external-failover
+                    no disable-communities
+                    no ttl-security
+                    no advertise-inactive
+                    no enable-peer-tracking
+                    no advertise-ldp-prefix
+                    no auth-keychain
+                    no bfd-enable
+                    no path-mtu-discovery
+                    no add-paths
+                    no default-route-target
+                    no aigp
+                    no split-horizon
+                    no third-party-nexthop
+                    error-handling
+                        no update-fault-tolerance
+                    exit
+                    no damp-peer-oscillations
+                    no next-hop-unchanged
+                    no enable-origin-validation
+                    link-bandwidth
+                        no add-to-received-ebgp
+                        no accept-from-ebgp
+                        no send-to-ebgp
+                        no aggregate-used-paths
+                    exit
+                    no def-recv-evpn-encap
+                    no enforce-first-as
+                    no initial-send-delay-zero
+                    no extended-nh-encoding
+                    no advertise-ipv6-next-hops
+                    no monitor
+                exit
                 neighbor 10.190.0.168
                     no shutdown
                     description "To-CBS-R11-EA"
@@ -23439,6 +27152,36 @@ echo "Local DHCP Server (Services) Configuration"
 echo "Filter Configuration"
 #--------------------------------------------------
     filter
+        ip-filter 2021 name "2021" create
+            entry 100 create
+            exit
+        exit
+        ip-filter 2031 name "2031" create
+            entry 100 create
+            exit
+        exit
+        ip-filter 3001 name "3001" create
+            entry 100 create
+            exit
+        exit
+        ip-filter 2021 name "2021" create
+        exit
+        ip-filter 2031 name "2031" create
+        exit
+        ip-filter 3001 name "3001" create
+        exit
+        ip-filter 2021 name "2021" create
+        exit
+        ip-filter 2031 name "2031" create
+        exit
+        ip-filter 3001 name "3001" create
+        exit
+        ip-filter 2021 name "2021" create
+        exit
+        ip-filter 2031 name "2031" create
+        exit
+        ip-filter 3001 name "3001" create
+        exit
     exit
 #--------------------------------------------------
 echo "NAT port forwarding Configuration"
@@ -23660,7 +27403,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:47 2020 UTC
+# Finished WED MAR 17 02:22:08 2021 UTC
 B:LCAMTX-BCS1003-CB# show port 
 
 ===============================================================================
@@ -23741,7 +27484,7 @@ Details
 Lag-id              : 2                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 10/04/2019 00:15:38   Port Thres. Action   : down
+Thres. Last Cleared : 02/12/2021 01:43:31   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : a0:f3:e4:17:fd:43     Lag-IfIndex          : 1342177282
@@ -23798,7 +27541,7 @@ Details
 Lag-id              : 4                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 10/04/2019 00:15:38   Port Thres. Action   : down
+Thres. Last Cleared : 02/12/2021 01:43:31   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : a0:f3:e4:17:fd:45     Lag-IfIndex          : 1342177284

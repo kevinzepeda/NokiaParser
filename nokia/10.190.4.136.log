@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.4.136
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.4.136
 Warning: Permanently added '10.190.4.136' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.4.136's password: 
+ca168b@10.190.4.136's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
 A:NARANJO2-MEX9158-AA# environment no more 
 A:NARANJO2-MEX9158-AA# show chassis 
 
@@ -79,7 +81,7 @@ A:NARANJO2-MEX9158-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Mar 6 07:36:33 EST 2018 by builder in /builds/F80B/R9/panos/main
 
-# Generated THU MAY 21 05:29:40 2020 UTC
+# Generated WED MAR 17 02:30:46 2021 UTC
 
 exit all
 configure
@@ -151,7 +153,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -222,6 +224,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -697,6 +709,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1193,7 +1245,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$kLd4yix9uef/3OH7i/ci..txRDS4SEqt/.nybOUMehufMk.JwKpiG"
+                password "$2y$10$4em.E07IDzNOHtDZ/1Tc2.6vO4gH8P.09eVt7ipecDtV/eBU/765i"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1210,8 +1262,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$YKW0kuEtCqvr/vmd.5bUk.ASf9nnVUIEZbB62ll7MQSVlmxjrWIO2"
-                no access
+                password "$2y$10$2lqthEhbiXsOCkPFS.kd...L0ZJhrF20aNERgg8zZ77U.bkltn4wW"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -1223,8 +1275,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$2/B.E/Rbok/oSoypSVKWU.qBL80SBNnJQz8O/NUYKQyWZI3oI1szG"
-                no access
+                password "$2y$10$HMsj/O5SYkaXoZQlMOai6.iUKaQDtrzePLOU5cV2t4OiB2p/GyjvW"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -3521,6 +3573,13 @@ echo "QoS Policy Configuration"
                 unknown-queue 1
                 no de-1-out-profile
             exit
+            fc "l2" create
+                queue 6
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
             fc "nc" create
                 queue 6
                 broadcast-queue 1
@@ -3627,6 +3686,13 @@ echo "QoS Policy Configuration"
             exit
             fc "l1" create
                 queue 3
+                broadcast-queue 1
+                multicast-queue 1
+                unknown-queue 1
+                no de-1-out-profile
+            exit
+            fc "l2" create
+                queue 6
                 broadcast-queue 1
                 multicast-queue 1
                 unknown-queue 1
@@ -3834,27 +3900,32 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -3924,27 +3995,32 @@ echo "QoS Policy Configuration"
             exit
             fc af create
                 queue 2
-                no dot1p
+                dot1p 2
                 no dscp
             exit 
             fc be create
                 queue 1
-                no dot1p
+                dot1p 0
                 no dscp
             exit 
             fc ef create
                 queue 5
-                no dot1p
+                dot1p 5
                 no dscp
             exit 
             fc h2 create
                 queue 4
-                no dot1p
+                dot1p 4
                 no dscp
             exit 
             fc l1 create
                 queue 3
-                no dot1p
+                dot1p 3
+                no dscp
+            exit 
+            fc l2 create
+                queue 6
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -3978,7 +4054,7 @@ echo "QoS Policy Configuration"
             exit
             fc l2 create
                 queue 1
-                no dot1p
+                dot1p 6
                 no dscp
             exit 
             fc nc create
@@ -4902,7 +4978,7 @@ echo "Port Configuration"
             exit
             mode hybrid
             encap-type dot1q
-            no mtu
+            mtu 9212
             no group-encryption
             crc-monitor
                 no sd-threshold
@@ -8165,13 +8241,13 @@ echo "Service Configuration"
                     no hold-mep-up-on-failure
                 exit
                 ingress
-                    qos 201
+                    qos 200
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 201
+                    qos 200
                     no qinq-mark-top-only
                     scheduler-mode 4-priority
                     no agg-rate-limit
@@ -8182,6 +8258,153 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11116:269006 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 269007 customer 2 create
+            description "To- MEXJUC0374-CFE"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To- MEXJUC0374-CFE"
+            sap 1/5/1:9 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11116:269007 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 269010 customer 2 create
+            description "To-MEXOZU0581-CFE"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To-MEXOZU0581-CFE"
+            sap 1/5/1:10 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11116:269010 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 269011 customer 2 create
+            description "To-MEXTGA0665-CFE"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To-MEXTGA0665-CFE"
+            sap 1/5/1:11 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11116:269011 vc-type ether create
                 no vlan-vc-tag
                 ingress
                     no vc-label
@@ -11466,6 +11689,12 @@ echo "Service Configuration"
         exit
         epipe 269006 customer 2 create
         exit
+        epipe 269007 customer 2 create
+        exit
+        epipe 269010 customer 2 create
+        exit
+        epipe 269011 customer 2 create
+        exit
         epipe 292200 customer 2 create
         exit
         epipe 292201 customer 2 create
@@ -11726,7 +11955,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:44 2020 UTC
+# Finished WED MAR 17 02:30:49 2021 UTC
 A:NARANJO2-MEX9158-AA# show port 
 
 ===============================================================================
@@ -11742,13 +11971,13 @@ Id          State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/5       Down  No   Down    1514 1514    - accs null xgige  
 1/1/6       Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-SR 
 1/5/1       Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-1/5/2       Up    Yes  Up      1572 1572    - hybr dotq xcme   MDI GIGE-T 
+1/5/2       Up    Yes  Up      9212 9212    - hybr dotq xcme   MDX GIGE-T 
 1/5/3       Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
 1/5/4       Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/5       Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/6       Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
 1/5/7       Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
-1/5/8       Down  No   Down    1514 1514    - accs null xcme   
+1/5/8       Down  No   Down    1514 1514    - accs null xcme   GIGE-LX  40KM
 
 ===============================================================================
 Ports on Slot A

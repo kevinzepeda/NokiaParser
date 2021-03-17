@@ -1,5 +1,5 @@
 Value Filldown sysname (\S+)
-Value Filldown model (\S+)
+Value Filldown model ([^:\b]+)
 Value source_ip (\S+)
 Value l3vpn (\S+)
 Value service_id (\d+)
@@ -21,6 +21,7 @@ Value card (\S+)
 Value mda (\d+)
 Value fabric_network (\d+)
 Value fabric_access (\d+)
+Value port_description (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -71,6 +72,7 @@ Egress
   ^\s{16}exit -> Sap
 
 Ports
+  ^\s{8}description "${port_description}"
   ^\s{8}ethernet -> PortEthernet
   ^\s{4}exit -> Record Start
 

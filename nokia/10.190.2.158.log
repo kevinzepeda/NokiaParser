@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.2.158
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.2.158
 Warning: Permanently added '10.190.2.158' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.2.158's password: 
+ca168b@10.190.2.158's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 22 Minutes 
 A:PUEMTX-PUE7020-AA# environment no more 
 A:PUEMTX-PUE7020-AA# show chassis 
 ===============================================================================
@@ -38,7 +40,7 @@ A:PUEMTX-PUE7020-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:26:30 2020 UTC
+# Generated WED MAR 17 02:25:29 2021 UTC
 
 exit all
 configure
@@ -115,7 +117,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -183,6 +185,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -658,6 +670,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1192,7 +1244,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$Hb3dIb1ru0Xs8heCWTV5s.fAfg5ie0hrnXN5N3ocNiEb3s/Z.piCe"
+                password "$2y$10$peP.v3MPg6dzBuU34K79Q.rqYwzdhYgIVeTYTMn7TI36jBKSn4CTe"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1208,7 +1260,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$4M4eym9TSt6TM6lxnNlwk.YvsbEML3CblOiWxFOcijCYZEt0firSC"
+                password "$2y$10$H7kOQ.sOQqRI.VCVg9Or..paAFPTimzJxzT/SfAR./QBzknGsFBrS"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1225,8 +1277,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$r25SpWCmVRJFYhMVUyl6g.jCoaSlb9XU0spXhkYW9r3Aicvd4tGyK"
-                no access
+                password "$2y$10$P9H49ORmwVOSh1a.cD7Y..IByScgAgLDza6DhfpUcwxbd1byUcOjW"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -1783,8 +1835,8 @@ echo "System Login Control Configuration"
             exit
             ssh
                 no disable-graceful-shutdown
-                inbound-max-sessions 5
-                outbound-max-sessions 5
+                inbound-max-sessions 7
+                outbound-max-sessions 7
                 ttl-security 20
             exit
             telnet
@@ -5768,6 +5820,7 @@ echo "Port Configuration"
         description "To-JALAP1-VER7010-AA"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -5782,6 +5835,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -5791,9 +5845,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -6783,6 +6835,7 @@ echo "Port Configuration"
         description "EVDO2 Oaxaca ll"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -6797,6 +6850,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -6806,9 +6860,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -8463,6 +8515,7 @@ echo "Port Configuration"
         description "To-PUEBLA_AA_SAN_MARTIN_AA_11"
         tdm
             e1 
+                shutdown
                 framing e1-unframed
                 clock-source node-timed
                 no signal-mode
@@ -8477,6 +8530,7 @@ echo "Port Configuration"
                     no tx-dus
                 exit
                 channel-group 1
+                    shutdown
                     description "DS0GRP"
                     mode access
                     encap-type cem
@@ -8486,9 +8540,7 @@ echo "Port Configuration"
                     no idle-cycle-flag
                     idle-payload-fill all-ones
                     no scramble
-                    no shutdown
                 exit
-                no shutdown
             exit
             line-impedance 120
         exit
@@ -13395,42 +13447,6 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
-        cpipe 107051 customer 2 vc-type satop-e1 create
-            description "To-JALAP1-VER7010-AA"
-            service-mtu 1514
-            no service-name
-            sap 1/2/14.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11153:107051 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
         cpipe 107124 customer 2 vc-type satop-e1 create
             description "E1I-0201-0019"
             service-mtu 1514
@@ -13490,78 +13506,6 @@ echo "Service Configuration"
                 no shutdown
             exit
             spoke-sdp 11148:107125 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179005 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/4/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11164:179005 create
-                ingress
-                    no vc-label
-                exit
-                egress
-                    no vc-label
-                exit
-                no entropy-label
-                control-word
-                no precedence 
-                no shutdown
-            exit
-            no shutdown
-        exit
-        cpipe 179012 customer 2 vc-type satop-e1 create
-            no description
-            service-mtu 1514
-            no service-name
-            sap 1/7/11.1 create
-                no description
-                cem
-                    packet jitter-buffer 10 payload-size 256
-                    report-alarm stray malformed pktloss overrun underrun 
-                    no report-alarm rpktloss rfault rrdi 
-                    no rtp-header
-                exit
-                ingress
-                    qos 111
-                exit
-                egress
-                    qos 1
-                exit
-                no collect-stats
-                no accounting-policy
-                no shutdown
-            exit
-            spoke-sdp 11164:179012 create
                 ingress
                     no vc-label
                 exit
@@ -14591,7 +14535,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:26:35 2020 UTC
+# Finished WED MAR 17 02:25:35 2021 UTC
 A:PUEMTX-PUE7020-AA# show port 
 
 ===============================================================================
@@ -14659,7 +14603,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/2/13        Up    No   Down                                    
 1/2/13.1      Up    No   Down    1514 1514    - accs cem  tdm    
 1/2/14        Up    No   Down                                    
-1/2/14.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/2/14.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/15        Down  No   Down                                    
 1/2/15.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/2/16        Down  No   Down                                    
@@ -14717,7 +14661,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/4/10        Down  No   Down                                    
 1/4/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/4/11        Up    No   Down                                    
-1/4/11.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/4/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/4/12        Down  No   Down                                    
 1/4/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/4/13        Down  No   Down                                    
@@ -14813,7 +14757,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/7/10        Down  No   Down                                    
 1/7/10.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/11        Up    No   Down                                    
-1/7/11.1      Up    No   Down    1514 1514    - accs cem  tdm    
+1/7/11.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/12        Down  No   Down                                    
 1/7/12.1      Down  No   Down    1514 1514    - accs cem  tdm    
 1/7/13        Down  No   Down                                    

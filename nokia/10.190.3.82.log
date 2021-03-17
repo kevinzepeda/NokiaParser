@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.82
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.82
 Warning: Permanently added '10.190.3.82' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.82's password: 
+ca168b@10.190.3.82's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 18 Minutes 
 A:CUAIZC-MEX9164-GA# environment no more 
 A:CUAIZC-MEX9164-GA# show chassis 
 ===============================================================================
@@ -43,7 +45,7 @@ A:CUAIZC-MEX9164-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:24:50 2020 UTC
+# Generated WED MAR 17 02:30:09 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca40264b001"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -244,20 +246,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$CwibLrKmDY5NeOnLEq1s2.LWm6owxgbZ9jPSYy3rv/RX.RjpYwy0K"
+                password "$2y$10$Al1QzxJZNo2/vS/c1C4CU.JeD9qZ/evR0m7wfpnJ6d8wXQr8iLdXa"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -909,7 +911,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$83PNM/BTU.ax9C6fHJE7H.xqKkR0s3srsJiU4JCzJ3rj.7/9yWwam"
+                password "$2y$10$1rMFgG5WahaPJsXWbZ.LQ.CkXJuVkqzgS.ypKTMclkYw3xTHgHD7S"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -933,8 +935,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$m.3p5bl2SUk.VGxAYCXJU.BcVAeOQtZXJIGM6H5IHHRamh7D6DAgO"
-                no access
+                password "$2y$10$AC2dYy9ussFkukDEW0Vao.29/24QKSJO5hTwV6SUsflq8rphXhTie"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4836,6 +4838,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4846,6 +4850,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4857,6 +4863,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -12068,8 +12274,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 1/1/5
-        shutdown
-        description "'TO-Redundacia-OLT-03-03-17'"
+        description "Nuevos Sitios 2020 Carrier Totalplay"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -12125,8 +12330,8 @@ echo "Port Configuration"
                 server-timeout 30
                 no tunneling
             exit
-            mode network
-            encap-type null
+            mode access
+            encap-type dot1q
             no mtu
             no mac
             no load-balancing-algorithm
@@ -12152,10 +12357,22 @@ echo "Port Configuration"
             no collect-stats
             egress
             exit
-            network
-                queue-policy "default"
-                no accounting-policy
-                no collect-stats
+            access
+                egress
+                    queue-group "policer-output-queues" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
+                no bandwidth
+                no booking-factor
             exit
             lldp
                 dest-mac nearest-bridge
@@ -12289,6 +12506,7 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
+        no shutdown
     exit
     port 3/1/1
         description "10/100/Gig Ethernet SFP"
@@ -16077,7 +16295,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-access:Mobile"
             crc-monitor
                 no sd-threshold
                 no sf-threshold
@@ -16308,7 +16526,7 @@ echo "Port Configuration"
             no mtu
             no mac
             no load-balancing-algorithm
-            no egress-scheduler-policy
+            egress-scheduler-policy "PS-IPMEAN-access:Mobile"
             crc-monitor
                 no sd-threshold
                 no sf-threshold
@@ -26624,7 +26842,7 @@ echo "Port Configuration"
     exit
     port 5/1/6
         shutdown
-        description "10-Gig Ethernet"
+        description "To-Carrier_LTE-AWS-Service"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -26680,8 +26898,8 @@ echo "Port Configuration"
                 server-timeout 30
                 no tunneling
             exit
-            mode network
-            encap-type null
+            mode access
+            encap-type dot1q
             no mtu
             no mac
             no load-balancing-algorithm
@@ -26707,10 +26925,22 @@ echo "Port Configuration"
             no collect-stats
             egress
             exit
-            network
-                queue-policy "default"
-                no accounting-policy
-                no collect-stats
+            access
+                egress
+                    queue-group "policer-output-queues" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
+                no bandwidth
+                no booking-factor
             exit
             lldp
                 dest-mac nearest-bridge
@@ -27070,7 +27300,7 @@ echo "Port Configuration"
     exit
     port 5/1/8
         shutdown
-        description "10-Gig Ethernet"
+        description "To-Carrier_LTE-AWS-Service"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -27126,8 +27356,8 @@ echo "Port Configuration"
                 server-timeout 30
                 no tunneling
             exit
-            mode network
-            encap-type null
+            mode access
+            encap-type dot1q
             no mtu
             no mac
             no load-balancing-algorithm
@@ -27153,10 +27383,22 @@ echo "Port Configuration"
             no collect-stats
             egress
             exit
-            network
-                queue-policy "default"
-                no accounting-policy
-                no collect-stats
+            access
+                egress
+                    queue-group "policer-output-queues" instance 1 create
+                        no description
+                        no scheduler-policy
+                        no accounting-policy
+                        no collect-stats
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                    exit
+                exit
+                no bandwidth
+                no booking-factor
             exit
             lldp
                 dest-mac nearest-bridge
@@ -29136,7 +29378,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 6/1/6
-        description "Sitios Carrier Red It, Total Play 06/Marzo/2017"
+        description "Sitios Carrier Red It"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -29772,7 +30014,7 @@ echo "Port Configuration"
     exit
     port 6/1/8
         shutdown
-        description "10-Gig Ethernet"
+        description "Nuevos Sitios Dalia 2020 Carrier ATC"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -30854,15 +31096,15 @@ echo "LAG Configuration"
         bfd
             no disable-soft-reset-extension
             family ipv4
-                shutdown
                 no bfd-on-distributing-only
-                no local-ip-address
+                local-ip-address 10.238.63.35
                 max-admin-down-time 0
                 max-setup-time infinite
                 multiplier 3
                 receive-interval 100
-                no remote-ip-address
+                remote-ip-address 10.238.63.34
                 transmit-interval 100
+                no shutdown
             exit
             family ipv6
                 shutdown
@@ -37628,7 +37870,7 @@ echo "Router (Network Side) Configuration"
             no qos-route-lookup
             no lag-link-map-profile
             no dist-cpu-protection
-            bfd 100 receive 100 multiplier 3
+            no bfd
             if-attribute
             exit
             lag-per-link-hash class 1 weight 1
@@ -41941,7 +42183,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -43609,13 +43851,21 @@ echo "Service Configuration"
             exit
             interface "To-GHMEX0276-PCS-OYM" create
             exit
+            interface "To-MEXHHC1752-AWS-OYM" create
+            exit
+            interface "To-MEXHHC1902-AWS-OYM" create
+            exit
+            interface "To-MEXHHC1752_O&M_2nd-eNodeB" create
+            exit
             interface "To-MEXNIC1581-AWS-OYM" create
             exit
             interface "To-MUMEXNIC1581X-PCS-OYM" create
             exit
-            interface "To-MEXTTZ1320-AWS-OYM" create
+            interface "To-MEXTTZ1793-AWS-OYM" create
             exit
-            interface "To-MUMEXTTZ1320X-PCS-OYM" create
+            interface "To-MEXTTZ1793-PCS-OYM" create
+            exit
+            interface "To-MEXTTZ1793_O&M_2nd-eNodeB" create
             exit
             interface "To-MEXTEY1257-AWS-OYM" create
             exit
@@ -43841,15 +44091,19 @@ echo "Service Configuration"
             exit
             interface "SFP INTELIGENTE-ACCEDIAN-SERVI" create
             exit
+            interface "To-MUMEXHHC1752Y" create
+            exit
+            interface "To-MUMEXHHC1902Y" create
+            exit
             interface "To-MUMEXNIC1581X" create
             exit
             interface "To-MUMEXNIC1581X-GSM" create
             exit
-            interface "To-MUMEXTTZ1320Y" create
+            interface "To-MUMEXTTZ1793Y" create
             exit
-            interface "To-MUMEXTTZ1320X" create
+            interface "To-MUMEXTTZ1793X" create
             exit
-            interface "To-MUMEXTTZ1320X-GSM" create
+            interface "To-MUMEXTTZ1793X-GSM" create
             exit
             interface "To-MUMEXTEY1257Y" create
             exit
@@ -43963,7 +44217,15 @@ echo "Service Configuration"
             exit
             interface "To-MLMEXNIC1581Y" create
             exit
-            interface "To-MLMEXTTZ1320Y" create
+            interface "To-MLMEXHHC1752Y" create
+            exit
+            interface "To-MLMEXHHC1902Y" create
+            exit
+            interface "To-MEXHHC1752_4G_2nd-eNodeB" create
+            exit
+            interface "To-MLMEXTTZ1793Y" create
+            exit
+            interface "To-MEXTTZ1793_4G_2nd-eNodeB" create
             exit
             interface "To-MLMEXTEY1257Y" create
             exit
@@ -44012,6 +44274,8 @@ echo "Service Configuration"
             interface "To-MEXVCA0903_CFE" create
             exit
             interface "To-MEXCTI0164_CFE" create
+            exit
+            interface "To-MEXCTI0154_CFE" create
             exit
             dhcp
             exit
@@ -44744,7 +45008,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 1
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -44752,7 +45016,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 1
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -57931,6 +58195,387 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
+            interface "To-MEXHHC1752-AWS-OYM" create
+                description "MEXHHC1752-AWS-OYM"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.242.52.113/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:1469 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXHHC1902-AWS-OYM" create
+                description "MEXHHC1902-AWS-OYM"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.242.52.117/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 6/1/6:1468 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXHHC1752_O&M_2nd-eNodeB" create
+                description "MEXHHC1752_O&M_2nd-eNodeB"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.242.53.169/29 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:2569 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
             interface "To-MEXNIC1581-AWS-OYM" create
                 description "MEXNIC1581-AWS-OYM"
                 hold-time
@@ -58001,7 +58646,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -58009,7 +58654,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -58128,7 +58773,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -58136,7 +58781,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -58185,8 +58830,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MEXTTZ1320-AWS-OYM" create
-                description "MEXTTZ1320-AWS_OYM"
+            interface "To-MEXTTZ1793-AWS-OYM" create
+                description "MEXTTZ1793-AWS-OYM"
                 hold-time
                     no up ip
                     no down ip
@@ -58198,7 +58843,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.252.31.81/30 broadcast host-ones
+                address 10.242.62.61/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -58247,7 +58892,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:1445 create
+                sap 1/1/5:1475 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -58312,8 +58957,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MUMEXTTZ1320X-PCS-OYM" create
-                description "MEXTTZ1320-PCS_OYM"
+            interface "To-MEXTTZ1793-PCS-OYM" create
+                description "MEXTTZ1793-PCS-OYM"
                 hold-time
                     no up ip
                     no down ip
@@ -58325,7 +58970,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.249.31.81/30 broadcast host-ones
+                address 10.232.62.61/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -58374,7 +59019,134 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:1845 create
+                sap 1/1/5:1875 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXTTZ1793_O&M_2nd-eNodeB" create
+                description "MEXTTZ1793_O&M_2nd-eNodeB"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.232.61.225/29 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:2575 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -60113,6 +60885,25 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
+            static-route-entry 10.229.55.143/32
+                no tag
+                next-hop 10.232.62.62
+                    description "MEXTTZ1793_PCS-3G_O&M"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
             static-route-entry 10.234.4.86/32
                 no tag
                 next-hop 10.242.1.90
@@ -60155,6 +60946,63 @@ echo "Service Configuration"
                 no tag
                 next-hop 10.242.50.150
                     description "HMEX0276_AWS-LTE_O&M"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.53.28/32
+                no tag
+                next-hop 10.242.52.114
+                    description "MEXHHC1752_AWS-LTE_O&M"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.53.29/32
+                no tag
+                next-hop 10.242.52.118
+                    description "MEXHHC1902_AWS-LTE_O&M"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.59.143/32
+                no tag
+                next-hop 10.242.62.62
+                    description "MEXTTZ1793_AWS-LTE_O&M"
                     preference 5
                     metric 1
                     no community
@@ -60835,25 +61683,6 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
-            static-route-entry 10.248.15.227/32
-                no tag
-                next-hop 10.249.31.82
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
             static-route-entry 10.248.24.100/32
                 no tag
                 next-hop 10.249.33.78
@@ -61500,25 +62329,6 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
-            static-route-entry 10.251.39.227/32
-                no tag
-                next-hop 10.252.31.82
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
             static-route-entry 10.251.40.81/32
                 no tag
                 next-hop 10.252.1.66
@@ -61978,25 +62788,6 @@ echo "Service Configuration"
             static-route-entry 10.251.46.155/32
                 no tag
                 next-hop 10.252.26.58
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
-            static-route-entry 10.251.47.227/32
-                no tag
-                next-hop 10.252.31.82
                     no description
                     preference 5
                     metric 1
@@ -65669,7 +66460,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -65677,7 +66468,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -73702,6 +74493,260 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
+            interface "To-MUMEXHHC1752Y" create
+                description "MEXHHC1752-AWS_3G"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.244.52.113/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:1069 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MUMEXHHC1902Y" create
+                description "MEXHHC1902-AWS_3G"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.244.52.117/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 6/1/6:1068 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
             interface "To-MUMEXNIC1581X" create
                 description "MEXNIC1581-PCS_3G"
                 hold-time
@@ -73772,7 +74817,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -73780,7 +74825,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -73899,7 +74944,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -73907,7 +74952,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -73956,8 +75001,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MUMEXTTZ1320Y" create
-                description "MEXTTZ1320-AWS_3G"
+            interface "To-MUMEXTTZ1793Y" create
+                description "MEXTTZ1793-AWS_3G"
                 hold-time
                     no up ip
                     no down ip
@@ -73969,7 +75014,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.254.31.81/30 broadcast host-ones
+                address 10.244.62.61/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -74018,7 +75063,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:1045 create
+                sap 1/1/5:1075 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -74083,8 +75128,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MUMEXTTZ1320X" create
-                description "MEXTTZ1320-PCS_3G"
+            interface "To-MUMEXTTZ1793X" create
+                description "MEXTTZ1793-PCS_3G"
                 hold-time
                     no up ip
                     no down ip
@@ -74096,7 +75141,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.250.31.81/30 broadcast host-ones
+                address 10.233.62.61/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -74145,7 +75190,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:1645 create
+                sap 1/1/5:1675 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -74210,8 +75255,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MUMEXTTZ1320X-GSM" create
-                description "MEXTTZ1320-GSM"
+            interface "To-MUMEXTTZ1793X-GSM" create
+                description "MEXTTZ1793-GSM"
                 hold-time
                     no up ip
                     no down ip
@@ -74223,7 +75268,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.247.31.81/30 broadcast host-ones
+                address 10.228.62.61/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -74272,7 +75317,7 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:2145 create
+                sap 1/1/5:2175 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -76369,6 +77414,25 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
+            static-route-entry 10.226.62.60/30
+                no tag
+                next-hop 10.228.62.62
+                    description "MEXTTZ1793_GSM-Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
             static-route-entry 10.229.0.86/32
                 no tag
                 next-hop 10.233.1.90
@@ -76426,6 +77490,25 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
+            static-route-entry 10.229.53.143/32
+                no tag
+                next-hop 10.233.62.62
+                    description "MEXTTZ1793_PCS-3G_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
             static-route-entry 10.234.0.86/32
                 no tag
                 next-hop 10.244.1.90
@@ -76468,6 +77551,63 @@ echo "Service Configuration"
                 no tag
                 next-hop 10.244.50.150
                     description "HMEX0276_AWS-3G_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.49.28/32
+                no tag
+                next-hop 10.244.52.114
+                    description "MEXHHC1752_AWS-3G_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.49.29/32
+                no tag
+                next-hop 10.244.52.118
+                    description "MEXHHC1902_AWS-3G_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.55.143/32
+                no tag
+                next-hop 10.244.62.62
+                    description "MEXTTZ1793_AWS-3G_Service"
                     preference 5
                     metric 1
                     no community
@@ -76961,25 +78101,6 @@ echo "Service Configuration"
             static-route-entry 10.246.26.56/30
                 no tag
                 next-hop 10.247.26.58
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
-            static-route-entry 10.246.31.80/30
-                no tag
-                next-hop 10.247.31.82
                     no description
                     preference 5
                     metric 1
@@ -77677,25 +78798,6 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
-            static-route-entry 10.248.7.227/32
-                no tag
-                next-hop 10.250.31.82
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
             static-route-entry 10.248.16.100/32
                 no tag
                 next-hop 10.250.33.78
@@ -78326,25 +79428,6 @@ echo "Service Configuration"
             static-route-entry 10.251.6.155/32
                 no tag
                 next-hop 10.254.26.58
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
-            static-route-entry 10.251.7.227/32
-                no tag
-                next-hop 10.254.31.82
                     no description
                     preference 5
                     metric 1
@@ -82669,7 +83752,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -82677,7 +83760,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -82726,8 +83809,8 @@ echo "Service Configuration"
                 no ip-helper-address
                 no shutdown
             exit
-            interface "To-MLMEXTTZ1320Y" create
-                description "MEXTTZ1320-AWS_LTE"
+            interface "To-MLMEXHHC1752Y" create
+                description "MEXHHC1752-AWS_LTE"
                 hold-time
                     no up ip
                     no down ip
@@ -82739,7 +83822,7 @@ echo "Service Configuration"
                 no tcp-mss
                 no monitor-oper-group
                 cpu-protection 254
-                address 10.253.31.81/30 broadcast host-ones
+                address 10.243.52.113/30 broadcast host-ones
                 no mac
                 arp-timeout 14400
                 arp-retry-timer 50
@@ -82788,7 +83871,515 @@ echo "Service Configuration"
                 no proxy-arp-policy
                 no local-proxy-arp
                 no remote-proxy-arp
-                sap 6/1/6:1245 create
+                sap 1/1/5:1269 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MLMEXHHC1902Y" create
+                description "MEXHHC1902-AWS_LTE"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.243.52.117/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 6/1/6:1268 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXHHC1752_4G_2nd-eNodeB" create
+                description "MEXHHC1752_4G_2nd-eNodeB"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.243.53.49/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:2369 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MLMEXTTZ1793Y" create
+                description "MEXTTZ1793-AWS_LTE"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.243.62.61/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:1275 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 2000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXTTZ1793_4G_2nd-eNodeB" create
+                description "MEXTTZ1793_4G_2nd-eNodeB"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.243.61.225/30 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 1/1/5:2375 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -83550,6 +85141,63 @@ echo "Service Configuration"
                     no shutdown
                 exit
             exit
+            static-route-entry 10.234.51.28/32
+                no tag
+                next-hop 10.243.52.114
+                    description "MEXHHC1752_AWS-LTE_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.51.29/32
+                no tag
+                next-hop 10.243.52.118
+                    description "MEXHHC1902_AWS-LTE_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
+            static-route-entry 10.234.57.143/32
+                no tag
+                next-hop 10.243.62.62
+                    description "MEXTTZ1793_AWS-LTE_Service"
+                    preference 5
+                    metric 1
+                    no community
+                    no tag
+                    no bfd-enable
+                    no load-balancing-weight
+                    no validate-next-hop
+                    no cpe-check
+                    no prefix-list
+                    no source-class
+                    no destination-class
+                    no forwarding-class
+                    no shutdown
+                exit
+            exit
             static-route-entry 10.251.8.81/32
                 no tag
                 next-hop 10.253.1.66
@@ -84009,25 +85657,6 @@ echo "Service Configuration"
             static-route-entry 10.251.14.155/32
                 no tag
                 next-hop 10.253.26.58
-                    no description
-                    preference 5
-                    metric 1
-                    no community
-                    no tag
-                    no bfd-enable
-                    no load-balancing-weight
-                    no validate-next-hop
-                    no cpe-check
-                    no prefix-list
-                    no source-class
-                    no destination-class
-                    no forwarding-class
-                    no shutdown
-                exit
-            exit
-            static-route-entry 10.251.15.227/32
-                no tag
-                next-hop 10.253.31.82
                     no description
                     preference 5
                     metric 1
@@ -85265,6 +86894,133 @@ echo "Service Configuration"
                 no local-proxy-arp
                 no remote-proxy-arp
                 sap 3/1/1:8 create
+                    no description
+                    no host-lockout-policy
+                    cpu-protection 254
+                    no multi-service-site
+                    ingress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no match-qinq-dot1p
+                        no filter
+                        no queue-group-redirect-list
+                    exit
+                    egress
+                        no scheduler-policy
+                        no policer-control-policy
+                        qos 3000
+                        no qinq-mark-top-only
+                        no filter
+                        agg-rate
+                            no rate
+                            no queue-frame-based-accounting
+                            no limit-unused-bandwidth
+                        exit
+                        no queue-group-redirect-list
+                    exit
+                    no anti-spoof
+                    no host-shutdown
+                    no collect-stats
+                    no accounting-policy
+                    eth-cfm
+                        no collect-lmm-stats
+                        collect-lmm-fc-stats
+                            no fc
+                            no fc-in-profile
+                        exit
+                        no squelch-ingress-levels
+                    exit
+                    no calling-station-id
+                    no transit-policy
+                    no aarp
+                    no app-profile
+                    no lag-link-map-profile
+                    no dist-cpu-protection
+                    no bandwidth
+                    no shutdown
+                exit
+                no ptp-hw-assist
+                no qos-route-lookup
+                no urpf-check
+                no static-tunnel-redundant-next-hop
+                no dynamic-tunnel-redundant-next-hop
+                if-attribute
+                exit
+                load-balancing
+                    no teid-load-balancing
+                    no egr-ip-load-balancing
+                    no spi-load-balancing
+                exit
+                ingress
+                exit
+                no vas-if-type
+                no ip-helper-address
+                no shutdown
+            exit
+            interface "To-MEXCTI0154_CFE" create
+                description "MEXCTI0154_CFE"
+                hold-time
+                    no up ip
+                    no down ip
+                    no up ipv6
+                    no down ipv6
+                exit
+                no enable-ingress-stats
+                no enable-mac-accounting
+                no tcp-mss
+                no monitor-oper-group
+                cpu-protection 254
+                address 10.237.1.192/31 broadcast host-ones
+                no mac
+                arp-timeout 14400
+                arp-retry-timer 50
+                no arp-limit
+                no arp-learn-unsolicited
+                no arp-proactive-refresh
+                no arp-populate-host-route
+                no arp-route-tag
+                no allow-directed-broadcasts
+                tos-marking-state trusted
+                icmp
+                    mask-reply
+                    param-problem 100 10
+                    redirects 100 10
+                    ttl-expired 100 10
+                    unreachables 100 10
+                exit
+                no arp-populate
+                dhcp
+                    shutdown
+                    no description
+                    no python-policy
+                    proxy-server
+                        shutdown
+                        no emulated-server
+                        no lease-time
+                    exit
+                    no option
+                    no server
+                    no trusted
+                    no lease-populate
+                    no relay-proxy
+                    no gi-address
+                    no relay-plain-bootp
+                    no use-arp
+                exit
+                no authentication-policy
+                no ip-mtu
+                no host-connectivity-verify
+                no shcv-policy-ipv4
+                cflowd-parameters
+                exit
+                no bfd
+                no ipv6
+                no local-dhcp-server
+                no proxy-arp-policy
+                no local-proxy-arp
+                no remote-proxy-arp
+                sap 5/1/5:9 create
                     no description
                     no host-lockout-policy
                     cpu-protection 254
@@ -100260,110 +102016,6 @@ echo "Service Configuration"
             no vsd-domain
             no shutdown
         exit
-        vpls 21930927 name "To-HMEX0109-LMEX0109-OYM-3G-LTE" customer 1 create
-            shutdown
-            no description
-            service-mtu 1514
-            mcr-default-gtw
-                no ip
-                no mac
-            exit
-            no selective-learned-fdb
-            no disable-learning
-            no disable-aging
-            no discard-unknown
-            load-balancing
-                no per-service-hashing
-                no spi-load-balancing
-                no teid-load-balancing
-            exit
-            allow-ip-int-bind
-                no vxlan-ipv4-tep-ecmp
-            exit
-            fdb-table-size 250
-            fdb-table-high-wmark 95
-            fdb-table-low-wmark 90
-            no host-connectivity-verify
-            no shcv-policy-ipv4
-            no send-flush-on-failure
-            mac-subnet-length 48
-            local-age 300
-            no mfib-table-size
-            mfib-table-high-wmark 95
-            mfib-table-low-wmark 90
-            no mcast-ipv6-snooping-scope
-            no multicast-info-policy
-            remote-age 900
-            no propagate-mac-flush
-            no vxlan-src-vtep
-            stp
-                shutdown
-                priority 32768
-                hello-time 2
-                forward-delay 15
-                max-age 20
-                hold-count 6
-                mode rstp
-                mst-max-hops 20
-                no mst-name
-                mst-revision 0
-            exit
-            eth-cfm
-                tunnel-fault ignore
-            exit
-            igmp-snooping
-                shutdown
-                query-interval 125
-                robust-count 2
-                report-src-ip 0.0.0.0
-                no query-src-ip
-                mvr
-                    shutdown
-                    no description
-                    no group-policy
-                exit
-            exit
-            igmp-host-tracking
-                shutdown
-                expiry-time 260
-            exit
-            mld-snooping
-                shutdown
-                query-interval 125
-                robust-count 2
-                no report-src-ip
-                no query-src-ip
-                mvr
-                    shutdown
-                    no description
-                    no group-policy
-                exit
-            exit
-            gsmp
-                shutdown
-            exit
-            no temp-flooding
-            wlan-gw
-                shutdown
-                no description
-                no sap-template
-            exit
-            mac-move
-                primary-ports
-                    cumulative-factor 3
-                exit
-                secondary-ports
-                    cumulative-factor 2
-                exit
-                move-frequency 2
-                retry-timeout 10
-                number-retries 3
-                shutdown
-            exit
-            static-mac
-            exit
-            no vsd-domain
-        exit
         vpls 21930931 name "To-HMEX8606-LMEX8606-OYM-3G-LTE" customer 1 create
             no description
             service-mtu 1514
@@ -106123,7 +107775,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -106131,7 +107783,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -107730,12 +109382,6 @@ echo "Service Configuration"
             exit
         exit
         vpls 21930924 name "To-MEX-446CR_0692_Bosques-OYM" customer 1 create
-            allow-ip-int-bind
-                no forward-ipv4-multicast-to-ip-int
-                no forward-ipv6-multicast-to-ip-int
-            exit
-        exit
-        vpls 21930927 name "To-HMEX0109-LMEX0109-OYM-3G-LTE" customer 1 create
             allow-ip-int-bind
                 no forward-ipv4-multicast-to-ip-int
                 no forward-ipv6-multicast-to-ip-int
@@ -113010,7 +114656,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:17 2020 UTC
+# Finished WED MAR 17 02:30:23 2021 UTC
 A:CUAIZC-MEX9164-GA# show port 
 
 ===============================================================================
@@ -113023,7 +114669,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/2         Down  No   Down    9212 9212    - netw null xgige   80KM
 1/1/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 1*
 1/1/4         Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 1*
-1/1/5         Down  No   Down    9212 9212    - netw null xgige   80KM
+1/1/5         Up    Yes  Up      1518 1518    - accs dotq xgige  10GBASE-LR  *
 
 ===============================================================================
 Ports on Slot 3
@@ -113051,17 +114697,17 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 4/1/1         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 4/1/2         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
-4/1/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-4/1/4         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
+4/1/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+4/1/4         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
 4/1/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 4/1/6         Down  No   Down    9212 9212    - netw null xcme   10GBASE-SR 
-4/1/7         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+4/1/7         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 4/1/8         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
 4/1/9         Down  No   Down    9212 9212    - netw null xcme   
 4/1/10        Down  No   Down    9212 9212    - netw null xcme   
 4/1/11        Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
 4/1/12        Down  No   Down    1514 1514    - accs null xcme   GIGE-T 
-4/1/13        Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+4/1/13        Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
 4/1/14        Down  No   Down    9212 9212    - netw null xcme   
 4/1/15        Down  No   Down    9212 9212    - netw null xcme   
 4/1/16        Down  No   Down    9212 9212    - netw null xcme   
@@ -113109,9 +114755,9 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 5/1/3         Up    Yes  Up      9212 9212    5 netw null xgige  10GBASE-LR  *
 5/1/4         Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-ER  *
 5/1/5         Up    Yes  Up      1518 1518    - accs dotq xgige  10GBASE-SR 
-5/1/6         Down  No   Down    9212 9212    - netw null xgige  
+5/1/6         Down  No   Down    1518 1518    - accs dotq xgige  
 5/1/7         Down  No   Down    9212 9212    - netw null xgige  
-5/1/8         Down  No   Down    9212 9212    - netw null xgige  
+5/1/8         Down  No   Down    1518 1518    - accs dotq xgige  
 5/1/9         Up    Yes  Up      9212 9212  200 netw null xgige  10GBASE-SR 
 5/1/10        Up    Yes  Up      9182 9182    - accs dotq xgige  10GBASE-SR 
 5/2/1         Down  No   Down    9212 9212    - netw null cgige  
@@ -113132,7 +114778,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 6/1/8         Down  No   Down    9212 9212    - netw null xgige  
 6/1/9         Up    Yes  Up      9212 9212    - netw null xgige  10GBASE-ER  *
 6/1/10        Down  No   Down    9212 9212    - netw null xgige  
-6/2/1         Up    No   Down    9212 9212    6 netw null cgige  100GBASE-ER4*
+6/2/1         Up    Yes  Up      9212 9212    6 netw null cgige  100GBASE-ER4*
 
 ===============================================================================
 Ports on Slot A
@@ -113167,7 +114813,7 @@ Details
 Lag-id              : 5                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/02/2019 01:23:14   Port Thres. Action   : down
+Thres. Last Cleared : 07/11/2020 04:51:07   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:b1:46     Lag-IfIndex          : 1342177285
@@ -113222,9 +114868,9 @@ Description        : LAG To-TLALNEPANTLA-CA
 Details
 -------------------------------------------------------------------------------
 Lag-id              : 6                     Mode                 : network
-Adm                 : up                    Opr                  : down
+Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/02/2019 01:23:14   Port Thres. Action   : down
+Thres. Last Cleared : 07/11/2020 04:51:07   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:b1:47     Lag-IfIndex          : 1342177286
@@ -113246,10 +114892,10 @@ Subgrp selected     : 1                     Subgrp candidate     : -
 Subgrp count        : 1                     
 System Id           : 0c:a4:02:64:b0:01     System Priority      : 32768
 Admin Key           : 32769                 Oper Key             : 32769
-Prtr System Id      : 00:00:00:00:00:00     Prtr System Priority : 0
-Prtr Oper Key       : 0                     
+Prtr System Id      : 0c:a4:02:68:20:01     Prtr System Priority : 32768
+Prtr Oper Key       : 32769                 
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 0
+Port weight speed   : 0 gbps                Number/Weight Up     : 1
 Weight Threshold    : 0                     
 Weight Thres. Action: down                  
 Weight Static Cost  : N/A                   
@@ -113257,13 +114903,13 @@ Weight Static Cost  : N/A
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
 -------------------------------------------------------------------------------
-6/2/1          up      active    down    yes       1             -       32768
+6/2/1          up      active    up      yes       1             -       32768
 
 -------------------------------------------------------------------------------
 Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 -------------------------------------------------------------------------------
-6/2/1          actor     No    No    No    No    No    Yes   Yes      Yes
-6/2/1          partner   No    No    Yes   Yes   No    Yes   Yes      Yes
+6/2/1          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
+6/2/1          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
 
 -------------------------------------------------------------------------------
 LAG 200
@@ -113275,7 +114921,7 @@ Details
 Lag-id              : 200                   Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/02/2019 01:23:14   Port Thres. Action   : down
+Thres. Last Cleared : 07/11/2020 04:51:07   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:b2:09     Lag-IfIndex          : 1342177480

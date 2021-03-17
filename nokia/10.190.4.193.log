@@ -1,11 +1,13 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.4.193
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.4.193
 Warning: Permanently added '10.190.4.193' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.4.193's password: 
+ca168b@10.190.4.193's password: 
 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
 A:TEXCOCO-MEX128-AA# environment no more 
 A:TEXCOCO-MEX128-AA# show chassis 
 ===============================================================================
@@ -21,7 +23,7 @@ System Information
   Oper number of slots              : 3
   Number of ports                   : 22
   Critical LED state                : Off
-  Major LED state                   : Off
+  Major LED state                   : Red
   Minor LED state                   : Off
   Over Temperature state            : OK
   Base MAC address                  : 84:db:fc:99:17:93
@@ -38,7 +40,7 @@ A:TEXCOCO-MEX128-AA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Tue Jul 30 13:05:22 EDT 2019 by builder in /builds/F90B/R6/panos/main
 
-# Generated THU MAY 21 05:29:24 2020 UTC
+# Generated WED MAR 17 02:30:55 2021 UTC
 
 exit all
 configure
@@ -115,9 +117,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -188,6 +190,16 @@ echo "System Security Configuration"
                 ip-filter
                     shutdown
                     default-action deny
+                    entry 90
+                        no description
+                        no src-port
+                        src-ip 10.32.241.38/32
+                        no protocol
+                        no dst-port
+                        no log
+                        no router
+                        action deny
+                    exit
                     entry 100
                         description "Accept ICMP"
                         no src-port
@@ -663,6 +675,46 @@ echo "System Security Configuration"
                         no src-port
                         src-ip 10.38.22.137/32
                         no protocol
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 213
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.2.135/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 214
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 10.103.133.128/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 215
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.45.216/32
+                        protocol tcp
+                        dst-port 22 65535
+                        no log
+                        no router
+                        action permit
+                    exit
+                    entry 216
+                        description "Permit SSH from Src IP - CyberArk"
+                        no src-port
+                        src-ip 135.208.47.0/24
+                        protocol tcp
                         dst-port 22 65535
                         no log
                         no router
@@ -1159,7 +1211,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$kuINwgZTt.lDORXlBixbc.kx3ohJDg5J.fW9fCuMWDzd5jh3b9RHO"
+                password "$2y$10$k7vH4zJush.RvNo.Qy/Ok.R65t78PJtdbgVMQxBi/4TYrE.LO7NSW"
                 access console ftp snmp 
                 no home-directory
                 no restricted-to-home
@@ -1176,7 +1228,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$fGy4qdrrVBO6K8kd7vT26.OpNeDM8LPNkh1RRegBFPboroWoFeDau"
+                password "$2y$10$I5KmPErLLy29eiOTdgZyA.W31tEp5L27NrN9OBssKpzdMrP.HN1NG"
                 access console 
                 no home-directory
                 no restricted-to-home
@@ -1189,8 +1241,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$JYTd1.L8fInMtXLX1fk.M.kKTGE4isKjmLpWMURHhxY2i8M9IMgkG"
-                no access
+                password "$2y$10$j1rB2CLUvOOVO8lbmqhKA.LXHE4ZbSbzPWv5NS.YRB954f1a7WuPm"
+                access console 
                 no home-directory
                 no restricted-to-home
                 console
@@ -5601,6 +5653,7 @@ echo "Port Configuration"
         no shutdown
     exit
     port 1/5/6
+        shutdown
         description "To-PANTITLAN-GA-PTO-4/1/3"
         ethernet
             dot1x
@@ -5698,7 +5751,6 @@ echo "Port Configuration"
             no phy-tx-clock
         exit
         ddm-events
-        no shutdown
     exit
     port 1/5/7
         shutdown
@@ -6438,7 +6490,7 @@ echo "Port Configuration"
                 no mac-auth-wait
             exit
             mode access
-            no encap-type
+            encap-type dot1q
             no mtu
             no group-encryption
             crc-monitor
@@ -8026,13 +8078,13 @@ echo "Service Configuration"
                 eth-cfm
                 exit
                 ingress
-                    qos 200
+                    qos 1
                     no match-qinq-dot1p
                     scheduler-mode 4-priority
                     no agg-rate-limit
                 exit
                 egress
-                    qos 200
+                    qos 1
                     no qinq-mark-top-only
                     no filter
                     scheduler-mode 4-priority
@@ -9443,6 +9495,153 @@ echo "Service Configuration"
             exit
             no shutdown
         exit
+        epipe 509190 customer 2 create
+            description "MEXTEX2006-AWS_3G"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To-MUMEXTEX2006Y"
+            sap 1/6/7:1033 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:509190 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 509191 customer 2 create
+            description "MEXTEX2006-AWS_LTE"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To-MLMEXTEX2006Y"
+            sap 1/6/7:1233 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:509191 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
+        epipe 509192 customer 2 create
+            description "To-MEXTEX2006-AWS-OYM"
+            service-mtu 1514
+            load-balancing
+                no per-service-hashing
+                no teid-load-balancing
+                no l4-load-balancing
+            exit
+            service-name "To-MEXTEX2006-AWS-OYM"
+            sap 1/6/7:1433 create
+                no description
+                eth-cfm
+                    no hold-mep-up-on-failure
+                exit
+                ingress
+                    qos 200
+                    no match-qinq-dot1p
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                egress
+                    qos 200
+                    no qinq-mark-top-only
+                    scheduler-mode 4-priority
+                    no agg-rate-limit
+                exit
+                no collect-stats
+                no accounting-policy
+                no loopback
+                no shutdown
+            exit
+            spoke-sdp 11115:509192 vc-type ether create
+                no vlan-vc-tag
+                ingress
+                    no vc-label
+                exit
+                egress
+                    no vc-label
+                exit
+                pw-status-signaling
+                no entropy-label
+                no control-word
+                eth-cfm
+                exit
+                no precedence 
+                no shutdown
+            exit
+            no shutdown
+        exit
         epipe 509200 customer 2 create
             description "Texcoco-centro O&M"
             service-mtu 1514
@@ -10239,6 +10438,12 @@ echo "Service Configuration"
         exit
         epipe 509189 customer 2 create
         exit
+        epipe 509190 customer 2 create
+        exit
+        epipe 509191 customer 2 create
+        exit
+        epipe 509192 customer 2 create
+        exit
         epipe 509200 customer 2 create
         exit
         epipe 509201 customer 2 create
@@ -10275,6 +10480,95 @@ echo "Router (Service Side) Configuration"
 echo "ISIS Configuration"
 #--------------------------------------------------
         isis 0
+            no shutdown
+        exit
+#--------------------------------------------------
+echo "BGP Configuration"
+#--------------------------------------------------
+        bgp
+            no description
+            no family
+            no vpn-apply-import
+            no vpn-apply-export
+            no route-target-list
+            no graceful-restart
+            no authentication-key
+            no connect-retry
+            no keepalive
+            no hold-time
+            no damping
+            no local-preference
+            no loop-detect 
+            no min-route-advertisement
+            no multipath
+            no aggregator-id-zero
+            no preference
+            no label-preference
+            no remove-private
+            no multihop
+            no med-out
+            no cluster
+            no disable-client-reflect
+            no ibgp-multipath
+            no purge-timer
+            no outbound-route-filtering
+            no import
+            no export
+            no local-as
+            no router-id
+            no disable-fast-external-failover
+            no disable-communities
+            no advertise-inactive
+            no enable-peer-tracking
+            no auth-keychain
+            no rapid-withdrawal
+            no bfd-enable
+            no split-horizon
+            no rapid-update
+            no mvpn-vrf-import-subtype-new
+            no add-paths
+            no backup-path
+            no def-recv-evpn-encap
+            best-path-selection
+                no always-compare-med 
+                no as-path-ignore
+            exit
+            next-hop-resolution
+                label-route-transport-tunnel
+                    family vpn
+                        resolution-filter
+                            ldp
+                            no rsvp
+                            no sr-isis
+                            no sr-ospf
+                            no sr-te
+                        exit
+                        resolution filter
+                    exit
+                    family label-ipv4
+                        resolution-filter
+                            ldp
+                            no rsvp
+                            no sr-isis
+                            no sr-ospf
+                            no sr-te
+                        exit
+                        resolution filter
+                    exit
+                exit
+            exit
+            no enable-rr-vpn-forwarding
+            rib-management
+                ipv4
+                    no route-table-import
+                exit
+                ipv6
+                    no route-table-import
+                exit
+                label-ipv4
+                    no route-table-import
+                exit
+            exit
             no shutdown
         exit
 #--------------------------------------------------
@@ -10403,7 +10697,7 @@ echo "Redundancy Administrative State Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:29:27 2020 UTC
+# Finished WED MAR 17 02:30:58 2021 UTC
 A:TEXCOCO-MEX128-AA# show port 
 
 ===============================================================================
@@ -10419,20 +10713,20 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 1/1/5         Down  No   Down    1514 1514    - accs null xgige  
 1/1/6         Up    Yes  Up      9212 9212    - netw null xgige   80KM
 1/5/1         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
-1/5/2         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
+1/5/2         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/5/3         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/4         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
 1/5/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDX GIGE-T 
-1/5/6         Up    Yes  Up      2102 2102    - hybr dotq xcme   MDI GIGE-T 
+1/5/6         Down  No   Down    2102 2102    - hybr dotq xcme   GIGE-T 
 1/5/7         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
-1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   MDI GIGE-T 
+1/5/8         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
 1/6/1         Up    Yes  Up      9212 9212    - accs dotq xcme   MDI GIGE-T 
 1/6/2         Up    Yes  Up      1514 1514    - accs null xcme   MDX GIGE-T 
 1/6/3         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/6/4         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/6/5         Down  No   Down    1514 1514    - accs null xcme   
 1/6/6         Down  No   Down    1514 1514    - accs null xcme   
-1/6/7         Down  No   Down    1514 1514    - accs null xcme   
+1/6/7         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 1/6/8         Down  No   Down    1514 1514    - accs null xcme   
 
 ===============================================================================

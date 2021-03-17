@@ -1,10 +1,12 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.109
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.109
 Warning: Permanently added '10.190.3.109' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.109's password: 
+ca168b@10.190.3.109's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 20 Minutes 
 B:RIOFRI-MEX115-GA# environment no more 
 B:RIOFRI-MEX115-GA# show chassis 
 ===============================================================================
@@ -43,7 +45,7 @@ B:RIOFRI-MEX115-GA# admin display-config detail
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:25:10 2020 UTC
+# Generated WED MAR 17 02:27:47 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca402879801"
             packet-size 9216
@@ -234,9 +236,9 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
-                start second sunday march 02:00
-                end first sunday november 02:00
+            dst-zone CDTT
+                start first sunday april 02:00
+                end last sunday october 02:00
                 offset 60
             exit
             zone CST -06
@@ -244,20 +246,20 @@ echo "System Configuration"
         exit
         thresholds
             rmon
-                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
-                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 5 absolute startup-alarm either rising-threshold 65 falling-threshold 0 owner "5620sam"
+                alarm 11 variable-oid tmnxHwTemperature.1.134217729 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 12 variable-oid tmnxHwTemperature.1.134217730 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 13 variable-oid tmnxHwTemperature.1.134217731 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 14 variable-oid tmnxHwTemperature.1.134217732 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 15 variable-oid tmnxHwTemperature.1.134217733 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 16 variable-oid tmnxHwTemperature.1.134217734 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 17 variable-oid tmnxHwTemperature.1.134217735 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 18 variable-oid tmnxHwTemperature.1.134217736 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 19 variable-oid tmnxHwTemperature.1.134217737 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 20 variable-oid tmnxHwTemperature.1.134217738 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 21 variable-oid tmnxHwTemperature.1.150995041 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 22 variable-oid tmnxHwTemperature.1.150995057 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 23 variable-oid tmnxHwTemperature.1.150995121 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
+                alarm 24 variable-oid tmnxHwTemperature.1.150995137 interval 300 absolute startup-alarm either rising-threshold 65 owner "5620sam"
                 event 11 both description "Temperature > = 65 Deg - IOM 1" owner "5620sam"
                 event 12 both description "Temperature > = 65 Deg - IOM 2" owner "5620sam"
                 event 13 both description "Temperature > = 65 Deg - IOM 3" owner "5620sam"
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$OXiTuk.KMrhPMKYN0IXhc.MPFHO4ekMyE4R4OeA2PbowJsERNOnxO"
+                password "$2y$10$itMef/btHoMKZvf1GcC1c.r1yu1xoEtL8hWWSraqIwAnrPriFpekC"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -910,7 +912,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$bbASsndqz7Tp1gjQNGufk.UknJfk6Innea9CAY7i3WfD34p87YFam"
+                password "$2y$10$lHWGP5g2u3faOFPC6aOqQ.KARPi/whsBSEqo.0oRw2ibBy8qcHYEq"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -925,12 +927,32 @@ echo "System Security Configuration"
                     no login-exec
                     no cannot-change-password
                     no new-password-at-login
-                    member "default"
+                    no member "default"
                     member "administrative"
                 exit
                 snmp
                     no authentication
                     no group
+                exit
+            exit
+            user "netsecroot"
+                password "$2y$10$0EqPYEeId1usl44ilKuyQ.0LJpM0lL6X6PqWh4cryEul7a8KBTAHa"
+                access console
+                no home-directory
+                no restricted-to-home
+                no cli-engine
+                public-keys
+                    ecdsa
+                    exit
+                    rsa
+                    exit
+                exit
+                console
+                    no login-exec
+                    no cannot-change-password
+                    no new-password-at-login
+                    no member "default"
+                    member "administrative"
                 exit
             exit
             snmp
@@ -4760,6 +4782,7 @@ echo "Filter Match lists Configuration"
                 prefix 10.150.10.67/32
                 prefix 10.150.10.71/32
                 prefix 10.150.10.192/26
+                prefix 10.150.57.0/25
                 prefix 10.189.48.48/32
                 prefix 10.189.48.105/32
                 prefix 10.189.48.106/32
@@ -4817,6 +4840,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4827,6 +4852,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4838,6 +4865,206 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "deny_snmp1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.224.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 81 create
+                        action accept
+                        description "accept_WAE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.240.171/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 82 create
+                        action accept
+                        description "accept_SEDONA"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 22 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.36.231.244/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 83 create
+                        action drop
+                        description "deny_snmp4"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.2.104/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 84 create
+                        action drop
+                        description "deny_ACC"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.200/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 85 create
+                        action accept
+                        description "accept_PACKETDESIGN"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.241/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 86 create
+                        action drop
+                        description "deny_SRPERFORMANCE"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.150.10.71/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 87 create
+                        action drop
+                        description "deny_NETCOOL1"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.132/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 88 create
+                        action drop
+                        description "deny_NETCOOL2"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.242.136/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
+                    entry 89 create
+                        action drop
+                        description "deny_snmp10"
+                        no log
+                        match protocol udp
+                            no dscp
+                            no dst-ip
+                            dst-port 161 65535
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip 10.32.241.38/32
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -14230,7 +14457,8 @@ echo "Port Configuration"
         ddm-events
     exit
     port 4/1/4
-        description "To-Router-RioFrio"
+        shutdown
+        description "To-Router-RioFrio-INC000004498658"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -14458,7 +14686,6 @@ echo "Port Configuration"
             no digital-coherent-optics
         exit
         ddm-events
-        no shutdown
     exit
     port 4/1/5
         description "MCR90-0045A_0373_Canal_de_Tezontle_I"
@@ -18635,7 +18862,8 @@ echo "Port Configuration"
         no shutdown
     exit
     port 6/1/2
-        description "LAG 2 To-LOSREYES-GAM puerto  6/1/2"
+        shutdown
+        description "PUERTO DISPONIBLE"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
             ing-percentage-of-rate 100
@@ -18869,7 +19097,6 @@ echo "Port Configuration"
             no rxdtv-adjust
         exit
         ddm-events
-        no shutdown
     exit
     port 6/1/3
         shutdown
@@ -20692,6 +20919,7 @@ echo "Port Configuration"
         ddm-events
     exit
     port 6/2/1
+        shutdown
         description "To-LOSREYES-GA-ATT-100G puerto 6/2/1"
         no monitor-agg-egress-queue-stats
         modify-buffer-allocation-rate
@@ -20920,7 +21148,6 @@ echo "Port Configuration"
             no digital-coherent-optics
         exit
         ddm-events
-        no shutdown
     exit
     port 8/1/1
         shutdown
@@ -31548,7 +31775,7 @@ echo "System Sync-If-Timing Configuration"
                 no ql-override
             exit
             ref2
-                source-port 6/2/1
+                source-port 6/1/1
                 no shutdown
                 no ql-override
             exit
@@ -31589,7 +31816,6 @@ echo "LAG Configuration"
         no port-weight-speed
         no weight-threshold
         port 6/1/1 priority 32768 sub-group 1
-        port 6/1/2 priority 32768 sub-group 1
         dynamic-cost
         lacp active administrative-key 32768
         no port-threshold
@@ -37946,100 +38172,6 @@ echo "Router (Network Side) Configuration"
         exit
         admin-tags
         exit
-        interface "To-LOSREYES-GA-ATT"
-            hold-time
-                no up ip
-                no down ip
-                no up ipv6
-                no down ipv6
-            exit
-            address 10.170.50.122/31 broadcast host-ones
-            network-domain "default"
-            description "Implementacion"
-            no enable-ingress-stats
-            no enable-mac-accounting
-            no tcp-mss
-            no ldp-sync-timer
-            cpu-protection 255
-            port 6/2/1
-            no unnumbered
-            no ptp-hw-assist
-            no urpf-check
-            eth-cfm
-            exit
-            no arp-timeout
-            arp-retry-timer 50
-            no arp-limit
-            no arp-learn-unsolicited
-            no arp-proactive-refresh
-            no allow-directed-broadcasts
-            tos-marking-state trusted
-            no strip-label
-            no proxy-arp-policy
-            no local-proxy-arp
-            no remote-proxy-arp
-            no mac
-            no ip-mtu
-            no ipv6
-            no urpf-selected-vprns
-            icmp
-                no mask-reply
-                param-problem 100 10
-                redirects 100 10
-                ttl-expired 100 10
-                unreachables 100 10
-            exit
-            qos 1000 egress-port-redirect-group "IPMEAN-QG:100G" egress-instance 1
-            ingress
-                no filter
-            exit
-            egress
-                no filter
-            exit
-            cflowd-parameters
-            exit
-            no local-dhcp-server
-            dhcp
-                shutdown
-                no description
-                no gi-address
-                no python-policy
-                no relay-plain-bootp
-                no server
-                no trusted
-                option
-                    action keep
-                    circuit-id ascii-tuple
-                    no remote-id
-                    vendor-specific-option
-                        no client-mac-address
-                        no pool-name
-                        no port-id
-                        no service-id
-                        no string
-                        no system-id
-                    exit
-                exit
-            exit
-            load-balancing
-                no lsr-load-balancing
-                no teid-load-balancing
-                no egr-ip-load-balancing
-                no spi-load-balancing
-            exit
-            no qos-route-lookup
-            no lag-link-map-profile
-            no dist-cpu-protection
-            bfd 100 receive 100 multiplier 3
-            if-attribute
-            exit
-            lag-per-link-hash class 1 weight 1
-            no vas-if-type
-            no ip-helper-address
-            no gre-termination
-            no untrusted
-            no shutdown
-        exit
         interface "To-LOSREYES-GAM"
             hold-time
                 no up ip
@@ -38913,68 +39045,6 @@ echo "ISIS Configuration"
                 exit
                 no shutdown
             exit
-            interface "To-LOSREYES-GA-ATT"
-                level-capability level-1/2
-                csnp-interval 10
-                no default-instance
-                no hello-auth-keychain
-                no hello-authentication-key
-                no hello-authentication-type
-                hello-authentication
-                interface-type point-to-point
-                no lfa-policy-map
-                lsp-pacing-interval 100
-                retransmit-interval 5
-                no tag
-                bfd-enable ipv4
-                no bfd-enable ipv6
-                no hello-padding
-                no loopfree-alternate-exclude
-                no ipv4-adjacency-sid
-                no ipv6-adjacency-sid
-                no ipv4-node-sid
-                no ipv6-node-sid
-                no ipv6-unicast-disable
-                no ipv4-multicast-disable
-                no ipv6-multicast-disable
-                no mesh-group
-                no passive
-                no load-balancing-weight
-                sid-protection
-                level 1
-                    no hello-auth-keychain
-                    no hello-authentication-key
-                    no hello-authentication-type
-                    hello-interval 9
-                    hello-multiplier 3
-                    no ipv6-unicast-metric
-                    no metric
-                    no ipv4-multicast-metric
-                    no ipv6-multicast-metric
-                    no passive
-                    no hello-padding
-                    priority 64
-                    no sd-offset
-                    no sf-offset
-                exit
-                level 2
-                    no hello-auth-keychain
-                    no hello-authentication-key
-                    no hello-authentication-type
-                    hello-interval 9
-                    hello-multiplier 3
-                    no ipv6-unicast-metric
-                    no metric
-                    no ipv4-multicast-metric
-                    no ipv6-multicast-metric
-                    no passive
-                    no hello-padding
-                    priority 64
-                    no sd-offset
-                    no sf-offset
-                exit
-                no shutdown
-            exit
             interface "To-MEGAIZTAPALAPA-GAM"
                 level-capability level-1/2
                 csnp-interval 10
@@ -39561,12 +39631,6 @@ echo "MPLS Configuration"
                 no te-metric
                 no shutdown
             exit
-            interface "To-LOSREYES-GA-ATT"
-                admin-group "ATT-ONLY"
-                no srlg-group
-                no te-metric
-                no shutdown
-            exit
             interface "To-MEGAIZTAPALAPA-GAM"
                 admin-group "Enterprise"
                 admin-group "Fixed"
@@ -39628,21 +39692,6 @@ echo "RSVP Configuration"
             exit
             interface "To-LOSREYES-GAM"
                 authentication-key "4AOSyHhj8FrK4feDhSh1QTnwI8N86BVD" hash2
-                no auth-keychain
-                hello-interval 3000
-                gr-helper disable
-                subscription 100
-                no refresh-reduction
-                bfd-enable
-                no graceful-shutdown
-                no class-type-bw
-                no implicit-null-label
-                no shutdown
-                no te-up-threshold
-                no te-down-threshold
-            exit
-            interface "To-LOSREYES-GA-ATT"
-                no authentication-key
                 no auth-keychain
                 hello-interval 3000
                 gr-helper disable
@@ -41795,7 +41844,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -41820,23 +41869,6 @@ echo "LDP Configuration"
                     no transport-address
                 exit
                 interface "To-LOSREYES-GAM" dual-stack
-                    bfd-enable ipv4
-                    ipv4
-                        no hello
-                        no keepalive
-                        no local-lsr-id
-                        fec-type-capability
-                            prefix-ipv4 enable
-                            prefix-ipv6 enable
-                            p2mp-ipv4 enable
-                            p2mp-ipv6 enable
-                        exit
-                        no transport-address
-                        no shutdown
-                    exit
-                    no shutdown
-                exit
-                interface "To-LOSREYES-GA-ATT" dual-stack
                     bfd-enable ipv4
                     ipv4
                         no hello
@@ -43897,6 +43929,7 @@ echo "Service Configuration"
             no shutdown
         exit
         vprn 429001 name "VPRN-GSM" customer 2 create
+            shutdown
             no description
             ipv6
                 reachable-time 30
@@ -44917,7 +44950,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -44925,7 +44958,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -47175,7 +47208,6 @@ echo "Service Configuration"
                 description "To-NEWMAN"
             exit
             no vsd-domain
-            no shutdown
         exit
         epipe 519055 name "EPIPE_To-IZTAPA-VLAN55-BH" customer 2 create
             description "EPIPE_To-IZTAPA-VLAN55-BH"
@@ -47517,6 +47549,7 @@ echo "Service Configuration"
             no shutdown
         exit
         vprn 1000000 name "VPRN-OYM-ATT" customer 2 create
+            shutdown
             no description
             ipv6
                 reachable-time 30
@@ -50126,7 +50159,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -50134,7 +50167,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -50253,7 +50286,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -50261,7 +50294,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -50380,7 +50413,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -50388,7 +50421,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -51238,7 +51271,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -51246,7 +51279,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -51492,7 +51525,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -51500,7 +51533,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -52127,7 +52160,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -52135,7 +52168,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -52254,7 +52287,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -52262,7 +52295,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -52381,7 +52414,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -52389,7 +52422,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -52508,7 +52541,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -52516,7 +52549,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -52889,7 +52922,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -52897,7 +52930,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53016,7 +53049,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53024,7 +53057,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53143,7 +53176,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53151,7 +53184,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53270,7 +53303,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53278,7 +53311,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53397,7 +53430,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53405,7 +53438,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53524,7 +53557,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53532,7 +53565,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53651,7 +53684,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53659,7 +53692,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53778,7 +53811,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53786,7 +53819,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -53905,7 +53938,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -53913,7 +53946,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 3000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -55299,9 +55332,9 @@ echo "Service Configuration"
                 exit
             exit
             no vsd-domain
-            no shutdown
         exit
         vprn 1000001 name "VPRN-3G-ATT" customer 2 create
+            shutdown
             no description
             ipv6
                 reachable-time 30
@@ -58735,7 +58768,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -58743,7 +58776,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -58862,7 +58895,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -58870,7 +58903,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -58989,7 +59022,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -58997,7 +59030,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -59116,7 +59149,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -59124,7 +59157,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -59243,7 +59276,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -59251,7 +59284,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -60259,7 +60292,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -60267,7 +60300,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -60386,7 +60419,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -60394,7 +60427,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -60640,7 +60673,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -60648,7 +60681,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -61656,7 +61689,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -61664,7 +61697,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -61783,7 +61816,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -61791,7 +61824,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -61910,7 +61943,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -61918,7 +61951,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -62037,7 +62070,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -62045,7 +62078,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -62164,7 +62197,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -62172,7 +62205,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -62672,7 +62705,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -62680,7 +62713,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -62799,7 +62832,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -62807,7 +62840,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -62926,7 +62959,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -62934,7 +62967,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63053,7 +63086,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63061,7 +63094,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63180,7 +63213,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63188,7 +63221,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63307,7 +63340,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63315,7 +63348,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63434,7 +63467,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63442,7 +63475,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63561,7 +63594,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63569,7 +63602,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63688,7 +63721,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63696,7 +63729,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63815,7 +63848,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63823,7 +63856,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -63942,7 +63975,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -63950,7 +63983,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -64069,7 +64102,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -64077,7 +64110,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -64196,7 +64229,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -64204,7 +64237,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -64323,7 +64356,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -64331,7 +64364,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -65907,9 +65940,9 @@ echo "Service Configuration"
                 exit
             exit
             no vsd-domain
-            no shutdown
         exit
         vprn 1000002 name "VPRN-LTE-ATT" customer 2 create
+            shutdown
             no description
             ipv6
                 reachable-time 30
@@ -67186,7 +67219,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -67194,7 +67227,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -67313,7 +67346,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -67321,7 +67354,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -67948,7 +67981,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -67956,7 +67989,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -68329,7 +68362,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -68337,7 +68370,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -68456,7 +68489,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -68464,7 +68497,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -68710,7 +68743,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -68718,7 +68751,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -68837,7 +68870,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -68845,7 +68878,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -68964,7 +68997,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -68972,7 +69005,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -69091,7 +69124,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -69099,7 +69132,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -69763,7 +69796,6 @@ echo "Service Configuration"
                 exit
             exit
             no vsd-domain
-            no shutdown
         exit
         vpls 90004019 name "To-MEX-115-01_1" customer 2 create
             no description
@@ -70301,7 +70333,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -70309,7 +70341,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -70460,7 +70492,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -70468,7 +70500,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -70619,7 +70651,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -70627,7 +70659,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -70778,7 +70810,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -70786,7 +70818,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -70937,7 +70969,7 @@ echo "Service Configuration"
                 ingress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no match-qinq-dot1p
                     no filter
                     no vlan-translation
@@ -70945,7 +70977,7 @@ echo "Service Configuration"
                 egress
                     no scheduler-policy
                     no policer-control-policy
-                    qos 1
+                    qos 3000
                     no qinq-mark-top-only
                     no dest-mac-rewrite
                     no filter
@@ -73441,7 +73473,7 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:39 2020 UTC
+# Finished WED MAR 17 02:28:08 2021 UTC
 B:RIOFRI-MEX115-GA# show port 
 
 ===============================================================================
@@ -73453,7 +73485,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 3/1/1         Down  No   Down    9212 9212    - accs dotq xcme   
 3/1/2         Down  No   Down    9212 9212    - netw null xcme   
 3/1/3         Down  No   Down    9212 9212    - netw null xcme   GIGE-SX 
-3/1/4         Up    Yes  Up      9212 9212    - accs dotq xcme   GIGE-SX 
+3/1/4         Up    No   Down    9212 9212    - accs dotq xcme   GIGE-SX 
 3/1/5         Down  No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 3/1/6         Down  No   Down    9212 9212    - netw null xcme   GIGE-SX 
 3/1/7         Down  No   Down    9212 9212    - accs dotq xcme   GIGE-T 
@@ -73471,8 +73503,8 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 4/1/1         Down  No   Down    9212 9212    - accs dotq xcme   
 4/1/2         Down  No   Down    9212 9212    - netw null xcme   
 4/1/3         Down  No   Down    9212 9212    - accs dotq xcme   
-4/1/4         Up    Yes  Up      9212 9212    - accs dotq xcme   GIGE-SX 
-4/1/5         Up    Yes  Up      1518 1518    - accs dotq xcme   MDI GIGE-T 
+4/1/4         Down  No   Down    9212 9212    - accs dotq xcme   GIGE-SX 
+4/1/5         Up    No   Down    1518 1518    - accs dotq xcme   GIGE-T 
 4/1/6         Up    Yes  Up      9212 9212    - accs dotq xcme   MDI GIGE-T 
 4/1/7         Down  No   Down    9212 9212    - accs dotq xcme   
 4/1/8         Down  No   Down    1518 1518    - accs dotq xcme   
@@ -73490,11 +73522,11 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 5/1/3         Down  No   Down    9212 9212    - netw null xgige  10GBASE-LR  *
 5/1/4         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
 5/1/5         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
-5/1/6         Up    Yes  Up      1518 1518    - accs dotq xgige  10GBASE-SR 
+5/1/6         Up    No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
 5/1/7         Down  No   Down    9212 9212    - netw null xgige  
 5/1/8         Down  No   Down    9212 9212    - netw null xgige  
-5/1/9         Up    Yes  Up      9212 9212  200 netw null xgige  10GBASE-SR 
-5/1/10        Up    Yes  Up      9182 9182    - accs dotq xgige  10GBASE-SR 
+5/1/9         Up    No   Down    9212 9212  200 netw null xgige  10GBASE-SR 
+5/1/10        Up    No   Down    9182 9182    - accs dotq xgige  10GBASE-SR 
 5/2/1         Up    Yes  Up      9212 9212    - netw null cgige  100GBASE-LR4*
 
 ===============================================================================
@@ -73504,16 +73536,16 @@ Port          Admin Link Port    Cfg  Oper LAG/ Port Port Port   C/QS/S/XFP/
 Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 -------------------------------------------------------------------------------
 6/1/1         Up    Yes  Up      9212 9212    2 netw null xgige  10GBASE-ER  *
-6/1/2         Up    Yes  Up      9212 9212    2 netw null xgige  10GBASE-ER  *
+6/1/2         Down  No   Down    9212 9212    - netw null xgige  10GBASE-ER  *
 6/1/3         Down  No   Down    9212 9212    - netw null xgige  
 6/1/4         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
 6/1/5         Down  No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
-6/1/6         Up    Yes  Up      1518 1518    - accs dotq xgige  10GBASE-SR 
+6/1/6         Up    No   Down    1518 1518    - accs dotq xgige  10GBASE-SR 
 6/1/7         Down  No   Down    9212 9212    - netw null xgige  
 6/1/8         Down  No   Down    9212 9212    - netw null xgige  
 6/1/9         Down  No   Down    9212 9212    - netw null xgige  
 6/1/10        Down  No   Down    9212 9212    - netw null xgige  10GBASE-SR 
-6/2/1         Up    Yes  Up      9212 9212    - netw null cgige  100GBASE-ER4*
+6/2/1         Down  No   Down    9212 9212    - netw null cgige  100GBASE-ER4*
 
 ===============================================================================
 Ports on Slot 8
@@ -73628,7 +73660,7 @@ Admin Key           : 32768                 Oper Key             : 32768
 Prtr System Id      : 0c:a4:02:d1:ad:5b     Prtr System Priority : 32768
 Prtr Oper Key       : 32768                 
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 2
+Port weight speed   : 0 gbps                Number/Weight Up     : 1
 Weight Threshold    : 0                     
 Weight Thres. Action: down                  
 Weight Static Cost  : N/A                   
@@ -73637,15 +73669,12 @@ Weight Static Cost  : N/A
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
 -------------------------------------------------------------------------------
 6/1/1          up      active    up      yes       1             -       32768
-6/1/2          up      active    up                1             -       32768
 
 -------------------------------------------------------------------------------
 Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 -------------------------------------------------------------------------------
 6/1/1          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
 6/1/1          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
-6/1/2          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
-6/1/2          partner   No    No    Yes   Yes   Yes   Yes   Yes      Yes
 
 -------------------------------------------------------------------------------
 LAG 3
@@ -73709,7 +73738,7 @@ Description        : To-MXMEX115RTACCES01
 Details
 -------------------------------------------------------------------------------
 Lag-id              : 200                   Mode                 : network
-Adm                 : up                    Opr                  : up
+Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
 Thres. Last Cleared : 04/21/2020 13:29:36   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
@@ -73733,10 +73762,10 @@ Subgrp selected     : 1                     Subgrp candidate     : -
 Subgrp count        : 1                     
 System Id           : 0c:a4:02:87:98:01     System Priority      : 32768
 Admin Key           : 32770                 Oper Key             : 32770
-Prtr System Id      : f0:78:16:6f:9a:00     Prtr System Priority : 32768
-Prtr Oper Key       : 1                     
+Prtr System Id      : 00:00:00:00:00:00     Prtr System Priority : 0
+Prtr Oper Key       : 0                     
 Standby Signaling   : lacp                  
-Port weight speed   : 0 gbps                Number/Weight Up     : 1
+Port weight speed   : 0 gbps                Number/Weight Up     : 0
 Weight Threshold    : 0                     
 Weight Thres. Action: down                  
 Weight Static Cost  : N/A                   
@@ -73744,12 +73773,12 @@ Weight Static Cost  : N/A
 -------------------------------------------------------------------------------
 Port-id        Adm     Act/Stdby Opr     Primary   Sub-group     Forced  Prio 
 -------------------------------------------------------------------------------
-5/1/9          up      active    up      yes       1             -       32768
+5/1/9          up      active    down    yes       1             -       32768
 
 -------------------------------------------------------------------------------
 Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 -------------------------------------------------------------------------------
-5/1/9          actor     No    No    Yes   Yes   Yes   Yes   Yes      Yes
-5/1/9          partner   No    No    Yes   Yes   Yes   Yes   No       Yes
+5/1/9          actor     No    Yes   No    No    No    Yes   Yes      Yes
+5/1/9          partner   Yes   Yes   No    No    No    No    Yes      No
 ===============================================================================
 B:RIOFRI-MEX115-GA# 

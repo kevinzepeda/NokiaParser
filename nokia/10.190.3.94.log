@@ -1,12 +1,14 @@
-spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ATT9084488@10.190.3.94
+spawn -nottycopy ssh -oUserKnownHostsFile=/dev/null -oStrictHostKeyChecking=no -oCheckHostIP=no ca168b@10.190.3.94
 Warning: Permanently added '10.190.3.94' (RSA) to the list of known hosts.
 This is a AT&T system restricted to authorized individuals.
  This system is subject to monitoring. Unauthorized users,
 access, and/or modification will be prosecuted.
 
-ATT9084488@10.190.3.94's password: 
-B:CHIQUI-MEXIN028-GA# environment no more 
-B:CHIQUI-MEXIN028-GA# show chassis 
+ca168b@10.190.3.94's password: 
+
+Authentication succeeded. Your password will expire in 2 weeks + 18 hours  + 17 Minutes 
+*B:CHIQUI-MEXIN028-GA# environment no more 
+*B:CHIQUI-MEXIN028-GA# show chassis 
 ===============================================================================
 System Information
 ===============================================================================
@@ -38,12 +40,12 @@ Chassis   Role                Status
 -------------------------------------------------------------------------------
 1         Standalone          up
 ===============================================================================
-B:CHIQUI-MEXIN028-GA# admin display-config detail 
+*B:CHIQUI-MEXIN028-GA# admin display-config detail 
 # TiMOS-C-16.0.R5-1 cpm/hops64 Nokia 7750 SR Copyright (c) 2000-2019 Nokia.
 # All rights reserved. All use subject to applicable license agreements.
 # Built on Fri Jan 18 10:59:23 PST 2019 by builder in /builds/c/160B/R5-1/panos/main
 
-# Generated THU MAY 21 05:24:56 2020 UTC
+# Generated WED MAR 17 02:30:29 2021 UTC
 
 exit all
 configure
@@ -209,7 +211,7 @@ echo "System Configuration"
         exit
         snmp
             streaming
-                no shutdown
+                shutdown
             exit
             engineID "0000197f00000ca40264e401"
             packet-size 9216
@@ -234,7 +236,7 @@ echo "System Configuration"
                 shutdown
                 no broadcast-client
             exit
-            dst-zone CDT
+            dst-zone CDTT
                 start first sunday april 02:00
                 end last sunday october 02:00
                 offset 60
@@ -886,7 +888,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "admin"
-                password "$2y$10$ZDUefP7WSsrZArWKRqaL2.iTNEVn4mSE3taQ7FxQslT58ROXCzy/K"
+                password "$2y$10$m61jVRQmU46VdWMJ61/F6.q.a9pm2tpXriqtaxyF0PbYaKwAO2cbG"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -909,7 +911,7 @@ echo "System Security Configuration"
                 exit
             exit
             user "emergencia"
-                password "$2y$10$83PNM/BTU.ax9C6fHJE7E.eP8HzWrDVfshD9vt3nXIStSz3hpfWQS"
+                password "$2y$10$fyMypP6KAC20nHb5WNxpQ.IMd7V.MrF/OieD8eYaT32KErJqEoori"
                 access console ftp snmp
                 no home-directory
                 no restricted-to-home
@@ -933,8 +935,8 @@ echo "System Security Configuration"
                 exit
             exit
             user "netsecroot"
-                password "$2y$10$ixCPhAlTiJrYYWmIxDpnM.2rmaRi7doTxvSQJuxlDbdmpaF7F17Dy"
-                no access
+                password "$2y$10$EDJVSEm9VfJeNZwk8BXKs.MXuGrnvId3XZ72zafW3j6cQlxfSXNOS"
+                access console
                 no home-directory
                 no restricted-to-home
                 no cli-engine
@@ -4303,9 +4305,7 @@ echo "Log Configuration"
         snmp-trap-group 98
             description "5620sam"
             trap-target "10.150.10.203:162" address 10.150.10.203 port 162 snmpv2c notify-community "netviewtrap98"
-            trap-target "10.190.60.162:162" address 10.190.60.162 port 162 snmpv2c notify-community "galateatrap98"
             trap-target "10.32.240.171:162" address 10.32.240.171 port 162 snmpv2c notify-community "netview"
-            trap-target "3CA82A0A7404:main1" address 10.190.60.130 port 162 snmpv2c notify-community "galateatrap98"
         exit
         snmp-trap-group 99
             no description
@@ -4775,6 +4775,18 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+                no description
+                prefix 10.32.2.104/32
+                prefix 10.32.224.132/32
+                prefix 10.32.240.171/32
+                prefix 10.32.241.38/32
+                prefix 10.32.242.132/32
+                prefix 10.32.242.136/32
+                prefix 10.36.231.244/32
+                prefix 10.150.10.71/32
+                prefix 10.150.10.200/32
+            exit
             ip-prefix-list "ntp-host" create
                 no description
                 prefix 196.18.6.12/32
@@ -4845,6 +4857,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.38.22.135/32
                 prefix 10.38.22.136/32
                 prefix 10.38.22.137/32
+                prefix 10.103.2.135/32
+                prefix 10.103.133.128/32
                 prefix 10.106.8.0/21
                 prefix 10.174.1.0/27
                 prefix 10.174.4.0/27
@@ -4855,6 +4869,8 @@ echo "Filter Match lists Configuration"
                 prefix 10.203.16.0/24
                 prefix 10.203.192.0/24
                 prefix 10.207.3.0/28
+                prefix 135.208.45.216/32
+                prefix 135.208.47.0/24
             exit
         exit
     exit
@@ -4866,6 +4882,26 @@ echo "System Security Cpm Hw Filters, PKI, TLS and LDAP Configuration"
             cpm-filter
                 default-action drop
                 ip-filter
+                    entry 80 create
+                        action drop
+                        description "Deny SNMP"
+                        no log
+                        match protocol none
+                            no dscp
+                            no dst-ip
+                            no dst-port
+                            no fragment
+                            no icmp-type
+                            no icmp-code
+                            no ip-option
+                            no multiple-option
+                            no option-present
+                            src-ip ip-prefix-list "denysnmp"
+                            no src-port
+                            no tcp-syn
+                            no tcp-ack
+                        exit
+                    exit
                     entry 90 create
                         action queue 33
                         no description
@@ -39340,7 +39376,7 @@ echo "LDP Configuration"
             no graceful-restart
             implicit-null-label
             no label-withdrawal-delay
-            mcast-upstream-frr
+            no mcast-upstream-frr
             no mcast-upstream-asbr-frr
             no mp-mbb-time
             no prefer-tunnel-in-tunnel
@@ -42744,7 +42780,7 @@ echo "Service Configuration"
                     ingress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no match-qinq-dot1p
                         no filter
                         no queue-group-redirect-list
@@ -42752,7 +42788,7 @@ echo "Service Configuration"
                     egress
                         no scheduler-policy
                         no policer-control-policy
-                        qos 10
+                        qos 2000
                         no qinq-mark-top-only
                         no filter
                         agg-rate
@@ -71221,6 +71257,8 @@ echo "Filter Match lists Configuration"
 #--------------------------------------------------
     filter
         match-list
+            ip-prefix-list "denysnmp" create
+            exit
             ip-prefix-list "ntp-host" create
             exit
             ip-prefix-list "snmp-list" create
@@ -77134,8 +77172,8 @@ echo "System Configuration Mode Configuration"
 
 exit all
 
-# Finished THU MAY 21 05:25:05 2020 UTC
-B:CHIQUI-MEXIN028-GA# show port 
+# Finished WED MAR 17 02:30:37 2021 UTC
+*B:CHIQUI-MEXIN028-GA# show port 
 
 ===============================================================================
 Ports on Slot 3
@@ -77264,7 +77302,7 @@ Id            State      State   MTU  MTU  Bndl Mode Encp Type   MDIMDX
 B/1           Up    No   Down    1514 1514    - netw null faste  
 B/4           Up    No   Down    1514 1514    - netw null faste  
 ===============================================================================
-B:CHIQUI-MEXIN028-GA# show lag detail 
+*B:CHIQUI-MEXIN028-GA# show lag detail 
 
 ===============================================================================
 LAG Details
@@ -77279,7 +77317,7 @@ Details
 Lag-id              : 2                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 00:59:43   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 04:27:36   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:e5:43     Lag-IfIndex          : 1342177282
@@ -77330,7 +77368,7 @@ Details
 Lag-id              : 3                     Mode                 : network
 Adm                 : up                    Opr                  : up
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 00:59:43   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 04:27:36   Port Thres. Action   : down
 Dynamic Cost        : true                  Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:e5:44     Lag-IfIndex          : 1342177283
@@ -77384,7 +77422,7 @@ Details
 Lag-id              : 200                   Mode                 : network
 Adm                 : up                    Opr                  : down
 Thres. Exceeded Cnt : 0                     Port Threshold       : 0
-Thres. Last Cleared : 03/01/2019 00:59:43   Port Thres. Action   : down
+Thres. Last Cleared : 07/10/2020 04:27:36   Port Thres. Action   : down
 Dynamic Cost        : false                 Port Static Cost     : N/A
 Encap Type          : null                  
 Configured Address  : 0c:a4:02:64:e6:09     Lag-IfIndex          : 1342177480
@@ -77425,4 +77463,4 @@ Port-id        Role      Exp   Def   Dist  Col   Syn   Aggr  Timeout  Activity
 3/1/9          actor     No    Yes   No    No    No    Yes   Yes      Yes
 3/1/9          partner   Yes   Yes   No    No    No    No    Yes      No
 ===============================================================================
-B:CHIQUI-MEXIN028-GA# 
+*B:CHIQUI-MEXIN028-GA# 
