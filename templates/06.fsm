@@ -19,6 +19,7 @@ Value buffer_max (\S+)
 Value shutdown (\S+)
 Value resv_min (\S+)
 Value resv_max (\S+)
+Value vpls (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -53,6 +54,7 @@ Service
 
 Vpn
   ^\s{12}sap ${sap} create -> Sap
+  ^\s{16}vpls ${vpls} -> Record
   ^\s{8}exit -> Service
 
 Sap

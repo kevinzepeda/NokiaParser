@@ -17,6 +17,7 @@ Value mda (\d+)
 Value fabric_network (\d+)
 Value fabric_access (\d+)
 Value port_description (.+)
+Value qos_value (\d+)
 
 
 Start
@@ -45,8 +46,8 @@ Base
 Interface
   ^\s{12}address ${address}
   ^\s{12}port ${port}
-  ^\s{12}qos 100 -> Record
-  ^\s{8}exit -> Base
+  ^\s{12}qos ${qos_value}
+  ^\s{8}exit -> Record Base
 
 Isis
   ^\s{12}interface "${isis}" -> Record

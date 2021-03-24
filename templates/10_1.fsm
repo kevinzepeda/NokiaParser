@@ -1,0 +1,102 @@
+Value Filldown sysname (\S+)
+Value Filldown model ([^:\b]+)
+Value address ([\d\.\/]+)
+Value source_ip (\S+)
+Value interface (\S+)
+Value port ([^:\s]+)
+Value queue_policy (\S+)
+Value isis (\S+)
+Value mpls (\S+)
+Value rsvp (\S+)
+Value lag_id (\S+)
+Value port_lag (\S+)
+Value type_port (\S+)
+Value type (\S+)
+Value card (\S+)
+Value mda (\d+)
+Value fabric_network (\d+)
+Value fabric_access (\d+)
+Value port_description (.+)
+Value qos_value (\d+)
+Value isis_value (\d+)
+
+
+Start
+  ^.+ -oCheckHostIP -> Source
+  ^.+ show chassis -> Chassis
+  ^\s{4}router Base -> Base
+  ^\s{4}port ${port} -> Ports
+  ^\s{4}card ${card} -> Card
+  ^Lag-id\s{14}:\s+${lag_id} -> Lag
+  ^.+show port -> PortType
+
+Source
+  ^.+@${source_ip}'s\s+password: -> Start
+
+Chassis
+  ^\s+Name\s+:\s${sysname}
+  ^\s+Type\s+:\s${model} -> Start
+
+Base
+  ^\s{8}interface "${interface}" -> Interface
+  ^\s{8}isis ${isis_value} -> Isis
+  ^\s{8}mpls -> Mpls
+  ^\s{8}rsvp -> Rsvp
+  ^\s{4}exit -> Start
+
+Interface
+  ^\s{12}address ${address}
+  ^\s{12}port ${port}
+  ^\s{12}qos ${qos_value}
+  ^\s{8}exit -> Record Base
+
+Isis
+  ^\s{12}interface "${isis}" -> Record
+  ^\s{8}exit -> Base
+
+Mpls
+  ^\s{12}interface "${mpls}" -> Record
+  ^\s{8}exit -> Base
+
+Rsvp
+  ^\s{12}interface "${rsvp}" -> Record
+  ^\s{8}exit -> Base
+
+Ports
+  ^\s{8}description "${port_description}"
+  ^\s{8}ethernet -> PortEthernet
+  ^\s{4}exit -> Record Start
+
+PortEthernet
+  ^\s{12}network -> PortEthernetNetwork
+  ^\s{8}exit -> Ports
+
+PortEthernetNetwork
+  ^\s{16}queue-policy "${queue_policy}"
+  ^\s{12}exit -> PortEthernet
+
+Lag
+  ^${port_lag}.+yes -> Record Start
+
+PortType
+  ^${type_port}\s*Up.{42}${type} -> Record
+  ^LAG Details -> Start
+
+Card
+  ^\s{8}mda ${mda} -> Mda
+  ^\s{4}exit -> Start
+
+Mda
+  ^\s{12}network -> MdaNetwork
+  ^\s{12}access -> MdaAccess
+  ^\s{8}exit -> Record Card
+
+MdaNetwork
+  ^\s{20}fabric-policy ${fabric_network}
+  ^\s{12}exit -> Mda
+
+MdaAccess
+  ^\s{20}fabric-policy ${fabric_access}
+  ^\s{12}exit -> Mda
+
+EOF

@@ -17,6 +17,7 @@ Value mda (\d+)
 Value fabric_network (\d+)
 Value fabric_access (\d+)
 Value port_description (.+)
+Value vpls (.+)
 
 Start
   ^.+ -oCheckHostIP -> Source
@@ -56,6 +57,7 @@ Service
 
 Vpn
   ^\s{12}sap ${sap} create -> Sap
+  ^\s{16}vpls ${vpls} -> Record
   ^\s{8}exit -> Service
 
 Sap
